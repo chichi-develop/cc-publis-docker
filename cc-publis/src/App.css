@@ -1,0 +1,135 @@
+.app {
+  max-width: 100%;
+  background-color: rgb(237, 237, 237);
+}
+
+.app-body {
+  display: block;
+  min-height: calc(100vh - 64px);
+  /* width: 980px; */
+  width: 1280px;
+  background-color: #f8f8f8;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.commonTable-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.commonTable-title {
+  display: inline-block;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.commonTable-addButton,
+.submitButton {
+  display: inline-block;
+  font-size: 14px;
+  padding: 0.5em 1em 0.5em 1em;
+  /* margin-bottom: 0.3em; */
+  text-decoration: none;
+  background: #668ad8;
+  color: #fff;
+  border-radius: 4px;
+}
+
+.commonTable-addButton:focus,
+.submitButton:focus {
+  outline: none;
+}
+
+.commonTable-addButton:hover,
+.submitButton:hover {
+  /* background: #0b7dda; */
+  background: #1565c0;
+  /* color:#888; */
+}
+
+.commonTable-table {
+  /* display: table; */
+  max-width: 100%;
+  min-width: 100%;
+  /* width: 100%; */
+  font-size: 14px;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.commonTable-thead th {
+  font-size: 12px;
+  color: white; /*文字色*/
+  background-color: hsl(60, 3%, 27%); /*背景色*/
+  border: solid 1px #aaaaaa;
+  padding: 0.5em 1em;
+}
+
+.commonTable-thead p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+.commonTable-thead select {
+  font-size: 12px;
+  outline: none;
+  text-indent: 0.01px;
+  text-overflow: "";
+  vertical-align: middle;
+  background: none transparent;
+  appearance: none;
+  padding: 5px 10px;
+  /* border:1px solid #ddd; */
+  border: 1px solid #aaaaaa;
+  /* color:#828c9a; */
+  color: #d6d8db;
+  width: 100%;
+  border-radius: 2px;
+}
+
+.commonTable-thead input {
+  font-size: 12px;
+  outline: none;
+  text-indent: 0.01px;
+  text-overflow: "";
+  vertical-align: middle;
+  background: none transparent;
+  padding: 5px 10px;
+  /* border:1px solid #ddd; */
+  border: 1px solid #aaaaaa;
+  /* color:#828c9a; */
+  color: #d6d8db;
+  width: 100%;
+  border-radius: 2px;
+}
+
+.commonTable-thead {
+  /* display: table;
+  width: 100%;
+  table-layout: fixed; */
+}
+
+.commonTable-table tr {
+  /* table-layout: fixed; */
+}
+
+.commonTable-tbody {
+  /* display: block; */
+  /* overflow-y: scroll; */
+  /* overflow-y: auto; */
+  /* scroll-behavior: smooth; */
+  /* table-layout: fixed; */
+  height: 250px;
+  /* width: 100%; */
+}
+
+.commonTable-tbody td {
+  border: solid 1px #aaaaaa;
+  padding: 0.5em 1em;
+}

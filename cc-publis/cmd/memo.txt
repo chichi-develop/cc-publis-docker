@@ -1,0 +1,40 @@
+aclg
+20936132
+20933859
+20977251
+20977473
+20981775
+
+mdmm
+22222222
+33333333
+44444444
+20977473
+
+hinagata
+
+// import React, { useEffect, useCallback } from "react";
+import React, { useEffect } from "react";
+// import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+// import { Actions } from "../../store/actions";
+import { StoreState } from "../../../../store";
+
+const CstmZandakaHistoryContainer: React.FC = () => {
+  const authState = useSelector((state: StoreState) => state.auth);
+  // const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log("CstmZandakaHistoryContainer render!");
+    return () => console.log("unmounting...");
+  }, []);
+
+  return (
+    <>
+      <h2>{authState.userID}</h2>
+      <h2>顧客残高履歴</h2>
+    </>
+  );
+};
+
+export default CstmZandakaHistoryContainer;

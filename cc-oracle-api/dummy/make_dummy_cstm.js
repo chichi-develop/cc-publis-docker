@@ -1,0 +1,96 @@
+// npm i --save-dev request casual moment
+var request = require('request')
+var casual = require('casual').ja_JP
+var moment = require('moment')
+var options = {
+  // uri: "http://localhost:3000/api/v1/cm_mdmms/20967357/6",
+  uri: 'http://localhost:8082/ccdb/cstm',
+  method: 'POST',
+  headers: {
+    //"Content-type": "application/x-www-form-urlencoded",
+    'Content-type': 'application/json'
+  },
+  form: {
+    CT_CDCSTM: '20191109',
+    CT_KBCSTM: '7',
+    CT_NMCSTM: '株式会社　致知出版社',
+    CT_NKCSTM: 'ﾁﾁｼｭｯﾊﾟﾝｼｬ',
+    CT_NMTNBU: 'データ管理部',
+    CT_NMTNTO: '致知　太郎',
+    CT_NMSIME: ' ',
+    CT_NKSIME: 'ﾁﾁ ﾀﾛｳ',
+    CT_KBKSYO: '1',
+    CT_NOYUBN: '1500001',
+    CT_ADCST1: '東京都渋谷区神宮前',
+    CT_ADCST2: '4-24-9',
+    CT_ADCST3: ' ',
+    CT_NMKUNI: 'JPN',
+    CT_KBKGTI: '0',
+    CT_CDSQSF: ' ',
+    CT_CDSQSM: ' ',
+    CT_NOTEL1: '0337962111',
+    CT_NOTEL2: '0337962108',
+    CT_ADMAIL: 'chichitaro@chichi.co.jp',
+    CT_KBDMPR: '1',
+    CT_NMFRKM: ' ',
+    CT_TXBIKO: '備考欄は特になし',
+    CT_TXSSHR: ' ',
+    CT_KBSEBT: '1',
+    CT_DTSNGP: '19780901',
+    CT_CDSYOK: '02',
+    CT_CDBAIT: 'Z',
+    CT_CDSYKS: 'A0011',
+    CT_CDSYTN: '01',
+    CT_CDDOKI: '04',
+    CT_CTSOUK: '6',
+    CT_KBSEKY: '0',
+    CT_KBCLAM: '0',
+    CT_KBJYCT: '0',
+    CT_KBTKSK: '0',
+    CT_KBJIK1: '0',
+    CT_KBJIK2: '0',
+    CT_KBSAKJ: '0',
+    CT_KBMSCH: '0',
+    CT_CCDATEC: '20070130',
+    CT_CCTIMEC: '144029',
+    CT_CCTERMC: 'CT_CCTERMC',
+    CT_CCOUSRC: 'IKOU',
+    CT_CCUSERC: 'IKOU',
+    CT_CCFUNCC: 'CT_CCFUNCC',
+    CT_CCDATEX: '20180612',
+    CT_CCTIMEX: '172143',
+    CT_CCTERMX: 'LM-IH533S-SH-18',
+    CT_CCOUSRX: 'taro',
+    CT_CCUSERX: 'CCUSER',
+    CT_CCFUNCX: 'WA'
+    // al_idactv: '',
+    // al_nmactv: casual.random_element(['大会', '一般注文', 'セミナー']),
+    // al_noactv: casual.integer((from = 1111), (to = 9999999)),
+    // al_dtactv: moment().format('YYYY-MM-DD'),
+    // al_cdsqsk: casual.random_element(['23232323', '21212121']),
+    // // "al_cdsqsk": casual.integer(from = 20900001, to = 20999999) ,
+    // al_nmsqsk: casual.random_element(['株式会社　致知出版社']),
+    // al_nmsqbu: '',
+    // // "al_nmsqtn": casual.full_name,
+    // al_nmsqtn: casual.random_element(['毛利　竹志']),
+    // al_txactv: casual.random_element([
+    //   '新春大会',
+    //   '別刊「母」',
+    //   '一日セミナー'
+    // ]),
+    // al_susury: casual.integer((from = 1), (to = 10)),
+    // al_kgtnka: casual.random_element([1200, 5000, 12000]),
+    // al_kggoke: casual.random_element([1200, 5000, 12000]),
+    // al_txbiko: '',
+    // al_cdcstm: casual.integer((from = 20900001), (to = 20999999)),
+    // al_nmcstm: casual.full_name,
+    // al_nmtnbu: '',
+    // al_nmtnto: '',
+    // createdAt: moment().format('YYYY-MM-DD'),
+    // updatedAt: moment().format('YYYY-MM-DD')
+  }
+}
+
+request.post(options, function(error, response, body) {
+  console.log(body)
+})

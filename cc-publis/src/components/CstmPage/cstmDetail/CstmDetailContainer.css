@@ -1,0 +1,806 @@
+p.frame-title {
+  color: #555;
+  font-size: 18px;
+}
+
+.cstmDetail-body {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 2fr;
+  row-gap: 1em;
+  margin: 0 1.8em 0 1.8em;
+}
+
+.cstmDetail-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+  border-radius: 8px;
+  border: 1px solid #c5c5c5;
+}
+
+.cstmDetail-subContainer {
+  display: grid;
+  /* justify-content: center; */
+}
+
+.cstmDetail-buttonList {
+  display: flex;
+  /* display: grid; */
+  height: 60px;
+  justify-content: center;
+  align-items: center;
+  margin-left: 2em;
+  margin-right: 2em;
+  border-top: 1px solid #c5c5c5;
+}
+
+.cstmDetail-container input {
+  font-size: 7;
+  color: green;
+  background-color: transparent;
+  border-radius: 3px;
+  /* border: 1px solid #c5c5c5; */
+  border: none;
+}
+
+.cstmDetail-gridContainer {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  margin: 20px;
+  /* grid-template-columns: repeat(auto-fill, 200px); */
+  grid-template-columns: repeat(auto-fill, 20px);
+  grid-template-rows: auto;
+  column-gap: 1.5em;
+  row-gap: 0.5em;
+  padding: 0.5em;
+
+  grid-template-areas:
+    /* "  1               2             3             4             5            6             7              8            9            10               1            2             3              4              5              6              7              8              9              20              21             22             23         "  */
+    "ctCdcstmLabel ctCdcstmLabel ctCdcstmInput ctCdcstmInput ctCdcstmInput  ctKbcstmLabel  ctKbcstmLabel  ctKbcstmInput  ctKbcstmGycms  ctKbcstmGyms  ctKbksyoLabel  ctKbksyoLabel  ctKbksyoInput  ctKbksyoGycms  ctKbksyoGycms  ctCdskaiLabel  ctCdskaiLabel  ctCdskaiInput  ctCdskaiInput  ctCdbaitGycms  ctCdbaitGycms  ctKbjyctLabel  ctKbjyctLabel  ctKbjyctInput"
+    "ctNmcstmLabel ctNmcstmLabel ctNmcstmInput ctNmcstmInput ctNmcstmInput ctNmcstmInput  ctNmcstmInput  ctNmcstmInput  ctNmcstmInput  ctNmcstmInput  ctKbsebtLabel  ctKbsebtLabel  ctKbsebtInput  ctKbsebtGycms  ctKbsebtGycms  ctCdbaitLabel  ctCdbaitLabel  ctCdbaitInput  ctCdbaitInput  ctCdbaitGycms  ctCdbaitGycms  ctKbtkskLabel  ctKbtkskLabel  ctKbtkskInput"
+    "ctNkcstmLabel ctNkcstmLabel ctNkcstmInput ctNkcstmInput ctNkcstmInput ctNkcstmInput  ctNkcstmInput  ctNkcstmInput  ctNkcstmInput  ctNkcstmInput  ctCdsyokLabel  ctCdsyokLabel  ctCdsyokInput  ctCdsyokGycms  ctCdsyokGycms  ctCdsyksLabel  ctCdsyksLabel  ctCdsyksInput  ctCdsyksInput  ctCdsyksGycms  ctCdsyksGycms  ctKbjik1Label  ctKbjik1Label  ctKbjik1Input"
+    "ctNmtnbuLabel ctNmtnbuLabel ctNmtnbuInput ctNmtnbuInput ctNmtnbuInput ctNmtnbuInput  ctNmtnbuInput  ctNmtnbuInput  ctNmtnbuInput  ctNmtnbuInput  ctKbdmprLabel  ctKbdmprLabel  ctKbdmprInput  ctKbdmprGycms  ctKbdmprGycms  ctCdsytnLabel  ctCdsytnLabel  ctCdsytnInput  ctCdsytnInput  ctCdsytnGycms  ctCdsytnGycms  ctKbjik2Label  ctKbjik2Label  ctKbjik2Input"
+    "ctNmtntoLabel ctNmtntoLabel ctNmtntoInput ctNmtntoInput ctNmtntoInput ctNmtntoInput  ctNmtntoInput  ctNmtntoInput  ctNmtntoInput  ctNmtntoInput  ctKbkgtiLabel  ctKbkgtiLabel  ctKbkgtiInput  ctKbkgtiGycms  ctKbkgtiGycms  ctCddokiLabel  ctCddokiLabel  ctCddokiInput  ctCddokiInput  ctCddokiGycms  ctCddokiGycms  ctKbclamLabel  ctKbclamLabel  ctKbclamInput"
+    "ctNmsimeLabel ctNmsimeLabel ctNmsimeInput ctNmsimeInput ctNmsimeInput ctNmsimeInput  ctNmsimeInput  ctNmsimeInput  ctNmsimeInput  ctNmsimeInput  ctDtsngpLabel  ctDtsngpLabel  ctDtsngpInput  ctDtsngpInput  ctDtsngpInput  ctCtsoukLabel  ctCtsoukLabel  ctCtsoukInput  ctCtsoukInput  ctCtsoukInput  ctCtsoukInput  ctKbsekyLabel  ctKbsekyLabel  ctKbsekyInput"
+    "ctNksimeLabel ctNksimeLabel ctNksimeInput ctNksimeInput ctNksimeInput ctNksimeInput  ctNksimeInput  ctNksimeInput  ctNksimeInput  ctNksimeInput  ctCcdatecLabel ctCcdatecLabel ctCcdatecInput ctCcdatecInput ctCcdatecInput ctCcdatexLabel ctCcdatexLabel ctCcdatexInput ctCcdatexInput ctCcdatexInput ctCcdatexInput ctKbmschLabel  ctKbmschLabel  ctKbmschInput"
+    "ctNotel1Label ctNotel1Label ctNotel1Input ctNotel1Input ctNotel1Input ctNotel2Label  ctNotel2Input  ctNotel2Input  ctNotel2Input  ctNotel2Input  ctAdmailLabel  ctAdmailLabel  ctAdmailLabel  ctAdmailInput  ctAdmailInput  ctAdmailInput  ctAdmailInput  ctAdmailInput  ctAdmailInput  ctAdmailInput  ctAdmailInput  ctAdmailInput  ctAdmailInput  ctAdmailInput"
+    "ctNoyubnLabel ctNoyubnLabel ctNoyubnInput ctNoyubnInput ctNmkuniLabel ctNmkuniLabel  ctNmkuniInput  ctNmkuniGycms  ctNmkuniGycms  ctNmkuniGycms  ctTxbikoLabel  ctTxbikoLabel  ctTxbikoLabel  ctTxbikoInput  ctTxbikoInput  ctTxbikoInput  ctTxbikoInput  ctTxbikoInput  ctTxbikoInput  ctTxbikoInput  ctTxbikoInput  ctTxbikoInput  ctTxbikoInput  ctTxbikoInput"
+    "ctAdcst1Label ctAdcst1Label ctAdcst1Input ctAdcst1Input ctAdcst1Input ctAdcst1Input  ctAdcst1Input  ctAdcst1Input  ctAdcst1Input  ctAdcst1Input  ctTxsshrLabel  ctTxsshrLabel  ctTxsshrLabel  ctTxsshrInput  ctTxsshrInput  ctTxsshrInput  ctTxsshrInput  ctTxsshrInput  ctTxsshrInput  ctTxsshrInput  ctTxsshrInput  ctTxsshrInput  ctTxsshrInput  ctTxsshrInput"
+    ".             .             ctAdcst2Input ctAdcst2Input ctAdcst2Input ctAdcst2Input  ctAdcst2Input  ctAdcst2Input  ctAdcst2Input  ctAdcst2Input  ctCdsqsfLabel  ctCdsqsfLabel  ctCdsqsfLabel  ctCdsqsfInput  ctCdsqsfInput  ctCdsqsfInput  ctCdsqsfInput  ctCdsqsfInput  ctCdsqsfInput  ctCdsqsfInput  ctCdsqsfInput  ctCdsqsfInput  ctCdsqsfInput  ctCdsqsfInput"
+    "submitButton  submitButton  ctAdcst3Input ctAdcst3Input ctAdcst3Input ctAdcst3Input  ctAdcst3Input  ctAdcst3Input  ctAdcst3Input  ctAdcst3Input  ctCdsqsmLabel  ctCdsqsmLabel  ctCdsqsmLabel  ctCdsqsmInput  ctCdsqsmInput  ctCdsqsmInput  ctCdsqsmInput  ctCdsqsmInput  ctCdsqsmInput  ctCdsqsmInput  ctCdsqsmInput  ctCdsqsmInput  ctCdsqsmInput  ctCdsqsmInput";
+  grid-template-rows: repeat(12, 25px);
+  /* grid-template-columns: repeat(11, 5.5em); */
+
+  grid-template-columns: repeat(22, 2.5em);
+  gap: 10px 5px;
+  max-width: 100%;
+  padding: 0.5em;
+  position: relative;
+
+  --input-box-size-small: 2em;
+  --input-box-size-large: 16em;
+  --input-box-size-xlarge: 19em;
+  --input-box-size-exlarge: 30em;
+  --input-box-size-date: 6.5em;
+  --input-tx-size-date: 1;
+}
+.gycms {
+  color: green;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctCdcstmLabel {
+  /* 読者番号 顧客Ｎｏ．*/
+  grid-area: ctCdcstmLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctCdcstmInput {
+  grid-area: ctCdcstmInput;
+  width: 5.5em;
+}
+
+.cstmDetail-ctKbcstmLabel {
+  /* 顧客区分 */
+  grid-area: ctKbcstmLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 10%;
+}
+.cstmDetail-ctKbcstmInput {
+  grid-area: ctKbcstmInput;
+  width: var(--input-box-size-small);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+.cstmDetail-ctKbcstmGycms {
+  grid-area: ctKbcstmGycms;
+}
+
+.cstmDetail-ctKbksyoLabel {
+  /* 敬称  */
+  grid-area: ctKbksyoLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctKbksyoInput {
+  grid-area: ctKbksyoInput;
+  width: var(--input-box-size-small);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+.cstmDetail-ctKbksyoGycms {
+  grid-area: ctKbksyoGycms;
+}
+
+.cstmDetail-ctCdskaiLabel {
+  /* 紹介 */
+  grid-area: ctCdskaiLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctCdskaiInput {
+  grid-area: ctCdskaiInput;
+  width: var(--input-box-size-small);
+  color: var(--input-tx-color --input-tx-color --input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+.cstmDetail-ctKbjyctLabel {
+  /* 重要顧客 */
+  grid-area: ctKbjyctLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctKbjyctInput {
+  grid-area: ctKbjyctInput;
+  width: var(--input-box-size-small);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+
+.cstmDetail-ctNmcstmLabel {
+  /* 顧客名 */
+  grid-area: ctNmcstmLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctNmcstmInput {
+  grid-area: ctNmcstmInput;
+  width: var(--input-box-size-xlarge);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+
+.cstmDetail-ctKbsebtLabel {
+  /* 性別区分 */
+  grid-area: ctKbsebtLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctKbsebtInput {
+  grid-area: ctKbsebtInput;
+  width: var(--input-box-size-small);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+.cstmDetail-ctKbsebtGycms {
+  grid-area: ctKbsebtGycms;
+}
+
+.cstmDetail-ctCdbaitLabel {
+  /* 申込媒体 */
+  grid-area: ctCdbaitLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctCdbaitInput {
+  grid-area: ctCdbaitInput;
+  width: var(--input-box-size-small);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+
+.cstmDetail-ctKbtkskLabel {
+  /* 督促注意 */
+  grid-area: ctKbtkskLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctKbtkskInput {
+  grid-area: ctKbtkskInput;
+  width: var(--input-box-size-small);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+
+.cstmDetail-ctNkcstmLabel {
+  /* 顧客名カナ */
+  grid-area: ctNkcstmLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctNkcstmInput {
+  grid-area: ctNkcstmInput;
+  width: var(--input-box-size-xlarge);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+
+.cstmDetail-ctCdsyokLabel {
+  /* 職種 */
+  grid-area: ctCdsyokLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctCdsyokInput {
+  grid-area: ctCdsyokInput;
+  width: var(--input-box-size-small);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+.cstmDetail-ctCdsyokGycms {
+  grid-area: ctCdsyokGycms;
+}
+
+.cstmDetail-ctCdsyksLabel {
+  /* 紹介者詳細 */
+  grid-area: ctCdsyksLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctCdsyksInput {
+  grid-area: ctCdsyksInput;
+  width: 4em;
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+.cstmDetail-ctCdsyksGycms {
+  grid-area: ctCdsyksGycms;
+}
+
+.cstmDetail-ctKbjik1Label {
+  /* 事故 */
+  grid-area: ctKbjik1Label;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctKbjik1Input {
+  grid-area: ctKbjik1Input;
+  width: var(--input-box-size-small);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+
+.cstmDetail-ctNmtnbuLabel {
+  /* 部署名 */
+  grid-area: ctNmtnbuLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctNmtnbuInput {
+  grid-area: ctNmtnbuInput;
+  width: var(--input-box-size-xlarge);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+
+.cstmDetail-ctKbdmprLabel {
+  /* DM発行 */
+  grid-area: ctKbdmprLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  /* right: 8%; */
+  left: 0%;
+}
+.cstmDetail-ctKbdmprInput {
+  grid-area: ctKbdmprInput;
+  width: var(--input-box-size-small);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+.cstmDetail-ctKbdmprGycms {
+  grid-area: ctKbdmprGycms;
+}
+
+.cstmDetail-ctCdsytnLabel {
+  /* 社内担当者 */
+  grid-area: ctCdsytnLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctCdsytnInput {
+  grid-area: ctCdsytnInput;
+  width: var(--input-box-size-small);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+.cstmDetail-ctCdsytnGycms {
+  grid-area: ctCdsytnGycms;
+}
+
+.cstmDetail-ctKbjik2Label {
+  /* 事故(売掛) */
+  grid-area: ctKbjik2Label;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctKbjik2Input {
+  grid-area: ctKbjik2Input;
+  width: var(--input-box-size-small);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+
+.cstmDetail-ctNmtntoLabel {
+  /* 担当者 */
+  grid-area: ctNmtntoLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctNmtntoInput {
+  grid-area: ctNmtntoInput;
+  width: var(--input-box-size-xlarge);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+
+.cstmDetail-ctKbkgtiLabel {
+  /* 海外便地帯 */
+  grid-area: ctKbkgtiLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctKbkgtiInput {
+  grid-area: ctKbkgtiInput;
+  width: var(--input-box-size-small);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+.cstmDetail-ctKbkgtiGycms {
+  grid-area: ctKbkgtiGycms;
+}
+
+.cstmDetail-ctCddokiLabel {
+  /* 申込動機 */
+  grid-area: ctCddokiLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctCddokiInput {
+  grid-area: ctCddokiInput;
+  width: var(--input-box-size-small);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+.cstmDetail-ctCddokiGycms {
+  grid-area: ctCddokiGycms;
+}
+
+.cstmDetail-ctKbclamLabel {
+  /* クレーム */
+  grid-area: ctKbclamLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctKbclamInput {
+  grid-area: ctKbclamInput;
+  width: var(--input-box-size-small);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+
+.cstmDetail-ctNmsimeLabel {
+  /* 氏名 */
+  grid-area: ctNmsimeLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctNmsimeInput {
+  grid-area: ctNmsimeInput;
+  width: var(--input-box-size-xlarge);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+
+.cstmDetail-ctDtsngpLabel {
+  /* 生年月日 */
+  grid-area: ctDtsngpLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctDtsngpInput {
+  grid-area: ctDtsngpInput;
+  width: var(--input-box-size-date);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size-date);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+
+.cstmDetail-ctCtsoukLabel {
+  /* 総契約数 */
+  grid-area: ctCtsoukLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctCtsoukInput {
+  grid-area: ctCtsoukInput;
+  width: var(--input-box-size-small);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+
+.cstmDetail-ctKbsekyLabel {
+  /* 逝去 */
+  grid-area: ctKbsekyLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctKbsekyInput {
+  grid-area: ctKbsekyInput;
+  width: var(--input-box-size-small);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+
+.cstmDetail-ctNksimeLabel {
+  /* 氏名カナ */
+  grid-area: ctNksimeLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctNksimeInput {
+  grid-area: ctNksimeInput;
+  width: var(--input-box-size-xlarge);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+
+.cstmDetail-ctCcdatecLabel {
+  /* 作成日 */
+  grid-area: ctCcdatecLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctCcdatecInput {
+  grid-area: ctCcdatecInput;
+  width: var(--input-box-size-date);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size-date);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+
+.cstmDetail-ctCcdatexLabel {
+  /* 更新日 */
+  grid-area: ctCcdatexLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctCcdatexInput {
+  grid-area: ctCcdatexInput;
+  width: var(--input-box-size-date);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size-date);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+
+.cstmDetail-ctKbmschLabel {
+  /* 申込注意 */
+  grid-area: ctKbmschLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctKbmschInput {
+  grid-area: ctKbmschInput;
+  width: var(--input-box-size-small);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+
+.cstmDetail-ctNotel1Label {
+  /* 電話　tel1 */
+  grid-area: ctNotel1Label;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctNotel1Input {
+  grid-area: ctNotel1Input;
+  width: 8em;
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+.cstmDetail-ctNotel2Label {
+  /* 電話　tel2 */
+  grid-area: ctNotel2Label;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctNotel2Input {
+  grid-area: ctNotel2Input;
+  width: 8em;
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+.cstmDetail-ctAdmailLabel {
+  /* メールアドレス */
+  grid-area: ctAdmailLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+  /* right: 10%; */
+}
+.cstmDetail-ctAdmailInput {
+  grid-area: ctAdmailInput;
+  width: var(--input-box-size-exlarge);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+
+.cstmDetail-ctNoyubnLabel {
+  /* 郵便番号 */
+  grid-area: ctNoyubnLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctNoyubnInput {
+  grid-area: ctNoyubnInput;
+  /* width: 8em; */
+  width: 5.5em;
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+.cstmDetail-ctNmkuniLabel {
+  /* 国名 */
+  grid-area: ctNmkuniLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  /* left: 10%; */
+  right: 5%;
+}
+.cstmDetail-ctNmkuniInput {
+  grid-area: ctNmkuniInput;
+  width: 3em;
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+  text-align: center;
+}
+.cstmDetail-ctNmkuniGycms {
+  grid-area: ctNmkuniGycms;
+}
+
+.cstmDetail-ctTxbikoLabel {
+  /* 備考 */
+  grid-area: ctTxbikoLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+  /* right: 10%; */
+}
+.cstmDetail-ctTxbikoInput {
+  grid-area: ctTxbikoInput;
+  width: var(--input-box-size-exlarge);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+.cstmDetail-ctAdcst1Label {
+  /* 住所 */
+  grid-area: ctAdcst1Label;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctAdcst1Input {
+  grid-area: ctAdcst1Input;
+  width: var(--input-box-size-xlarge);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+.cstmDetail-ctTxsshrLabel {
+  /* 送本先変更履歴 */
+  grid-area: ctTxsshrLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctTxsshrInput {
+  grid-area: ctTxsshrInput;
+  width: var(--input-box-size-exlarge);
+  /* width: 20em; */
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+.cstmDetail-ctAdcst2Input {
+  grid-area: ctAdcst2Input;
+  width: var(--input-box-size-xlarge);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+.cstmDetail-ctCdsqsfLabel {
+  /* 請求書送付先No. */
+  grid-area: ctCdsqsfLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctCdsqsfInput {
+  grid-area: ctCdsqsfInput;
+  width: var(--input-box-size-exlarge);
+  /* width: 20em; */
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+.cstmDetail-ctAdcst3Input {
+  grid-area: ctAdcst3Input;
+  width: var(--input-box-size-xlarge);
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+.cstmDetail-ctCdsqsmLabel {
+  /* 請求書送付先名 */
+  grid-area: ctCdsqsmLabel;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0%;
+}
+.cstmDetail-ctCdsqsmInput {
+  grid-area: ctCdsqsmInput;
+  width: var(--input-box-size-exlarge);
+  /* width: 20em; */
+  color: var(--input-tx-color);
+  font-size: var(--input-tx-size);
+  border: var(--input-box-border);
+  border-radius: var(--input-box-border-radius);
+}
+.submitButton {
+  grid-area: submitButton;
+}

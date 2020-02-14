@@ -1,0 +1,15 @@
+version: "3.3"
+
+services:
+  node:
+    container_name: cc-publis
+    build:
+      context: .
+    ports:
+      - "8343:8343"
+    command: yarn run docker:prod
+
+networks:
+  default:
+    external:
+      name: chichi-network

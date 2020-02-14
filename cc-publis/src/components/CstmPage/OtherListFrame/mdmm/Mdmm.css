@@ -1,0 +1,25 @@
+p.frame-title {
+  color: #555;
+  font-size: 18px;
+  margin: 0;
+}
+
+.mdmm-menu {
+  display: grid;
+  grid-template-columns: 1fr 0.5fr 5fr;
+}
+
+.mdmm-body {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 2fr;
+  row-gap: 1em;
+  /* margin: 0 1.8em 0 1.8em; */
+}
+
+.mdmm-container {
+  display: block;
+  max-height: 500px;
+  overflow-y: scroll;
+  border: 1px solid #c5c5c5;
+}

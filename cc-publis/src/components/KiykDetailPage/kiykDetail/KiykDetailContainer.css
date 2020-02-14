@@ -1,0 +1,105 @@
+p.frame-title {
+  color: #555;
+  font-size: 18px;
+}
+
+.kiykDetail-body {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 2fr;
+  row-gap: 1em;
+  margin: 0 1.8em 0 1.8em;
+}
+
+.kiykDetail-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+  border-radius: 8px;
+  border: 1px solid #c5c5c5;
+}
+
+.kiykDetail-gridContainer {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: repeat(auto-fill, 200px);
+  grid-template-rows: auto;
+  column-gap: 1.5em;
+  row-gap: 0.5em;
+  padding: 0.5em;
+}
+
+.kiykDetail p {
+  margin-top: 0.3em;
+  margin-bottom: 0.3em;
+  margin-left: 1.5em;
+}
+
+.kiykDetailInputBox {
+  display: flex;
+  align-content: center;
+  margin-left: 1.5em;
+}
+
+.kiykDetailInputBox input[type="text"] {
+  float: left;
+  height: 2.5em;
+  width: 10em;
+  border: 1px solid grey;
+  padding: 10px;
+  font-size: 14px;
+  background: #f1f1f1;
+}
+
+.kiykDetailInputBox button {
+  float: left;
+  height: 2.5em;
+  width: 4em;
+  padding: 0.3em;
+  font-size: 14px;
+  /* background: rgb(65, 131, 196); */
+  background: #668ad8;
+  border: 1px solid grey;
+  border-left: none;
+  /* background: #2196F3; */
+  color: white;
+  cursor: pointer;
+}
+
+.kiykDetailInputBox button:focus {
+  outline: none;
+}
+
+.kiykDetailInputBox button:hover {
+  /* background: #0b7dda; */
+  background: #1565c0;
+  /* color:#888; */
+}
+
+.kiykDetail-currentContainer {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 2px;
+}
+
+.kiykDetail-currentData {
+  /* height: 100%; */
+  display: inline-block;
+  font-size: 18px;
+  margin: 0;
+  margin-left: 2em;
+  font-weight: bold;
+  border-bottom: 1px solid black;
+}
+
+.kiykDetail-currentMessage {
+  /* height: 100%; */
+  display: inline-block;
+  font-size: 16px;
+  margin: 0;
+  margin-left: 1em;
+  margin-bottom: 1px;
+}

@@ -1,0 +1,23 @@
+.linkList-container {
+  display: grid;
+  justify-content: right;
+  grid-auto-flow: column;
+  column-gap: 1.5em;
+}
+
+.linkList-container button {
+  font-size: 16px;
+  color: #555;
+  border-style: none;
+  outline: none;
+  background-color: transparent;
+  border-bottom: solid 1px #c5c5c5;
+}
+
+.linkList-container button:hover {
+  background-color: #ddd;
+  color: rgb(167, 147, 147);
+  /* background-color: #8cae47; */
+  /* background-color: #2196F3; */
+  /* color: white;  */
+}

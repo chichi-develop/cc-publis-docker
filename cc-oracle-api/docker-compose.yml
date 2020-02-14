@@ -1,0 +1,29 @@
+version: "3.3"
+
+services:
+  node:
+    container_name: cc-oracle-api
+    build:
+      context: .
+      # args:
+      #   - NODE_ENV=development
+    tty: true
+    environment:
+      - NODE_ENV=production
+    ports:
+      - "8344:8344"
+    volumes:
+      - ./app/src:/opt/app/src:delegated
+      # - ./cmd:/opt/app/cmd:delegated # テスト用
+      # - notused:/opt/app/node_modules
+
+    # command: yarn run build:prod
+    command: yarn run dev
+
+volumes:
+  notused:
+
+networks:
+  default:
+    external:
+      name: chichi-network

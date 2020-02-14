@@ -1,0 +1,1 @@
+curl -i -XDELETE localhost:8344/api/v1/cm_mdmms/20967357/5

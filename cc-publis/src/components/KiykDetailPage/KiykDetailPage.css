@@ -1,0 +1,35 @@
+.kiykDetailPage-body {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: 1fr;
+  grid-template-rows: 3fr;
+  row-gap: 2em;
+  padding-top: 1.5em;
+  padding-bottom: 1.5em;
+}
+
+.kiykDetailPage-link {
+  display: grid;
+  justify-content: right;
+  grid-auto-flow: column;
+  column-gap: 1.5em;
+  margin-right: 1em;
+}
+
+.kiykDetailPage-link button {
+  font-size: 16px;
+  color: #555;
+  border-style: none;
+  outline: none;
+  background-color: transparent;
+  border-bottom: solid 1px #c5c5c5;
+}
+
+.kiykDetailPage-link button:hover {
+  background-color: #ddd;
+  color: rgb(167, 147, 147);
+  /* background-color: #8cae47; */
+  /* background-color: #2196F3; */
+  /* color: white;  */
+}

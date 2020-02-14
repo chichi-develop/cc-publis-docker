@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noUnusedParameters": false,
+    "strict": true,
+    "esModuleInterop": true
+    // "lib": ["dom", "es2018", "dom.iterable", "esnext"],
+    // "allowJs": true,
+    // "skipLibCheck": true,
+    // "allowSyntheticDefaultImports": true,
+    // "forceConsistentCasingInFileNames": true,
+    // "resolveJsonModule": true,
+    // "isolatedModules": true,
+    // "isolatedModules": false,
+    // "noEmit": true,
+    // "jsx": "react",
+    // "sourceMap": true,
+    // "outDir": "dist",
+    // "declaration": true,
+    // "typeRoots": ["src/types", "node_modules/@types"]
+  },
+  "include": ["src"]
+}

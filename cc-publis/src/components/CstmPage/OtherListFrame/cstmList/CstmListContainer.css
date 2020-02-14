@@ -1,0 +1,36 @@
+p.frame-title {
+  color: #555;
+  font-size: 18px;
+  margin: 0;
+}
+
+.cstmList-menu {
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+}
+
+.cstmList-body {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 2fr;
+  row-gap: 1em;
+  /* margin: 0 1.8em 0 1.8em; */
+}
+
+.cstmList-container {
+  max-height: 500px;
+  overflow-y: scroll;
+  border: 1px solid #c5c5c5;
+}
+
+.maru {
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  line-height: 24px;
+  text-align: center;
+  background: #668ad8;
+  font-size: 12px;
+  /* color: white; */
+  margin-left: 2px;
+}
