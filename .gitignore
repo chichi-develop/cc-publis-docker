@@ -27,4 +27,7 @@ yarn.lock
 constants.js
 constants.ts
 constants.json
+node_modules
 *.zip
+*.tar
+*.gz

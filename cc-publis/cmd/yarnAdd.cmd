@@ -23,6 +23,7 @@ yarn add typescript
 yarn add yup
 yarn add serve
 yarn add react-hook-form
+yarn add classnames
 
 yarn add -D @material-ui/core
 yarn add -D @material-ui/icons
@@ -37,5 +38,6 @@ yarn add -D @types/react-redux
 yarn add -D @types/react-router-dom
 yarn add -D @types/redux-logger
 yarn add -D @types/yup
+yarn add -D @types/classnames
 yarn add -D prettier
 yarn add -D redux-devtools-extension
