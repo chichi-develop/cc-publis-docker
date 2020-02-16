@@ -1,9 +1,3 @@
-p.frame-title {
-  color: #555;
-  font-size: 18px;
-  margin: 0;
-}
-
 .cstmList-menu {
   display: grid;
   grid-template-columns: 1fr 5fr;

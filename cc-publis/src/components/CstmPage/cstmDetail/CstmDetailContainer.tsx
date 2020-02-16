@@ -52,7 +52,18 @@ const CstmDetailContainer: React.FC = () => {
     <div className="cstmDetail-body">
       {showListCstm && (
         <>
-          <p className="frame-title">顧客情報詳細</p>
+          <div className="cstmDetail-menu">
+            <p className="frame-title">顧客情報詳細</p>
+            <div className="cstmDetail-menu-container">
+              <button
+                onClick={() =>
+                  alert(`ラベルを印刷します: ${JSON.stringify(cstm)}`)
+                }
+              >
+                ラベル印刷
+              </button>
+            </div>
+          </div>
           <CstmDetail
             cstm={cstm}
             gycms={gycms}
