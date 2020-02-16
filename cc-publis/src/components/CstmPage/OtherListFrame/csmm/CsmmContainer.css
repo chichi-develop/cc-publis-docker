@@ -11,8 +11,6 @@ p.frame-title {
 
 .csmm-body {
   display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 2fr;
   row-gap: 1em;
   /* margin: 0 1.8em 0 1.8em; */
 }

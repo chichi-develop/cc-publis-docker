@@ -5,6 +5,7 @@ import { Actions } from "../../../store/actions";
 import { StoreState } from "../../../store";
 // import { useParams, useLocation } from "react-router-dom";
 import { Cstm, Gycms, Privilege } from "../../../types/models";
+import classNames from "classnames";
 
 import "./CstmDetailContainer.css";
 import moment from "moment";
@@ -80,12 +81,6 @@ const CstmDetail: React.FC<Props> = ({
     setEditMode(!editMode);
   };
 
-  const editModeStyle = {
-    backgroundColor: "inherit",
-    border: "1px solid #c5c5c5"
-    // border: "none"
-  };
-
   const { register, handleSubmit, errors } = useForm();
 
   const onSubmit = (data: Record<string, any>) => {
@@ -104,481 +99,524 @@ const CstmDetail: React.FC<Props> = ({
     gycms.filter(r => r.GY_CDBNRI === cdbnri && r.GY_CDBNSY === cdbnsy)[0]
       .GY_NMBNSY;
 
+  let editModeStyle = [
+    "cstmDetail-container-inputBox",
+    {
+      "cstmDetail-container-inputBox-edit": editMode,
+      "cstmDetail-container-inputBox-read": !editMode
+    }
+  ];
+
   return (
     <div className="cstmDetail-container">
       <form
-        className="cstmDetail-subContainer"
         autoComplete="off"
         onSubmit={handleSubmit(onSubmit)}
         key={cstm.CT_CDCSTM}
       >
         <div className="cstmDetail-gridContainer">
-          <div className="cstmDetail-ctCdcstmLabel">顧客 No. :</div>
+          <div className="cstmDetail-container-label cstmDetail-ctCdcstmLabel">
+            読者No.
+          </div>
           <input
-            className="cstmDetail-ctCdcstmInput"
+            className={classNames("cstmDetail-ctCdcstmInput", editModeStyle)}
             type="text"
-            name="CDCSTM"
-            defaultValue={cstm.CT_CDCSTM.replace("/s+$/g", "")}
-            ref={register({ pattern: /^2[0-9]{7}/ })}
-            style={editMode ? editModeStyle : {}}
+            name="CT_CDCSTM"
+            defaultValue={cstm.CT_CDCSTM.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^2[0-9]]{7}/ })}
           />
-          {errors.cdcstm && <p>8桁入力してください</p>}
-
-          <div className="cstmDetail-ctKbcstmLabel">顧客区分:</div>
+          {errors.CT_CDCSTM && <p>エラーメッセージ</p>}
+          <div className="cstmDetail-container-label cstmDetail-ctKbcstmLabel">
+            顧客区分
+          </div>
           <input
-            className="cstmDetail-ctKbcstmInput"
+            className={classNames("cstmDetail-ctKbcstmInput", editModeStyle)}
             type="text"
-            name="KBCSTM"
+            name="CT_KBCSTM"
             defaultValue={cstm.CT_KBCSTM.replace(/\s+$/g, "")}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
           />
+          {errors.CT_KBCSTM && <p>エラーメッセージ</p>}
           <div className="cstmDetail-ctKbcstmGycms gycms">
             {gycmConv("KBCSTM", cstm.CT_KBCSTM)}
           </div>
-
-          <div className="cstmDetail-ctKbksyoLabel">敬称:</div>
+          <div className="cstmDetail-container-label cstmDetail-ctNmcstmLabel">
+            顧客名
+          </div>
           <input
-            className="cstmDetail-ctKbksyoInput"
+            className={classNames("cstmDetail-ctNmcstmInput", editModeStyle)}
             type="text"
-            name="KBKSYO"
-            defaultValue={cstm.CT_KBKSYO}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
+            name="CT_NMCSTM"
+            defaultValue={cstm.CT_NMCSTM.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
           />
+          {errors.CT_NMCSTM && <p>エラーメッセージ</p>}
+          <input
+            className={classNames("cstmDetail-ctNkcstmInput", editModeStyle)}
+            type="text"
+            name="CT_NKCSTM"
+            defaultValue={cstm.CT_NKCSTM.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
+          />
+          {errors.CT_NKCSTM && <p>エラーメッセージ</p>}
+          <div className="cstmDetail-container-label cstmDetail-ctNmtnbuLabel">
+            部署名
+          </div>
+          <input
+            className={classNames("cstmDetail-ctNmtnbuInput", editModeStyle)}
+            type="text"
+            name="CT_NMTNBU"
+            defaultValue={cstm.CT_NMTNBU.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
+          />
+          {errors.CT_NMTNBU && <p>エラーメッセージ</p>}
+          <div className="cstmDetail-container-label cstmDetail-ctNmtntoLabel">
+            担当者名
+          </div>
+          <input
+            className={classNames("cstmDetail-ctNmtntoInput", editModeStyle)}
+            type="text"
+            name="CT_NMTNTO"
+            defaultValue={cstm.CT_NMTNTO.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
+          />
+          {errors.CT_NMTNTO && <p>エラーメッセージ</p>}
+          <div className="cstmDetail-container-label cstmDetail-ctNmsimeLabel">
+            氏名
+          </div>
+          <input
+            className={classNames("cstmDetail-ctNmsimeInput", editModeStyle)}
+            type="text"
+            name="CT_NMSIME"
+            defaultValue={cstm.CT_NMSIME.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
+          />
+          {errors.CT_NMSIME && <p>エラーメッセージ</p>}
+          <input
+            className={classNames("cstmDetail-ctNksimeInput", editModeStyle)}
+            type="text"
+            name="CT_NKSIME"
+            defaultValue={cstm.CT_NKSIME.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
+          />
+          {errors.CT_NKSIME && <p>エラーメッセージ</p>}
+          <div className="cstmDetail-container-label cstmDetail-ctKbksyoLabel">
+            敬称区分
+          </div>
+          <input
+            className={classNames("cstmDetail-ctKbksyoInput", editModeStyle)}
+            type="text"
+            name="CT_KBKSYO"
+            defaultValue={cstm.CT_KBKSYO.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
+          />
+          {errors.CT_KBKSYO && <p>エラーメッセージ</p>}
           <div className="cstmDetail-ctKbksyoGycms gycms">
             {gycmConv("KBKSYO", cstm.CT_KBKSYO)}
           </div>
-
-          <div className="cstmDetail-ctKbjyctLabel">重要顧客:</div>
-          <input
-            className="cstmDetail-ctKbjyctInput"
-            type="text"
-            name="KBJYCT"
-            defaultValue={cstm.CT_KBJYCT}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
-          />
-
-          <div className="cstmDetail-ctNmcstmLabel">顧客名:</div>
-          <input
-            className="cstmDetail-ctNmcstmInput"
-            type="text"
-            name="NMCSTM"
-            defaultValue={cstm.CT_NMCSTM}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
-          />
-
-          <div className="cstmDetail-ctKbsebtLabel">性別:</div>
-          <input
-            className="cstmDetail-ctKbsebtInput"
-            type="text"
-            name="KBSEBT"
-            defaultValue={cstm.CT_KBSEBT}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
-          />
-          <div className="cstmDetail-ctKbsebtGycms gycms">
-            {gycmConv("KBSEBT", cstm.CT_KBSEBT)}
+          <div className="cstmDetail-container-label cstmDetail-ctNoyubnLabel">
+            郵便番号
           </div>
-
-          <div className="cstmDetail-ctCdbaitLabel">申込媒体:</div>
           <input
-            className="cstmDetail-ctCdbaitInput"
+            className={classNames("cstmDetail-ctNoyubnInput", editModeStyle)}
             type="text"
-            name="CDBAIT"
-            defaultValue={cstm.CT_CDBAIT}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
+            name="CT_NOYUBN"
+            defaultValue={cstm.CT_NOYUBN.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
           />
-
-          <div className="cstmDetail-ctKbtkskLabel">督促注意:</div>
-          <input
-            className="cstmDetail-ctKbtkskInput"
-            type="text"
-            name="CBTKSK"
-            defaultValue={cstm.CT_KBTKSK}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
-          />
-
-          <div className="cstmDetail-ctNkcstmLabel">顧客名カナ:</div>
-          <input
-            className="cstmDetail-ctNkcstmInput"
-            type="text"
-            name="NKCSTM"
-            defaultValue={cstm.CT_NKCSTM}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
-          />
-
-          <div className="cstmDetail-ctCdsyokLabel">職種:</div>
-          <input
-            className="cstmDetail-ctCdsyokInput"
-            type="text"
-            name="CDSYOK"
-            defaultValue={cstm.CT_CDSYOK}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
-          />
-          <div className="cstmDetail-ctCdsyokGycms gycms">
-            {gycmConv("CDSYOK", cstm.CT_CDSYOK)}
+          {errors.CT_NOYUBN && <p>エラーメッセージ</p>}
+          <div className="cstmDetail-container-label cstmDetail-ctAdcst1Label">
+            住所１
           </div>
-
-          <div className="cstmDetail-ctCdsyksLabel">紹介者詳細:</div>
           <input
-            className="cstmDetail-ctCdsyksInput"
+            className={classNames("cstmDetail-ctAdcst1Input", editModeStyle)}
             type="text"
-            name="CDSYKS"
-            defaultValue={cstm.CT_CDSYKS}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
+            name="CT_ADCST1"
+            defaultValue={cstm.CT_ADCST1.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
           />
-          <div className="cstmDetail-ctCdsyksGycms gycms">
-            {gycmConv("CDSYKS", cstm.CT_CDSYKS)}
+          {errors.CT_ADCST1 && <p>エラーメッセージ</p>}
+          <input
+            className={classNames("cstmDetail-ctAdcst2Input", editModeStyle)}
+            type="text"
+            name="CT_ADCST2"
+            defaultValue={cstm.CT_ADCST2.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
+          />
+          {errors.CT_ADCST2 && <p>エラーメッセージ</p>}
+          <input
+            className={classNames("cstmDetail-ctAdcst3Input", editModeStyle)}
+            type="text"
+            name="CT_ADCST3"
+            defaultValue={cstm.CT_ADCST3.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
+          />
+          {errors.CT_ADCST3 && <p>エラーメッセージ</p>}
+          <div className="cstmDetail-container-label cstmDetail-ctNmkuniLabel">
+            国名
           </div>
-
-          <div className="cstmDetail-ctKbjik1Label">事故:</div>
           <input
-            className="cstmDetail-ctKbjik1Input"
+            className={classNames("cstmDetail-ctNmkuniInput", editModeStyle)}
             type="text"
-            name="KBJIK1"
-            defaultValue={cstm.CT_KBJIK1}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
+            name="CT_NMKUNI"
+            defaultValue={cstm.CT_NMKUNI.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
           />
-
-          <div className="cstmDetail-ctNmtnbuLabel">部署名:</div>
+          {errors.CT_NMKUNI && <p>エラーメッセージ</p>}
+          <div className="cstmDetail-container-label cstmDetail-ctKbkgtiLabel">
+            海外便地帯
+          </div>
           <input
-            className="cstmDetail-ctNmtnbuInput"
+            className={classNames("cstmDetail-ctKbkgtiInput", editModeStyle)}
             type="text"
-            name="NMTNBU"
-            defaultValue={cstm.CT_NMTNBU}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
+            name="CT_KBKGTI"
+            defaultValue={cstm.CT_KBKGTI.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
           />
-
-          <div className="cstmDetail-ctKbdmprLabel">DM発行:</div>
+          {errors.CT_KBKGTI && <p>エラーメッセージ</p>}
+          <div className="cstmDetail-ctKbkgtiGycms gycms">
+            {gycmConv("KBKGTI", cstm.CT_KBKGTI)}
+          </div>
+          <div className="cstmDetail-container-label cstmDetail-ctCdsqsfLabel">
+            請求書送付先
+          </div>
           <input
-            className="cstmDetail-ctKbdmprInput"
+            className={classNames("cstmDetail-ctCdsqsfInput", editModeStyle)}
             type="text"
-            name="KBDMPR"
-            defaultValue={cstm.CT_KBDMPR}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
+            name="CT_CDSQSF"
+            defaultValue={cstm.CT_CDSQSF.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
           />
+          {errors.CT_CDSQSF && <p>エラーメッセージ</p>}
+          <div className="cstmDetail-container-label cstmDetail-ctCdsqsmLabel">
+            請求書送付先名
+          </div>
+          <input
+            className={classNames("cstmDetail-ctCdsqsmInput", editModeStyle)}
+            type="text"
+            name="CT_CDSQSM"
+            defaultValue={cstm.CT_CDSQSM.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
+          />
+          {errors.CT_CDSQSM && <p>エラーメッセージ</p>}
+          <div className="cstmDetail-container-label cstmDetail-ctNotel1Label">
+            TEL1
+          </div>
+          <input
+            className={classNames("cstmDetail-ctNotel1Input", editModeStyle)}
+            type="text"
+            name="CT_NOTEL1"
+            defaultValue={cstm.CT_NOTEL1.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
+          />
+          {errors.CT_NOTEL1 && <p>エラーメッセージ</p>}
+          <div className="cstmDetail-container-label cstmDetail-ctNotel2Label">
+            TEL2
+          </div>
+          <input
+            className={classNames("cstmDetail-ctNotel2Input", editModeStyle)}
+            type="text"
+            name="CT_NOTEL2"
+            defaultValue={cstm.CT_NOTEL2.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
+          />
+          {errors.CT_NOTEL2 && <p>エラーメッセージ</p>}
+          <div className="cstmDetail-container-label cstmDetail-ctAdmailLabel">
+            メールアドレス
+          </div>
+          <input
+            className={classNames("cstmDetail-ctAdmailInput", editModeStyle)}
+            type="text"
+            name="CT_ADMAIL"
+            defaultValue={cstm.CT_ADMAIL.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
+          />
+          {errors.CT_ADMAIL && <p>エラーメッセージ</p>}
+          <div className="cstmDetail-container-label cstmDetail-ctKbdmprLabel">
+            DM発行
+          </div>
+          <input
+            className={classNames("cstmDetail-ctKbdmprInput", editModeStyle)}
+            type="text"
+            name="CT_KBDMPR"
+            defaultValue={cstm.CT_KBDMPR.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
+          />
+          {errors.CT_KBDMPR && <p>エラーメッセージ</p>}
           <div className="cstmDetail-ctKbdmprGycms gycms">
             {gycmConv("KBDMPR", cstm.CT_KBDMPR)}
           </div>
 
-          <div className="cstmDetail-ctCdsytnLabel">社内担当者:</div>
-          <input
-            className="cstmDetail-ctCdsytnInput"
-            type="text"
-            name="CDSYTN"
-            defaultValue={cstm.CT_CDSYTN}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
-          />
-          <div className="cstmDetail-ctCdsytnGycms gycms">
-            {gycmConv("CDSYTN", cstm.CT_CDSYTN)}
+          <div className="cstmDetail-container-label cstmDetail-ctTxbikoLabel">
+            備考
           </div>
-
-          <div className="cstmDetail-ctKbjik2Label">事故(売掛):</div>
           <input
-            className="cstmDetail-ctKbjik2Input"
+            className={classNames("cstmDetail-ctTxbikoInput", editModeStyle)}
             type="text"
-            name="KBJIK2"
-            defaultValue={cstm.CT_KBJIK2}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
+            name="CT_TXBIKO"
+            defaultValue={cstm.CT_TXBIKO.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
           />
-
-          <div className="cstmDetail-ctNmtntoLabel">担当者名:</div>
-          <input
-            className="cstmDetail-ctNmtntoInput"
-            type="text"
-            name="NMTNTO"
-            defaultValue={cstm.CT_NMTNTO}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
-          />
-
-          <div className="cstmDetail-ctKbkgtiLabel">海外便地帯:</div>
-          <input
-            className="cstmDetail-ctKbkgtiInput"
-            type="text"
-            name="KBKGTI"
-            defaultValue={cstm.CT_KBKGTI}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
-          />
-          <div className="cstmDetail-ctKbkgtiGycms gycms">
-            {gycmConv("KBKGTI", cstm.CT_KBKGTI)}
+          {errors.CT_TXBIKO && <p>エラーメッセージ</p>}
+          <div className="cstmDetail-container-label cstmDetail-ctTxsshrLabel">
+            送本先変更履歴
           </div>
-
-          <div className="cstmDetail-ctCddokiLabel">申込動機:</div>
           <input
-            className="cstmDetail-ctCddokiInput"
+            className={classNames("cstmDetail-ctTxsshrInput", editModeStyle)}
             type="text"
-            name="CDDOKI"
-            defaultValue={cstm.CT_CDDOKI}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
+            name="CT_TXSSHR"
+            defaultValue={cstm.CT_TXSSHR.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
           />
-          <div className="cstmDetail-ctCddokiGycms gycms">
-            {gycmConv("CDDOKI", cstm.CT_CDDOKI)}
+          {errors.CT_TXSSHR && <p>エラーメッセージ</p>}
+          <div className="cstmDetail-container-label cstmDetail-ctKbsebtLabel">
+            性別
           </div>
-
-          <div className="cstmDetail-ctKbclamLabel">クレーム:</div>
           <input
-            className="cstmDetail-ctKbclamInput"
+            className={classNames("cstmDetail-ctKbsebtInput", editModeStyle)}
             type="text"
-            name="KBCLAM"
-            defaultValue={cstm.CT_KBCLAM}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
+            name="CT_KBSEBT"
+            defaultValue={cstm.CT_KBSEBT.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
           />
-
-          <div className="cstmDetail-ctNmsimeLabel">氏名:</div>
+          {errors.CT_KBSEBT && <p>エラーメッセージ</p>}
+          <div className="cstmDetail-ctKbsebtGycms gycms">
+            {gycmConv("KBSEBT", cstm.CT_KBSEBT)}
+          </div>
+          <div className="cstmDetail-container-label cstmDetail-ctDtsngpLabel">
+            生年月日
+          </div>
           <input
-            className="cstmDetail-ctNmsimeInput"
+            className={classNames("cstmDetail-ctDtsngpInput", editModeStyle)}
             type="text"
-            name="NMSIME"
-            defaultValue={cstm.CT_NMSIME}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
-          />
-
-          <div className="cstmDetail-ctDtsngpLabel">生年月日:</div>
-          <input
-            className="cstmDetail-ctDtsngpInput"
-            type="text"
-            name="DTSNGP"
+            name="CT_DTSNGP"
             defaultValue={
               cstm.CT_DTSNGP.trim() !== ""
                 ? moment(cstm.CT_DTSNGP).format("YYYY/MM/DD")
                 : ""
             }
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
           />
-          <div className="cstmDetail-ctCtsoukLabel">総契約数:</div>
+          {errors.CT_DTSNGP && <p>エラーメッセージ</p>}
+          <div className="cstmDetail-container-label cstmDetail-ctCdsyokLabel">
+            職種
+          </div>
           <input
-            className="cstmDetail-ctCtsoukInput"
+            className={classNames("cstmDetail-ctCdsyokInput", editModeStyle)}
             type="text"
-            name="CTSOUK"
-            defaultValue={cstm.CT_CTSOUK}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
+            name="CT_CDSYOK"
+            defaultValue={cstm.CT_CDSYOK.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
           />
+          {errors.CT_CDSYOK && <p>エラーメッセージ</p>}
+          <div className="cstmDetail-ctCdsyokGycms gycms">
+            {gycmConv("CDSYOK", cstm.CT_CDSYOK)}
+          </div>
+          <div className="cstmDetail-container-label cstmDetail-ctCdbaitLabel">
+            申込媒体
+          </div>
+          <input
+            className={classNames("cstmDetail-ctCdbaitInput", editModeStyle)}
+            type="text"
+            name="CT_CDBAIT"
+            defaultValue={cstm.CT_CDBAIT.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
+          />
+          {errors.CT_CDBAIT && <p>エラーメッセージ</p>}
+          <div className="cstmDetail-ctCdbaitGycms gycms">
+            {gycmConv("CDBAIT", cstm.CT_CDBAIT)}
+          </div>
+          <div className="cstmDetail-container-label cstmDetail-ctCdsyksLabel">
+            紹介者詳細
+          </div>
+          <input
+            className={classNames("cstmDetail-ctCdsyksInput", editModeStyle)}
+            type="text"
+            name="CT_CDSYKS"
+            defaultValue={cstm.CT_CDSYKS.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
+          />
+          {errors.CT_CDSYKS && <p>エラーメッセージ</p>}
+          <div className="cstmDetail-ctCdsyksGycms gycms">
+            {gycmConv("CDSYKS", cstm.CT_CDSYKS)}
+          </div>
+          <div className="cstmDetail-container-label cstmDetail-ctCdsytnLabel">
+            社内担当者
+          </div>
+          <input
+            className={classNames("cstmDetail-ctCdsytnInput", editModeStyle)}
+            type="text"
+            name="CT_CDSYTN"
+            defaultValue={cstm.CT_CDSYTN.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
+          />
+          {errors.CT_CDSYTN && <p>エラーメッセージ</p>}
+          <div className="cstmDetail-ctCdsytnGycms gycms">
+            {gycmConv("CDSYTN", cstm.CT_CDSYTN)}
+          </div>
+          <div className="cstmDetail-container-label cstmDetail-ctCddokiLabel">
+            申込動機
+          </div>
+          <input
+            className={classNames("cstmDetail-ctCddokiInput", editModeStyle)}
+            type="text"
+            name="CT_CDDOKI"
+            defaultValue={cstm.CT_CDDOKI.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
+          />
+          {errors.CT_CDDOKI && <p>エラーメッセージ</p>}
+          <div className="cstmDetail-ctCddokiGycms gycms">
+            {gycmConv("CDDOKI", cstm.CT_CDDOKI)}
+          </div>
+          <div className="cstmDetail-container-label cstmDetail-ctCtsoukLabel">
+            総契約数
+          </div>
+          <input
+            className={classNames("cstmDetail-ctCtsoukInput", editModeStyle)}
+            type="text"
+            name="CT_CTSOUK"
+            defaultValue={cstm.CT_CTSOUK.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
+          />
+          {errors.CT_CTSOUK && <p>エラーメッセージ</p>}
+          <div className="cstmDetail-container-label cstmDetail-ctKbsekyLabel">
+            逝去区分
+          </div>
+          <input
+            className={classNames("cstmDetail-ctKbsekyInput", editModeStyle)}
+            type="text"
+            name="CT_KBSEKY"
+            defaultValue={cstm.CT_KBSEKY.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
+          />
+          {errors.CT_KBSEKY && <p>エラーメッセージ</p>}
+          <div className="cstmDetail-container-label cstmDetail-ctKbclamLabel">
+            クレーム
+          </div>
+          <input
+            className={classNames("cstmDetail-ctKbclamInput", editModeStyle)}
+            type="text"
+            name="CT_KBCLAM"
+            defaultValue={cstm.CT_KBCLAM.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
+          />
+          {errors.CT_KBCLAM && <p>エラーメッセージ</p>}
+          <div className="cstmDetail-container-label cstmDetail-ctKbjyctLabel">
+            重要顧客
+          </div>
+          <input
+            className={classNames("cstmDetail-ctKbjyctInput", editModeStyle)}
+            type="text"
+            name="CT_KBJYCT"
+            defaultValue={cstm.CT_KBJYCT.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
+          />
+          {errors.CT_KBJYCT && <p>エラーメッセージ</p>}
+          <div className="cstmDetail-container-label cstmDetail-ctKbtkskLabel">
+            督促注意
+          </div>
+          <input
+            className={classNames("cstmDetail-ctKbtkskInput", editModeStyle)}
+            type="text"
+            name="CT_KBTKSK"
+            defaultValue={cstm.CT_KBTKSK.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
+          />
+          {errors.CT_KBTKSK && <p>エラーメッセージ</p>}
+          <div className="cstmDetail-container-label cstmDetail-ctKbjik1Label">
+            事故
+          </div>
+          <input
+            className={classNames("cstmDetail-ctKbjik1Input", editModeStyle)}
+            type="text"
+            name="CT_KBJIK1"
+            defaultValue={cstm.CT_KBJIK1.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
+          />
+          {errors.CT_KBJIK1 && <p>エラーメッセージ</p>}
+          <input
+            className={classNames("cstmDetail-ctKbjik2Input", editModeStyle)}
+            type="text"
+            name="CT_KBJIK2"
+            defaultValue={cstm.CT_KBJIK2.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
+          />
+          {errors.CT_KBJIK2 && <p>エラーメッセージ</p>}
 
-          <div className="cstmDetail-ctKbsekyLabel">ご逝去:</div>
+          <div className="cstmDetail-container-label cstmDetail-ctKbmschLabel">
+            申込注意
+          </div>
           <input
-            className="cstmDetail-ctKbsekyInput"
+            className={classNames("cstmDetail-ctKbmschInput", editModeStyle)}
             type="text"
-            name="KBSEKY"
-            defaultValue={cstm.CT_KBSEKY}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
+            name="CT_KBMSCH"
+            defaultValue={cstm.CT_KBMSCH.replace(/\s+$/g, "")}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
           />
-
-          <div className="cstmDetail-ctNksimeLabel">氏名カナ:</div>
+          {errors.CT_KBMSCH && <p>エラーメッセージ</p>}
+          <div className="cstmDetail-container-label cstmDetail-ctCcdatecLabel">
+            作成日
+          </div>
           <input
-            className="cstmDetail-ctNksimeInput"
+            className={classNames("cstmDetail-ctCcdatecInput", editModeStyle)}
             type="text"
-            name="NKSIME"
-            defaultValue={cstm.CT_NKSIME}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
-          />
-
-          <div className="cstmDetail-ctCcdatecLabel">作成日:</div>
-          <input
-            className="cstmDetail-ctCcdatecInput"
-            type="text"
-            name="CCDATEC"
+            name="CT_CCDATEC"
             defaultValue={
               cstm.CT_CCDATEC.trim() !== ""
                 ? moment(cstm.CT_CCDATEC).format("YYYY/MM/DD")
                 : ""
             }
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
           />
+          {errors.CT_CCDATEC && <p>エラーメッセージ</p>}
 
-          <div className="cstmDetail-ctCcdatexLabel">更新日:</div>
+          <div className="cstmDetail-container-label cstmDetail-ctCcdatexLabel">
+            更新日
+          </div>
           <input
-            className="cstmDetail-ctCcdatexInput"
+            className={classNames("cstmDetail-ctCcdatexInput", editModeStyle)}
             type="text"
-            name="CCDATEX"
+            name="CT_CCDATEX"
             defaultValue={
               cstm.CT_CCDATEX.trim() !== ""
                 ? moment(cstm.CT_CCDATEX).format("YYYY/MM/DD")
                 : ""
             }
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
+            ref={register({ pattern: /^[0-9]]{6,20}/ })}
           />
-
-          <div className="cstmDetail-ctKbmschLabel">申込注意:</div>
-          <input
-            className="cstmDetail-ctKbmschInput"
-            type="text"
-            name="KBMSCH"
-            defaultValue={cstm.CT_KBMSCH}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
-          />
-
-          <div className="cstmDetail-ctNotel1Label">TEL1:</div>
-          <input
-            className="cstmDetail-ctNotel1Input"
-            type="text"
-            name="NOTEL1"
-            defaultValue={cstm.CT_NOTEL1}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
-          />
-
-          <div className="cstmDetail-ctNotel2Label">TEL2:</div>
-          <input
-            className="cstmDetail-ctNotel2Input"
-            type="text"
-            name="NOTEL2"
-            defaultValue={cstm.CT_NOTEL2}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
-          />
-
-          <div className="cstmDetail-ctAdmailLabel">email:</div>
-          <input
-            className="cstmDetail-ctAdmailInput"
-            type="text"
-            name="ADMAIL"
-            defaultValue={cstm.CT_ADMAIL}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
-          />
-
-          <div className="cstmDetail-ctNoyubnLabel">郵便番号:</div>
-          <input
-            className="cstmDetail-ctNoyubnInput"
-            type="text"
-            name="NOYUBN"
-            defaultValue={cstm.CT_NOYUBN}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
-          />
-
-          <div className="cstmDetail-ctNmkuniLabel">国名:</div>
-          <input
-            className="cstmDetail-ctNmkuniInput"
-            type="text"
-            name="NMKUNI"
-            defaultValue={cstm.CT_NMKUNI}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
-          />
-
-          <div className="cstmDetail-ctTxbikoLabel">備考:</div>
-          <input
-            className="cstmDetail-ctTxbikoInput"
-            type="text"
-            name="TXBIKO"
-            defaultValue={cstm.CT_TXBIKO}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
-          />
-
-          <div className="cstmDetail-ctAdcst1Label">住所:</div>
-          <input
-            className="cstmDetail-ctAdcst1Input"
-            type="text"
-            name="ADCST1"
-            defaultValue={cstm.CT_ADCST1}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
-          />
-
-          <div className="cstmDetail-ctTxsshrLabel">送本先変更履歴 :</div>
-          <input
-            className="cstmDetail-ctTxsshrInput"
-            type="text"
-            name="TXSSHR"
-            defaultValue={cstm.CT_TXSSHR}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
-          />
-
-          <input //住所2
-            className="cstmDetail-ctAdcst2Input"
-            type="text"
-            name="ADCST2"
-            defaultValue={cstm.CT_ADCST2}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
-          />
-
-          <div className="cstmDetail-ctCdsqsfLabel">請求書送付先No.</div>
-          <input
-            className="cstmDetail-ctCdsqsfInput"
-            type="text"
-            name="CDSQSF"
-            defaultValue={cstm.CT_CDSQSF}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
-          />
-
-          <input
-            className="cstmDetail-ctAdcst3Input"
-            type="text"
-            name="ASCST3"
-            defaultValue={cstm.CT_ADCST3}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
-          />
-
-          <div className="cstmDetail-ctCdsqsmLabel">請求書送付先名 :</div>
-          <input
-            className="cstmDetail-ctCdsqsmInput"
-            type="text"
-            name="CDSQSM"
-            defaultValue={cstm.CT_CDSQSM}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
-            style={editMode ? editModeStyle : {}}
-          />
+          {errors.CT_CCDATEX && <p>エラーメッセージ</p>}
         </div>
-        {/* {isAuth && privilege.editPublisCstm && ( */}
-        {true && (
-          <div className="cstmDetail-buttonList">
-            {/* <div> */}
-            {!editMode ? (
-              <button
-                className="submitButton"
-                type="button"
-                onClick={handleEditMode}
-              >
-                編集する
-              </button>
-            ) : (
-              <>
+        <div className="cstmDetail-buttonContainer">
+          {/* {isAuth && privilege.editPublisCstm && ( */}
+          {true && (
+            <div className="cstmDetail-buttonList">
+              {/* <div> */}
+              {!editMode ? (
                 <button
-                  className="submitButton"
+                  className="cstmDetail-container-button"
                   type="button"
                   onClick={handleEditMode}
                 >
-                  キャンセル
+                  編集する
                 </button>
-                <button className="submitButton" type="submit">
-                  更新
-                </button>
-              </>
-            )}
-            {/* </div> */}
-          </div>
-        )}
+              ) : (
+                <>
+                  <button
+                    className="cstmDetail-container-button"
+                    type="button"
+                    onClick={handleEditMode}
+                  >
+                    キャンセル
+                  </button>
+                  <button className="cstmDetail-container-button" type="submit">
+                    更新
+                  </button>
+                </>
+              )}
+              {/* </div> */}
+            </div>
+          )}
+        </div>
       </form>
     </div>
   );

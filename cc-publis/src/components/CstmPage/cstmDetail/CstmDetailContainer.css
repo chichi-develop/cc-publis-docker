@@ -5,8 +5,6 @@ p.frame-title {
 
 .cstmDetail-body {
   display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 2fr;
   row-gap: 1em;
   margin: 0 1.8em 0 1.8em;
 }
@@ -22,29 +20,63 @@ p.frame-title {
   border: 1px solid #c5c5c5;
 }
 
-.cstmDetail-subContainer {
+.cstmDetail-buttonContainer {
   display: grid;
-  /* justify-content: center; */
-}
-
-.cstmDetail-buttonList {
-  display: flex;
-  /* display: grid; */
-  height: 60px;
   justify-content: center;
-  align-items: center;
   margin-left: 2em;
   margin-right: 2em;
   border-top: 1px solid #c5c5c5;
 }
 
-.cstmDetail-container input {
+.cstmDetail-buttonList {
+  display: flex;
+  height: 60px;
+  justify-content: center;
+  align-items: center;
+}
+
+.cstmDetail-container-button {
+  display: inline-block;
+  font-size: 14px;
+  padding: 0.5em 1em 0.5em 1em;
+  margin: 0.5em;
+  text-decoration: none;
+  background: #668ad8;
+  color: #fff;
+  border-radius: 4px;
+}
+
+.cstmDetail-container-button:focus {
+  outline: none;
+}
+
+.cstmDetail-container-button:hover {
+  /* background: #0b7dda; */
+  background: #1565c0;
+  /* color:#888; */
+}
+
+.cstmDetail-container-label {
+  font-size: 6;
+  color: #555;
+}
+
+.cstmDetail-container-inputBox {
   font-size: 7;
-  color: green;
   background-color: transparent;
   border-radius: 3px;
-  /* border: 1px solid #c5c5c5; */
+}
+
+.cstmDetail-container-inputBox-edit {
+  color: black;
+  border: 1px solid #c5c5c5;
+  pointer-events: auto;
+}
+
+.cstmDetail-container-inputBox-read {
+  color: green;
   border: none;
+  pointer-events: none;
 }
 
 .cstmDetail-gridContainer {
@@ -72,7 +104,7 @@ p.frame-title {
     "ctNoyubnLabel ctNoyubnLabel ctNoyubnInput ctNoyubnInput ctNmkuniLabel ctNmkuniLabel  ctNmkuniInput  ctNmkuniGycms  ctNmkuniGycms  ctNmkuniGycms  ctTxbikoLabel  ctTxbikoLabel  ctTxbikoLabel  ctTxbikoInput  ctTxbikoInput  ctTxbikoInput  ctTxbikoInput  ctTxbikoInput  ctTxbikoInput  ctTxbikoInput  ctTxbikoInput  ctTxbikoInput  ctTxbikoInput  ctTxbikoInput"
     "ctAdcst1Label ctAdcst1Label ctAdcst1Input ctAdcst1Input ctAdcst1Input ctAdcst1Input  ctAdcst1Input  ctAdcst1Input  ctAdcst1Input  ctAdcst1Input  ctTxsshrLabel  ctTxsshrLabel  ctTxsshrLabel  ctTxsshrInput  ctTxsshrInput  ctTxsshrInput  ctTxsshrInput  ctTxsshrInput  ctTxsshrInput  ctTxsshrInput  ctTxsshrInput  ctTxsshrInput  ctTxsshrInput  ctTxsshrInput"
     ".             .             ctAdcst2Input ctAdcst2Input ctAdcst2Input ctAdcst2Input  ctAdcst2Input  ctAdcst2Input  ctAdcst2Input  ctAdcst2Input  ctCdsqsfLabel  ctCdsqsfLabel  ctCdsqsfLabel  ctCdsqsfInput  ctCdsqsfInput  ctCdsqsfInput  ctCdsqsfInput  ctCdsqsfInput  ctCdsqsfInput  ctCdsqsfInput  ctCdsqsfInput  ctCdsqsfInput  ctCdsqsfInput  ctCdsqsfInput"
-    "submitButton  submitButton  ctAdcst3Input ctAdcst3Input ctAdcst3Input ctAdcst3Input  ctAdcst3Input  ctAdcst3Input  ctAdcst3Input  ctAdcst3Input  ctCdsqsmLabel  ctCdsqsmLabel  ctCdsqsmLabel  ctCdsqsmInput  ctCdsqsmInput  ctCdsqsmInput  ctCdsqsmInput  ctCdsqsmInput  ctCdsqsmInput  ctCdsqsmInput  ctCdsqsmInput  ctCdsqsmInput  ctCdsqsmInput  ctCdsqsmInput";
+    ".             .             ctAdcst3Input ctAdcst3Input ctAdcst3Input ctAdcst3Input  ctAdcst3Input  ctAdcst3Input  ctAdcst3Input  ctAdcst3Input  ctCdsqsmLabel  ctCdsqsmLabel  ctCdsqsmLabel  ctCdsqsmInput  ctCdsqsmInput  ctCdsqsmInput  ctCdsqsmInput  ctCdsqsmInput  ctCdsqsmInput  ctCdsqsmInput  ctCdsqsmInput  ctCdsqsmInput  ctCdsqsmInput  ctCdsqsmInput";
   grid-template-rows: repeat(12, 25px);
   /* grid-template-columns: repeat(11, 5.5em); */
 
@@ -87,7 +119,6 @@ p.frame-title {
   --input-box-size-xlarge: 19em;
   --input-box-size-exlarge: 30em;
   --input-box-size-date: 6.5em;
-  --input-tx-size-date: 1;
 }
 .gycms {
   color: green;
@@ -120,10 +151,6 @@ p.frame-title {
 .cstmDetail-ctKbcstmInput {
   grid-area: ctKbcstmInput;
   width: var(--input-box-size-small);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 .cstmDetail-ctKbcstmGycms {
   grid-area: ctKbcstmGycms;
@@ -140,10 +167,6 @@ p.frame-title {
 .cstmDetail-ctKbksyoInput {
   grid-area: ctKbksyoInput;
   width: var(--input-box-size-small);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 .cstmDetail-ctKbksyoGycms {
   grid-area: ctKbksyoGycms;
@@ -160,10 +183,6 @@ p.frame-title {
 .cstmDetail-ctCdskaiInput {
   grid-area: ctCdskaiInput;
   width: var(--input-box-size-small);
-  color: var(--input-tx-color --input-tx-color --input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 .cstmDetail-ctKbjyctLabel {
   /* 重要顧客 */
@@ -176,10 +195,6 @@ p.frame-title {
 .cstmDetail-ctKbjyctInput {
   grid-area: ctKbjyctInput;
   width: var(--input-box-size-small);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 
 .cstmDetail-ctNmcstmLabel {
@@ -193,10 +208,6 @@ p.frame-title {
 .cstmDetail-ctNmcstmInput {
   grid-area: ctNmcstmInput;
   width: var(--input-box-size-xlarge);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 
 .cstmDetail-ctKbsebtLabel {
@@ -210,10 +221,6 @@ p.frame-title {
 .cstmDetail-ctKbsebtInput {
   grid-area: ctKbsebtInput;
   width: var(--input-box-size-small);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 .cstmDetail-ctKbsebtGycms {
   grid-area: ctKbsebtGycms;
@@ -230,10 +237,6 @@ p.frame-title {
 .cstmDetail-ctCdbaitInput {
   grid-area: ctCdbaitInput;
   width: var(--input-box-size-small);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 
 .cstmDetail-ctKbtkskLabel {
@@ -247,10 +250,6 @@ p.frame-title {
 .cstmDetail-ctKbtkskInput {
   grid-area: ctKbtkskInput;
   width: var(--input-box-size-small);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 
 .cstmDetail-ctNkcstmLabel {
@@ -264,10 +263,6 @@ p.frame-title {
 .cstmDetail-ctNkcstmInput {
   grid-area: ctNkcstmInput;
   width: var(--input-box-size-xlarge);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 
 .cstmDetail-ctCdsyokLabel {
@@ -281,10 +276,6 @@ p.frame-title {
 .cstmDetail-ctCdsyokInput {
   grid-area: ctCdsyokInput;
   width: var(--input-box-size-small);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 .cstmDetail-ctCdsyokGycms {
   grid-area: ctCdsyokGycms;
@@ -301,10 +292,6 @@ p.frame-title {
 .cstmDetail-ctCdsyksInput {
   grid-area: ctCdsyksInput;
   width: 4em;
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 .cstmDetail-ctCdsyksGycms {
   grid-area: ctCdsyksGycms;
@@ -321,10 +308,6 @@ p.frame-title {
 .cstmDetail-ctKbjik1Input {
   grid-area: ctKbjik1Input;
   width: var(--input-box-size-small);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 
 .cstmDetail-ctNmtnbuLabel {
@@ -338,10 +321,6 @@ p.frame-title {
 .cstmDetail-ctNmtnbuInput {
   grid-area: ctNmtnbuInput;
   width: var(--input-box-size-xlarge);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 
 .cstmDetail-ctKbdmprLabel {
@@ -356,10 +335,6 @@ p.frame-title {
 .cstmDetail-ctKbdmprInput {
   grid-area: ctKbdmprInput;
   width: var(--input-box-size-small);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 .cstmDetail-ctKbdmprGycms {
   grid-area: ctKbdmprGycms;
@@ -376,10 +351,6 @@ p.frame-title {
 .cstmDetail-ctCdsytnInput {
   grid-area: ctCdsytnInput;
   width: var(--input-box-size-small);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 .cstmDetail-ctCdsytnGycms {
   grid-area: ctCdsytnGycms;
@@ -396,10 +367,6 @@ p.frame-title {
 .cstmDetail-ctKbjik2Input {
   grid-area: ctKbjik2Input;
   width: var(--input-box-size-small);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 
 .cstmDetail-ctNmtntoLabel {
@@ -413,10 +380,6 @@ p.frame-title {
 .cstmDetail-ctNmtntoInput {
   grid-area: ctNmtntoInput;
   width: var(--input-box-size-xlarge);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 
 .cstmDetail-ctKbkgtiLabel {
@@ -430,10 +393,6 @@ p.frame-title {
 .cstmDetail-ctKbkgtiInput {
   grid-area: ctKbkgtiInput;
   width: var(--input-box-size-small);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 .cstmDetail-ctKbkgtiGycms {
   grid-area: ctKbkgtiGycms;
@@ -450,10 +409,6 @@ p.frame-title {
 .cstmDetail-ctCddokiInput {
   grid-area: ctCddokiInput;
   width: var(--input-box-size-small);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 .cstmDetail-ctCddokiGycms {
   grid-area: ctCddokiGycms;
@@ -470,10 +425,6 @@ p.frame-title {
 .cstmDetail-ctKbclamInput {
   grid-area: ctKbclamInput;
   width: var(--input-box-size-small);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 
 .cstmDetail-ctNmsimeLabel {
@@ -487,10 +438,6 @@ p.frame-title {
 .cstmDetail-ctNmsimeInput {
   grid-area: ctNmsimeInput;
   width: var(--input-box-size-xlarge);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 
 .cstmDetail-ctDtsngpLabel {
@@ -504,10 +451,6 @@ p.frame-title {
 .cstmDetail-ctDtsngpInput {
   grid-area: ctDtsngpInput;
   width: var(--input-box-size-date);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size-date);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 
 .cstmDetail-ctCtsoukLabel {
@@ -521,10 +464,6 @@ p.frame-title {
 .cstmDetail-ctCtsoukInput {
   grid-area: ctCtsoukInput;
   width: var(--input-box-size-small);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 
 .cstmDetail-ctKbsekyLabel {
@@ -538,10 +477,6 @@ p.frame-title {
 .cstmDetail-ctKbsekyInput {
   grid-area: ctKbsekyInput;
   width: var(--input-box-size-small);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 
 .cstmDetail-ctNksimeLabel {
@@ -555,10 +490,6 @@ p.frame-title {
 .cstmDetail-ctNksimeInput {
   grid-area: ctNksimeInput;
   width: var(--input-box-size-xlarge);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 
 .cstmDetail-ctCcdatecLabel {
@@ -572,10 +503,6 @@ p.frame-title {
 .cstmDetail-ctCcdatecInput {
   grid-area: ctCcdatecInput;
   width: var(--input-box-size-date);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size-date);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 
 .cstmDetail-ctCcdatexLabel {
@@ -589,10 +516,6 @@ p.frame-title {
 .cstmDetail-ctCcdatexInput {
   grid-area: ctCcdatexInput;
   width: var(--input-box-size-date);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size-date);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 
 .cstmDetail-ctKbmschLabel {
@@ -606,10 +529,6 @@ p.frame-title {
 .cstmDetail-ctKbmschInput {
   grid-area: ctKbmschInput;
   width: var(--input-box-size-small);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 
 .cstmDetail-ctNotel1Label {
@@ -623,10 +542,6 @@ p.frame-title {
 .cstmDetail-ctNotel1Input {
   grid-area: ctNotel1Input;
   width: 8em;
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 .cstmDetail-ctNotel2Label {
   /* 電話　tel2 */
@@ -639,10 +554,6 @@ p.frame-title {
 .cstmDetail-ctNotel2Input {
   grid-area: ctNotel2Input;
   width: 8em;
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 .cstmDetail-ctAdmailLabel {
   /* メールアドレス */
@@ -656,10 +567,6 @@ p.frame-title {
 .cstmDetail-ctAdmailInput {
   grid-area: ctAdmailInput;
   width: var(--input-box-size-exlarge);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 
 .cstmDetail-ctNoyubnLabel {
@@ -674,10 +581,6 @@ p.frame-title {
   grid-area: ctNoyubnInput;
   /* width: 8em; */
   width: 5.5em;
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 .cstmDetail-ctNmkuniLabel {
   /* 国名 */
@@ -691,10 +594,6 @@ p.frame-title {
 .cstmDetail-ctNmkuniInput {
   grid-area: ctNmkuniInput;
   width: 3em;
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
   text-align: center;
 }
 .cstmDetail-ctNmkuniGycms {
@@ -713,10 +612,6 @@ p.frame-title {
 .cstmDetail-ctTxbikoInput {
   grid-area: ctTxbikoInput;
   width: var(--input-box-size-exlarge);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 .cstmDetail-ctAdcst1Label {
   /* 住所 */
@@ -729,10 +624,6 @@ p.frame-title {
 .cstmDetail-ctAdcst1Input {
   grid-area: ctAdcst1Input;
   width: var(--input-box-size-xlarge);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 .cstmDetail-ctTxsshrLabel {
   /* 送本先変更履歴 */
@@ -746,18 +637,10 @@ p.frame-title {
   grid-area: ctTxsshrInput;
   width: var(--input-box-size-exlarge);
   /* width: 20em; */
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 .cstmDetail-ctAdcst2Input {
   grid-area: ctAdcst2Input;
   width: var(--input-box-size-xlarge);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 .cstmDetail-ctCdsqsfLabel {
   /* 請求書送付先No. */
@@ -771,18 +654,10 @@ p.frame-title {
   grid-area: ctCdsqsfInput;
   width: var(--input-box-size-exlarge);
   /* width: 20em; */
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 .cstmDetail-ctAdcst3Input {
   grid-area: ctAdcst3Input;
   width: var(--input-box-size-xlarge);
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
 }
 .cstmDetail-ctCdsqsmLabel {
   /* 請求書送付先名 */
@@ -796,11 +671,4 @@ p.frame-title {
   grid-area: ctCdsqsmInput;
   width: var(--input-box-size-exlarge);
   /* width: 20em; */
-  color: var(--input-tx-color);
-  font-size: var(--input-tx-size);
-  border: var(--input-box-border);
-  border-radius: var(--input-box-border-radius);
-}
-.submitButton {
-  grid-area: submitButton;
 }
