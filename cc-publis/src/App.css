@@ -130,3 +130,8 @@
   border: solid 1px #aaaaaa;
   padding: 0.5em 1em;
 }
+
+p.frame-title {
+  color: #555;
+  font-size: 18px;
+}
