@@ -81,26 +81,35 @@
 }
 
 .cstmDetail-container-label {
-  font-size: 10px;
+  font-size: 11px;
   color: #555;
 }
 
-.cstmDetail-container-inputBox {
+.cstmDetail-container-common {
   font-size: 16px;
   background-color: transparent;
   border-radius: 3px;
 }
 
-.cstmDetail-container-inputBox-edit {
+.cstmDetail-container-editMode {
   color: black;
   border: 1px solid #c5c5c5;
   pointer-events: auto;
+  background-color: #fbfae5;
 }
 
-.cstmDetail-container-inputBox-read {
+.cstmDetail-container-readMode {
   color: green;
-  border: none;
+  /* border: none; */
+  border: 1px solid #c5c5c5;
   pointer-events: none;
+}
+
+.cstmDetail-container-selectBox {
+  /* font-size: 16px; */
+  /* background-color: transparent; */
+  /* border-radius: 3px; */
+  appearance: none;
 }
 
 .cstmDetail-gridContainer {
