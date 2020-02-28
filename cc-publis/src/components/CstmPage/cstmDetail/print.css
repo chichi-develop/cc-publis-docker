@@ -1,0 +1,18 @@
+.cstmLabel-container {
+  display: grid;
+  width: 800px;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 12fr;
+  row-gap: 0.5em;
+  margin-top: 5em;
+  margin-left: 4.5em;
+}
+
+.cstmLabel-row-1 {
+  display: grid;
+  grid-template-columns: 10fr 10fr 1fr 10fr 10fr;
+}
+
+.cstmLabel-container p {
+  font-size: 14px;
+  margin: 0;
+}

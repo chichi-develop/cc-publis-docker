@@ -24,6 +24,7 @@ yarn add yup
 yarn add serve
 yarn add react-hook-form
 yarn add classnames
+yarn add react-to-print
 
 yarn add -D @material-ui/core
 yarn add -D @material-ui/icons
