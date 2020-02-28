@@ -1,0 +1,23 @@
+{
+ "development": {
+ "username": "docker",
+ "password": "docker",
+ "database": "cm_spinfo",
+ "host": "localhost",
+ "dialect": "mysql"
+ },
+ "test": {
+ "username": "docker",
+ "password": "docker",
+ "database": "cm_spinfo",
+ "host": "cm-spinfo-mysql",
+ "dialect": "mysql"
+ },
+ "production": {
+ "username": "docker",
+ "password": "docker",
+ "database": "cm_spinfo",
+ "host": "cm-spinfo-mysql",
+ "dialect": "mysql"
+ }
+}
