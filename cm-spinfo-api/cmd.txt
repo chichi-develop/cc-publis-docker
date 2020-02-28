@@ -1,3 +1,8 @@
 mysqldump -udocker -p -r cm_spinfo.bakcup --single-transaction cm_spinfo
 
 mysql -udocker -p cm_spinfo < cm_spinfo.bakcup
+
+
+mysqldump -udocker -p ccwebdb cm_aclg > cm_aclg.sql
+
+mysql -udocker -p -D cm_spinfo < cm_aclg.sql

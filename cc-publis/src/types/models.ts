@@ -32,8 +32,8 @@ export type Aclg = {
   al_nmcstm: string; // '顧客名'
   al_nmtnbu: string; // '部署名'
   al_nmtnto: string; // '担当者名'
-  createdAt: string; // '作成日'
-  updatedAt: string; // '更新日'
+  // createdAt: string; // '作成日'
+  // updatedAt: string; // '更新日'
 };
 
 export type Aclgs = Aclg[];
