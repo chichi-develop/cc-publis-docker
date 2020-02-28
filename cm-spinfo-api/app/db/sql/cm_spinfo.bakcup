@@ -1,0 +1,105 @@
+-- MySQL dump 10.13  Distrib 5.7.25, for Linux (x86_64)
+--
+-- Host: localhost    Database: cm_spinfo
+-- ------------------------------------------------------
+-- Server version	5.7.25
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `cm_aclg`
+--
+
+DROP TABLE IF EXISTS `cm_aclg`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cm_aclg` (
+  `al_idactv` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `al_nmactv` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'アクティビティ区分名',
+  `al_noactv` int(11) NOT NULL COMMENT 'アクティビティ番号',
+  `al_dtactv` date NOT NULL COMMENT 'アクティビティ日付',
+  `al_cdsqsk` varchar(8) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '請求先読者番号',
+  `al_nmsqsk` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '請求先顧客名',
+  `al_nmsqbu` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '請求先部署名',
+  `al_nmsqtn` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '請求先担当名',
+  `al_txactv` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'アクティビティ内容',
+  `al_susury` int(11) DEFAULT NULL COMMENT '数量',
+  `al_kgtnka` int(11) DEFAULT NULL COMMENT '単価',
+  `al_kggoke` int(11) DEFAULT NULL COMMENT '合計金額',
+  `al_txbiko` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '備考',
+  `al_cdcstm` varchar(8) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '読者番号',
+  `al_nmcstm` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '顧客名',
+  `al_nmtnbu` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '部署名',
+  `al_nmtnto` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '担当者名',
+  `createdAt` date NOT NULL COMMENT '作成日',
+  `updatedAt` date NOT NULL COMMENT '更新日',
+  PRIMARY KEY (`al_idactv`),
+  KEY `cm_aclg_i01` (`al_nmactv`,`al_cdsqsk`),
+  KEY `cm_aclg_i02` (`al_dtactv`,`al_nmactv`,`al_cdsqsk`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='アクティビティログ';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cm_aclg`
+--
+
+LOCK TABLES `cm_aclg` WRITE;
+/*!40000 ALTER TABLE `cm_aclg` DISABLE KEYS */;
+INSERT INTO `cm_aclg` VALUES (1,'一般注文',1382716,'2019-06-12','20936132','長澤博之','','清田未華子','別刊「母」',6,5000,12000,'','20933984','内田しぼり','','','2019-06-12','2019-06-12'),(2,'一般注文',6823489,'2019-06-12','20977251','平田陽子','','小川貴美子','別刊「母」',10,1200,1200,'','20989128','西川恵梨香','','','2019-06-12','2019-06-12'),(3,'一般注文',2286337,'2019-06-12','20933859','田島綾女','','小柳友也','一日セミナー',3,12000,5000,'','20963887','菊地サダヲ','','','2019-06-12','2019-06-12'),(4,'セミナー',6538481,'2019-06-12','20981775','谷村昴','','関秀隆','別刊「母」',5,5000,1200,'','20982724','上村昴','','','2019-06-12','2019-06-12'),(5,'name',0,'2019-06-12','20139944','name','name','name','txactv',0,0,0,'biko','20977473','name','name','name','2019-06-12','2019-06-12'),(6,'name',1,'2019-06-12','20139944','name','name','name','txactv',0,0,0,'biko','20977473','name','name','name','2019-06-12','2019-06-12'),(7,'name',0,'2019-06-12','20139944','name','name','name','txactv',0,0,0,'biko','20977473','name','name','name','2019-06-12','2019-06-12'),(8,'name',0,'2019-06-12','20249192','name','name','name','txactv',0,0,0,'biko','20977473','name','name','name','2019-06-12','2019-06-12'),(9,'name',0,'2019-06-12','20249192','name','name','name','txactv',0,0,0,'biko','20977473','name','name','name','2019-06-12','2019-06-12'),(10,'name',0,'2019-06-12','20249192','name','name','name','txactv',0,0,0,'biko','20977473','name','name','name','2019-06-12','2019-06-12');
+/*!40000 ALTER TABLE `cm_aclg` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cm_mdmm`
+--
+
+DROP TABLE IF EXISTS `cm_mdmm`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cm_mdmm` (
+  `md_idmdmm` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `md_cdcstm` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '顧客コード',
+  `md_nommrb` int(3) NOT NULL COMMENT '窓口メモ連番',
+  `md_nmmmbr` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '窓口メモ分類名',
+  `md_txmdmm` varchar(400) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '顧客メモ',
+  `md_fganch` int(1) DEFAULT NULL COMMENT 'アンカーフラグ',
+  `md_clmdmm` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '窓口メモカラー',
+  `md_ccadip` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '更新IPアドレス',
+  `md_ccmodu` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '更新モジュール',
+  `createdAt` date NOT NULL COMMENT '作成日',
+  `updatedAt` date NOT NULL COMMENT '更新日',
+  PRIMARY KEY (`md_idmdmm`),
+  UNIQUE KEY `cm_mdmm_i01u` (`md_cdcstm`,`md_idmdmm`),
+  KEY `cm_mdmm_i02` (`md_cdcstm`,`md_nommrb`)
+) ENGINE=InnoDB AUTO_INCREMENT=301 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='お客様窓口メモ';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cm_mdmm`
+--
+
+LOCK TABLES `cm_mdmm` WRITE;
+/*!40000 ALTER TABLE `cm_mdmm` DISABLE KEYS */;
+INSERT INTO `cm_mdmm` VALUES (1,'20945932',1,'その他メモ','物販メモ',5,'Blue','172.26.0.1','post-test','2019-06-12','2019-06-12'),(2,'20951089',1,'問い合わせ','物販メモ',9,'Green','172.26.0.1','post-test','2019-06-12','2019-06-12'),(3,'20971902',1,'要望','大会メモ',8,'Green','172.26.0.1','post-test','2019-06-12','2019-06-12'),(8,'20971902',2,'0','Api test',1,'Green','127.0.0.1','dredd','2019-05-24','2019-06-12'),(9,'20981775',1,'0','Api test',1,'Green','127.0.0.1','dredd','2019-05-24','2019-06-12'),(10,'20981775',2,'0','Api test',1,'Green','127.0.0.1','dredd','2019-05-24','2019-06-12'),(12,'20977473',4,'要望','物販メモ',7,'Blue','172.26.0.1','post-test','2019-08-06','2019-08-06'),(13,'20977473',5,'要望','大会メモ',6,'Blue','172.26.0.1','post-test/OK','2020-01-16','2020-01-16'),(15,'20977473',7,'その他メモ','大会メモ',1,'Green','172.26.0.1','post-test','2019-08-06','2019-08-06'),(16,'20977473',8,'その他メモ','大会メモ',4,'Blue','172.26.0.1','post-testaaaa','2020-01-07','2020-01-07'),(119,'44444444',1,'テストテスト','登録のテスト',7,'Blue','172.26.0.1','2019/08/08','2019-08-09','2019-08-09'),(121,'88888888',1,'テスト','登録のテスト',7,'Blue','172.26.0.1','2019/08/08','2019-05-24','2019-08-09'),(123,'12345678',1,'テスト','登録のテスト',7,'Blue','172.26.0.1','2019/08/08','2019-05-24','2019-08-09'),(124,'44444444',2,'テスト','登録のテストtest',7,'Blue','172.26.0.1','2019/08/08','2019-05-24','2019-08-16'),(129,'33333333',6,'test','セミナーメモtest',5,'Blue','172.26.0.1','post-test','2019-08-09','2019-08-22'),(131,'33333333',8,'その他メモ','物販メモ',9,'Blue','172.26.0.1','post-test','2019-08-09','2019-08-16'),(132,'33333333',9,'問い合わせ','セミナーメモ',4,'Red','172.26.0.1','post-test','2019-08-09','2019-08-16'),(134,'33333333',11,'testtest','物販メモtest',2,'Blue','172.26.0.1','post-test','2019-08-09','2019-08-22'),(135,'33333333',12,'要望','セミナーメモ',9,'Blue','172.26.0.1','post-test','2019-08-09','2019-08-09'),(136,'33333333',13,'問い合わせ','大会メモ',6,'Red','172.26.0.1','post-test','2019-08-09','2019-08-09'),(137,'33333333',14,'要望','セミナーメモ',4,'Blue','172.26.0.1','post-test','2019-08-09','2019-08-09'),(138,'33333333',15,'要望','大会メモ',7,'Green','172.26.0.1','post-test','2019-08-09','2019-08-09'),(139,'33333333',16,'要望','大会メモ',3,'Blue','172.26.0.1','post-test','2019-08-09','2019-08-09'),(140,'33333333',17,'要望','セミナーメモ',4,'Green','172.26.0.1','post-test','2019-08-09','2019-08-09'),(142,'33333333',19,'問い合わせ','大会メモ',3,'Green','172.26.0.1','post-test','2019-08-09','2019-08-09'),(143,'33333333',20,'要望','大会メモ',7,'Red','172.26.0.1','post-test','2019-08-09','2019-08-09'),(144,'33333333',21,'問い合わせ','大会メモ',7,'Blue','172.26.0.1','post-test','2019-08-09','2019-08-09'),(145,'33333333',22,'要望','物販メモ',2,'Blue','172.26.0.1','post-test','2019-08-09','2019-08-09'),(147,'33333333',24,'その他メモ','セミナーメモ',3,'Blue','172.26.0.1','post-test','2019-08-09','2019-08-09'),(148,'33333333',25,'要望','大会メモ',7,'Blue','172.26.0.1','post-test','2019-08-09','2019-08-16'),(149,'33333333',26,'要望','大会メモ',5,'Blue','172.26.0.1','post-test','2019-08-09','2019-08-09'),(150,'44444444',3,'テスト','登録のテスト',7,'Blue','172.26.0.1','2019/08/08','2019-05-24','2019-08-09'),(151,'44444444',4,'テスト','登録のテスト',7,'Blue','172.26.0.1','2019/08/08','2019-05-24','2019-08-10'),(152,'44444444',5,'テスト','登録のテスト',7,'Blue','172.26.0.1','2019/08/08','2019-05-24','2019-08-10'),(153,'44444444',6,'テスト','登録のテストtest',7,'Blue','172.26.0.1','2019/08/08','2019-05-24','2019-08-16'),(154,'44444444',7,'テスト','登録のテスト',7,'Blue','172.26.0.1','2019/08/08','2019-05-24','2019-08-12'),(155,'44444444',8,'テスト','登録のテスト',7,'Blue','172.26.0.1','2019/08/08','2019-05-24','2019-08-14'),(174,'44444444',9,'テスト','登録のテスト',7,'Blue','172.26.0.1','2019/08/08','2019-05-24','2019-08-16'),(175,'44444444',10,'テスト','登録のテスト',7,'Blue','172.26.0.1','2019/08/08','2019-05-24','2019-08-16'),(176,'44444444',11,'テスト','登録のテスト',7,'Blue','172.26.0.1','2019/08/08','2019-05-24','2019-08-16'),(192,'33333333',27,'テスト','登録のテストtest',7,'Blue','172.26.0.1','2019/08/08','2019-05-24','2019-08-16'),(194,'33333333',29,'テスト','登録のテスト',7,'Blue','172.26.0.1','2019/08/08','2019-05-24','2019-08-16'),(195,'33333333',30,'テスト','登録のテスト',7,'Blue','172.26.0.1','2019/08/08','2019-05-24','2019-08-16'),(196,'33333333',31,'テスト','登録のテスト',7,'Blue','172.26.0.1','2019/08/08','2019-05-24','2019-08-16'),(197,'33333333',32,'テスト','登録のテストtest',7,'Blue','172.26.0.1','2019/08/08','2019-05-24','2019-08-16'),(198,'33333333',33,'テスト','登録のテスト',7,'Blue','172.26.0.1','2019/08/08','2019-05-24','2019-08-16'),(199,'33333333',34,'テスト','登録のテスト',7,'Blue','172.26.0.1','2019/08/08','2019-05-24','2019-08-16'),(218,'21111111',1,'test','test data test',1,'blue','172.26.0.1',NULL,'2019-08-17','2019-08-17'),(250,'22222222',32,'test32','test data',1,'blue','172.26.0.1','aaa','2019-10-22','2019-10-22'),(256,'22222222',38,'test','test data',1,'blue','172.26.0.1','bbbaaaddd','2020-01-07','2020-01-07'),(262,'22222222',44,'test','test data',1,'blue','172.26.0.1','aaaabb','2020-01-07','2020-01-07'),(263,'22222222',45,'20191020_test','test data',1,'blue','172.26.0.1',NULL,'2019-10-20','2019-10-20'),(265,'22222222',47,'test987','test data',1,'blue','172.26.0.1',NULL,'2019-10-20','2019-10-20'),(267,'22222222',49,'20191022','test data',1,'blue','172.26.0.1','aaaabbbcccdddd','2020-01-15','2020-01-15'),(269,'22222222',50,'test','test data',1,'blue','172.26.0.1','ccdda','2020-01-07','2020-01-07'),(271,'22222222',51,'test','test data',1,'blue','172.26.0.1','testaaaaa','2020-01-16','2020-01-16'),(272,'22222222',52,'test','test data',1,'bluetet','172.26.0.1','aaa aa','2020-01-16','2020-01-16'),(273,'22222222',53,'test','test data',1,'53???','172.26.0.1',NULL,'2020-01-16','2020-01-16'),(274,'22222222',54,'test','test data',1,'54???','172.26.0.1',NULL,'2020-01-16','2020-01-16'),(275,'22222222',55,'test','test data',1,'blue55','172.26.0.1',NULL,'2020-01-16','2020-01-16'),(276,'22222222',56,'テスト','メモテスト',1,'blue','172.26.0.1',NULL,'2020-01-20','2020-01-20'),(277,'20139944',1,'test update OK!','test data',1,'blue','172.26.0.1','ccmodu','2020-01-23','2020-01-23'),(278,'20139944',2,'test','test data',1,'blue','172.26.0.1',NULL,'2020-01-21','2020-01-21'),(280,'20249192',1,'test','test data',1,'blue','172.26.0.1',NULL,'2020-01-21','2020-01-21'),(281,'20249192',2,'test','test data',1,'blue','172.26.0.1',NULL,'2020-01-21','2020-01-21'),(282,'20249192',3,'test','test data',1,'blue','172.26.0.1',NULL,'2020-01-21','2020-01-21'),(283,'20249192',4,'test','test data',1,'blue','172.26.0.1',NULL,'2020-01-21','2020-01-21'),(284,'22222222',57,'test insert','test data',1,'blue','172.26.0.1',NULL,'2020-01-23','2020-01-23'),(285,'20139944',4,'test insert','test data',1,'blue','172.26.0.1',NULL,'2020-01-23','2020-01-23'),(286,'20139944',5,'test insert 2','test data',1,'blue','172.26.0.1',NULL,'2020-01-23','2020-01-23'),(287,'22222222',58,'test','test data',1,'blue','172.26.0.1',NULL,'2020-01-23','2020-01-23'),(288,'22222222',59,'test','test data',1,'blue','172.26.0.1',NULL,'2020-01-23','2020-01-23'),(289,'22222222',60,'test','test data',1,'blue','172.26.0.1',NULL,'2020-01-23','2020-01-23'),(290,'22222222',61,'test','test data',1,'blue','172.26.0.1',NULL,'2020-01-23','2020-01-23'),(291,'22222222',62,'test','test data',1,'blue','172.26.0.1',NULL,'2020-01-23','2020-01-23'),(292,'20139944',6,'test','test data',1,'blue','172.26.0.1',NULL,'2020-01-23','2020-01-23'),(293,'20139944',7,'test','test data',1,'blue','172.26.0.1',NULL,'2020-01-23','2020-01-23'),(294,'20139944',8,'test','test data',1,'blue','172.26.0.1',NULL,'2020-01-23','2020-01-23'),(295,'20139944',9,'test','test data',1,'blue','172.26.0.1',NULL,'2020-01-23','2020-01-23'),(296,'20139944',10,'test','test data',1,'blue','172.26.0.1',NULL,'2020-01-23','2020-01-23'),(297,'20139944',11,'test','test data',1,'blue','172.26.0.1',NULL,'2020-01-23','2020-01-23'),(298,'20139944',12,'test','test data',1,'blue','172.26.0.1',NULL,'2020-01-23','2020-01-23'),(299,'20139944',13,'test','test data',1,'blue','172.26.0.1',NULL,'2020-01-23','2020-01-23'),(300,'20139944',14,'test','test data',1,'blue','172.26.0.1',NULL,'2020-01-23','2020-01-23');
+/*!40000 ALTER TABLE `cm_mdmm` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2020-02-28 17:52:58

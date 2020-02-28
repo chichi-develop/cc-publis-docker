@@ -1,0 +1,3 @@
+mysqldump -udocker -p -r cm_spinfo.bakcup --single-transaction cm_spinfo
+
+mysql -udocker -p cm_spinfo < cm_spinfo.bakcup

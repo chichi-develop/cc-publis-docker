@@ -1,0 +1,13 @@
+{
+    "tables": {
+        "cm_aclg": {
+            "tableName": "cm_aclg",
+            "indexes": []
+        },
+        "cm_mdmm": {
+            "tableName": "cm_mdmm",
+            "indexes": []
+        }
+    },
+    "revision": 1
+}

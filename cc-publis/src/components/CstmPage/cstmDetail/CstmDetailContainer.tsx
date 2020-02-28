@@ -67,7 +67,7 @@ const CstmDetailContainer: React.FC = () => {
       getGycmStart();
     }
     return () => console.log("unmounting...");
-  }, [cstm, showListCstm, gycms, setGycm, getGycmStart, privilege, userID]);
+  }, [cstm, showListCstm, gycms, setGycm, getGycmStart, privilege]);
 
   return (
     <div className="cstmDetail-body">

@@ -1,0 +1,361 @@
+swagger: "2.0"
+info:
+  description: "これはccwebのAPIです。"
+  version: "1.0.0"
+  title: "cm-spinfo-api"
+host: localhost:3000
+basePath: /api
+schemes:
+  - http
+paths:
+  /v1/cm_mdmms/{md_cdcstm}:
+    get:
+      summary: "窓口メモ"
+      # consumes:
+      #   - application/json
+      description: "指定されたIDの窓口メモ情報を返します"
+      parameters:
+        - in: "path"
+          name: "md_cdcstm"
+          type: string
+          required: true
+          description: "取得したい顧客情報の読者番号"
+          x-example: "20913069"
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            type: object
+            $ref: '#/definitions/cm_mdmms_response'
+  /v1/cm_mdmms:
+    post:
+      summary: Creates a new data.
+      consumes:
+        - application/json
+      # consumes:
+      #   - application/x-www-form-urlencoded
+      parameters:
+        - in: body
+          name: cm_mdmms
+          required: true
+          description: create
+          schema:
+            # type: object
+            $ref: '#/definitions/cm_mdmms_request'
+      responses:
+        '201':
+          description: ""
+          schema:
+            properties:
+              message:
+                type: string
+
+  /v1/cm_mdmms/{md_cdcstm}/{md_nommrb}:
+    put:
+      summary: Update a memo.
+      parameters:
+        - in: "path"
+          name: "md_cdcstm"
+          type: string
+          required: true
+          description: "取得したい顧客情報の読者番号"
+          x-example: "20913069"
+        - in: "path"
+          name: "md_nommrb"
+          type: string
+          required: true
+          description: "取得したいメモデータのメモ連番"
+          x-example: "26"
+        - in: body
+          name: cm_mdmms
+          required: true
+          description: update
+          schema:
+            # type: object
+            $ref: '#/definitions/cm_mdmms_request'
+      responses:
+        '204':
+          description: ""
+          schema:
+            properties:
+              message:
+                type: string
+    delete:
+      summary: Delete a memo.
+      parameters:
+        - in: "path"
+          name: "md_cdcstm"
+          type: string
+          required: true
+          description: "削除したい顧客情報の読者番号"
+          x-example: "20913069"
+        - in: "path"
+          name: "md_nommrb"
+          type: string
+          required: true
+          description: "削除したいメモデータのメモ連番"
+          x-example: "1"
+      responses:
+        '204':
+          description: ""
+          schema:
+            properties:
+              message:
+                type: string
+  /v1/cm_aclgs/{al_cdsqsk}:
+    get:
+      summary: "アクティビティログ"
+      # consumes:
+      #   - application/json
+      description: "指定されたIDのアクティビティログ情報を返します"
+      parameters:
+        - in: "path"
+          name: "al_cdsqsk"
+          type: string
+          required: true
+          description: "取得したい顧客情報の読者番号"
+          x-example: "20981775"
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            type: object
+            $ref: '#/definitions/cm_aclgs_response'
+  /v1/cm_aclgs:
+    post:
+      summary: Creates a new data.
+      consumes:
+        - application/json
+      # consumes:
+      #   - application/x-www-form-urlencoded
+      parameters:
+        - in: body
+          name: cm_aclgs
+          required: true
+          description: create
+          schema:
+            # type: object
+            $ref: '#/definitions/cm_aclgs_request'
+      responses:
+        '201':
+          description: ""
+          schema:
+            properties:
+              message:
+                type: string
+
+definitions:
+  cm_mdmms_response:
+    properties:
+      md_idmdmm:
+        type: integer
+        format: int32
+        example: "0"
+      md_cdcstm:
+        type: string
+        example: "22222222"
+      md_nommrb:
+        type: integer
+        format: int32
+        example: "0"
+      md_nmmmbr:
+        type: string
+        example: "0"
+      md_txmdmm:
+        type: string
+        example: "Api test"
+      md_fganch:
+        type: integer
+        format: int32
+        example: "1"
+      md_clmdmm:
+        type: string
+        example: "Green"
+      md_ccadip:
+        type: string
+        example: "192.168.100.100"
+      md_ccmodu:
+        type: string
+        example: "dredd"
+      createdAt:
+        type: string
+        example: "2019-05-24"
+      updatedAt:
+        type: string
+        example: "2019-05-24"
+  cm_mdmms_request:
+    properties:
+      md_idmdmm:
+        type: integer
+        format: int32
+        example: "0"
+      md_cdcstm:
+        type: string
+        example: "20981775"
+      md_nommrb:
+        type: integer
+        format: int32
+        example: "0"
+      md_nmmmbr:
+        type: string
+        example: "0"
+      md_txmdmm:
+        type: string
+        example: "Api test"
+      md_fganch:
+        type: integer
+        format: int32
+        example: "1"
+      md_clmdmm:
+        type: string
+        example: "Green"
+      md_ccadip:
+        type: string
+        example: "192.168.100.100"
+      md_ccmodu:
+        type: string
+        example: "dredd"
+      createdAt:
+        type: string
+        example: "2019-05-24"
+      updatedAt:
+        type: string
+        example: "2019-05-24"
+
+  cm_aclgs_response:
+    properties:
+      al_idmdmm:
+        type: integer
+        format: int32
+        example: "0"
+      al_idactv:
+        type: integer
+        format: int32
+        example: "0"
+      al_nmactv:
+        type: string
+        example: "name"
+      al_noactv:
+        type: integer
+        format: int32
+        example: "0"
+      al_dtactv:
+        type: string
+        example: "2019-06-12"
+      al_cdsqsk:
+        type: string
+        example: "20977251"
+      al_nmsqsk:
+        type: string
+        example: "name"
+      al_nmsqbu:
+        type: string
+        example: "name"
+      al_nmsqtn:
+        type: string
+        example: "name"
+      al_txactv:
+        type: string
+        example: "txactv"
+      al_susury:
+        type: integer
+        format: int32
+        example: "0"
+      al_kgtnka:
+        type: integer
+        format: int32
+        example: "0"
+      al_kggoke:
+        type: integer
+        format: int32
+        example: "0"
+      al_txbiko:
+        type: string
+        example: "biko"
+      al_cdcstm:
+        type: string
+        example: "20977473"
+      al_nmcstm:
+        type: string
+        example: "name"
+      al_nmtnbu:
+        type: string
+        example: "name"
+      al_nmtnto:
+        type: string
+        example: "name"
+      createdAt:
+        type: string
+        example: "2019-06-12"
+      updatedAt:
+        type: string
+        example: "2019-06-12"
+
+  cm_aclgs_request:
+    properties:
+      al_idmdmm:
+        type: integer
+        format: int32
+        example: "0"
+      al_idactv:
+        type: integer
+        format: int32
+        example: "0"
+      al_nmactv:
+        type: string
+        example: "name"
+      al_noactv:
+        type: integer
+        format: int32
+        example: "0"
+      al_dtactv:
+        type: string
+        example: "2019-06-12"
+      al_cdsqsk:
+        type: string
+        example: "20977251"
+      al_nmsqsk:
+        type: string
+        example: "name"
+      al_nmsqbu:
+        type: string
+        example: "name"
+      al_nmsqtn:
+        type: string
+        example: "name"
+      al_txactv:
+        type: string
+        example: "txactv"
+      al_susury:
+        type: integer
+        format: int32
+        example: "0"
+      al_kgtnka:
+        type: integer
+        format: int32
+        example: "0"
+      al_kggoke:
+        type: integer
+        format: int32
+        example: "0"
+      al_txbiko:
+        type: string
+        example: "biko"
+      al_cdcstm:
+        type: string
+        example: "20977473"
+      al_nmcstm:
+        type: string
+        example: "name"
+      al_nmtnbu:
+        type: string
+        example: "name"
+      al_nmtnto:
+        type: string
+        example: "name"
+      createdAt:
+        type: string
+        example: "2019-06-12"
+      updatedAt:
+        type: string
+        example: "2019-06-12"

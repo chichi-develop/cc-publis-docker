@@ -1,0 +1,40 @@
+version: "3.3"
+
+services:
+  db:
+    image: mysql:5.7
+    container_name: cm-spinfo-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cm_spinfo
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: docker
+      TZ: "Asia/Tokyo"
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./app/db/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./app/db/sql:/docker-entrypoint-initdb.d
+      - mysql-data:/var/lib/mysql
+    ports:
+      - 3306:3306
+
+  node-api:
+    build:
+      context: ./
+    environment:
+      - NODE_ENV=production
+    container_name: cm-spinfo-api
+    ports:
+      - "8340:3000"
+    tty: true
+    depends_on:
+      - db
+    command: sh /wait.sh yarn start
+
+volumes:
+  mysql-data:
+
+networks:
+  default:
+    external:
+      name: chichi-network
