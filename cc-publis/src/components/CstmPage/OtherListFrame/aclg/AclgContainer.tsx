@@ -31,7 +31,7 @@ const AclgContainer: React.FC = () => {
   );
 
   let cm_aclgs = aclgState.cm_aclgs;
-  let showListAclgs  = aclgState.showListAclgs;
+  let showListAclgs = aclgState.showListAclgs;
 
   useEffect(() => {
     console.log("AclgContainer render!");
@@ -93,6 +93,7 @@ const AclgTable: React.FC<Props> = ({ aclgs }) => {
   useEffect(() => {
     console.log("AclgTable render!");
     setNmactvs(_.uniq(_.map(aclgs, "al_nmactv")));
+    setSort({ key: "al_dtactv", order: -1, icon: <span /> });
     return () => console.log("unmounting...");
   }, [aclgs]);
 

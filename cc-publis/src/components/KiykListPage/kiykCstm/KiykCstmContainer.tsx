@@ -1,15 +1,16 @@
 import React, { useEffect, useCallback } from "react";
-import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
 import { Actions } from "../../../store/actions";
 import { StoreState } from "../../../store";
 
 import { Cstm, Kiyk, Gycms } from "../../../types/models";
+import moment from "moment";
 
 import "./KiykCstmContainer.css";
 
 type Props = {
   cstm: Cstm;
+  gycms: Gycms;
 };
 
 const KiykCstmContainer: React.FC = () => {
@@ -63,8 +64,8 @@ const KiykCstmContainer: React.FC = () => {
         <>
           <p className="frame-title">契約顧客マスタ</p>
           <div className="kiykCstm-frame">
-            <KiykCstmDetail cstm={sqsk} />
-            <KiykCstmDetail cstm={shsk} />
+            <KiykCstmDetail cstm={sqsk} gycms={gycms} />
+            <KiykCstmDetail cstm={shsk} gycms={gycms} />
           </div>
         </>
       )}
@@ -72,133 +73,140 @@ const KiykCstmContainer: React.FC = () => {
   );
 };
 
-const KiykCstmDetail: React.FC<Props> = ({ cstm }) => {
-  // const { register, handleSubmit, errors } = useForm();
-  const { register, errors } = useForm();
-  // const { register, handleSubmit, errors } = useForm({
-  //   defaultValues: {
-  //     cdcstm: publisState.cstms[0].CT_CDCSTM,
-  //     tel1: publisState.cstms[0].CT_NOTEL1,
-  //     tel2: publisState.cstms[0].CT_NOTEL2,
-  //     nmcstm: publisState.cstms[0].CT_NMCSTM,
-  //     nmsime: publisState.cstms[0].CT_NMSIME,
-  //     address1: publisState.cstms[0].CT_ADCST1,
-  //     address2: publisState.cstms[0].CT_ADCST2,
-  //     address3: publisState.cstms[0].CT_ADCST3
-  //   }
-  // });
-
+const KiykCstmDetail: React.FC<Props> = ({ cstm, gycms }) => {
   useEffect(() => {
     console.log("KiykCstmDetail render!");
     return () => console.log("unmounting...");
   }, []);
+
+  const gycmConv = (cdbnri: string, cdbnsy: string) =>
+    gycms.filter(r => r.GY_CDBNRI === cdbnri && r.GY_CDBNSY === cdbnsy)[0]
+      .GY_NMBNSY;
 
   return (
     <div className="kiykCstm-container">
       <form
         className="kiykCstm-gridContainer"
         autoComplete="off"
-        // onSubmit={handleSubmit(onSubmit)}
         key={cstm.CT_CDCSTM}
       >
-        <p>{cstm.CT_CDCSTM}</p>
-        <p>{cstm.CT_NMCSTM}</p>
-        <div className="kiykCstm-gridContainer-column">
-          <p>読者番号</p>
-          <input
-            type="text"
-            name="cdcstm"
-            defaultValue={cstm.CT_CDCSTM.replace("/s+$/g", "")}
-            ref={register({ pattern: /^2[0-9]{7}/ })}
-          />
-          {errors.cdcstm && <p>cdcstm is 8 characters starting with 2</p>}
+        <div className="kiykCstm-rowContainer">
+          <div className="kiykCstm-columnContainer">
+            <div className="kiykCstm-label">読者番号</div>
+            <textarea
+              className="kiykCstm-column kiykCstm-textarea"
+              defaultValue={cstm.CT_CDCSTM.replace("/s+$/g", "")}
+              style={{ height: "30px", width: "90%" }}
+            />
+          </div>
+
+          <div className="kiykCstm-columnContainer">
+            <div className="kiykCstm-label">顧客区分</div>
+            <textarea
+              className="kiykCstm-column kiykCstm-textarea"
+              defaultValue={[
+                cstm.CT_KBCSTM.replace(/\s+$/g, ""),
+                gycmConv("KBCSTM", cstm.CT_KBCSTM.replace(/\s+$/g, ""))
+              ].join(": ")}
+              style={{ height: "30px", width: "90%" }}
+            />
+          </div>
         </div>
 
-        <div className="cstmDetai-gridContainer-column">
-          <p>電話番号１</p>
-          <input
-            type="text"
-            name="tel1"
-            defaultValue={cstm.CT_NOTEL1.replace(/\s+$/g, "")}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
+        <div className="kiykCstm-columnContainer">
+          <div className="kiykCstm-label">顧客名</div>
+          <textarea
+            className="kiykCstm-column kiykCstm-textarea"
+            defaultValue={[
+              cstm.CT_NMCSTM.replace(/\s+$/g, ""),
+              cstm.CT_NMTNBU.replace(/\s+$/g, ""),
+              cstm.CT_NMSIME !== cstm.CT_NMCSTM
+                ? cstm.CT_NMSIME.replace(/\s+$/g, "")
+                : ""
+            ].join("\n")}
           />
-          {errors.tel1 && <p>tel1 is Numbers from 6 to 20 characters</p>}
         </div>
 
-        <div className="cstmDetai-gridContainer-column">
-          <p>電話番号２</p>
-          <input
-            type="text"
-            name="tel2"
-            defaultValue={cstm.CT_NOTEL2.replace(/\s+$/g, "")}
-            ref={register({ pattern: /^[0-9]{6,20}/ })}
+        {/* <div className="kiykCstm-columnContainer">
+          <div className="kiykCstm-label">顧客名カナ</div>
+          <textarea
+            className="kiykCstm-column kiykCstm-textarea"
+            defaultValue={[
+              cstm.CT_NKCSTM.replace(/\s+$/g, ""),
+              cstm.CT_NKSIME !== cstm.CT_NKCSTM
+                ? cstm.CT_NKSIME.replace(/\s+$/g, "")
+                : ""
+            ].join("\n")}
+            style={{ height: "50px" }}
           />
-          {errors.tel2 && <p>tel2 is Numbers from 6 to 20 characters</p>}
+        </div> */}
+
+        <div className="kiykCstm-columnContainer">
+          <div className="kiykCstm-label">住所</div>
+          <textarea
+            className="kiykCstm-column kiykCstm-textarea"
+            defaultValue={[
+              cstm.CT_ADCST1.replace(/\s+$/g, ""),
+              cstm.CT_ADCST2.replace(/\s+$/g, ""),
+              cstm.CT_ADCST3.replace(/\s+$/g, "")
+            ].join("\n")}
+          />
         </div>
 
-        <div className="cstmDetai-gridContainer-column">
-          <p>顧客名</p>
-          <input
-            type="text"
-            name="nmcstm"
-            // defaultValue={cstm.CT_NMCSTM}
-            defaultValue={cstm.CT_NMCSTM.replace(/\s+$/g, "")}
-            ref={register({ minLength: 2, maxLength: 50 })}
-          />
-          {errors.nmcstm && <p>nmcstm is Strings from 2 to 50 characters</p>}
+        <div className="kiykCstm-rowContainer">
+          <div className="kiykCstm-columnContainer">
+            <div className="kiykCstm-label">電話番号１</div>
+            <textarea
+              className="kiykCstm-column kiykCstm-textarea"
+              defaultValue={cstm.CT_NOTEL1.replace(/\s+$/g, "")}
+              style={{ height: "30px", width: "90%" }}
+            />
+          </div>
+
+          <div className="kiykCstm-columnContainer">
+            <div className="kiykCstm-label">電話番号２</div>
+            <textarea
+              className="kiykCstm-column kiykCstm-textarea"
+              defaultValue={cstm.CT_NOTEL2.replace(/\s+$/g, "")}
+              style={{ height: "30px", width: "90%" }}
+            />
+          </div>
+
+          {/* <div className="kiykCstm-columnContainer">
+            <div className="kiykCstm-label">担当者</div>
+            <textarea
+              className="kiykCstm-column kiykCstm-textarea"
+              defaultValue={[
+                cstm.CT_CDSYTN.replace(/\s+$/g, ""),
+                gycmConv("CDSYTN", cstm.CT_CDSYTN.replace(/\s+$/g, ""))
+              ].join(": ")}
+              style={{ height: "30px", width: "90%" }}
+            />
+          </div> */}
+          <div className="kiykCstm-columnContainer">
+            <div className="kiykCstm-label">生年月日</div>
+            <textarea
+              className="kiykCstm-column kiykCstm-textarea"
+              defaultValue={
+                cstm.CT_DTSNGP.trim() !== ""
+                  ? moment(cstm.CT_DTSNGP).format("YYYY/MM/DD")
+                  : ""
+              }
+              style={{ height: "30px", width: "90%" }}
+            />
+          </div>
         </div>
 
-        <div className="cstmDetai-gridContainer-column">
-          <p>氏名</p>
-          <input
-            type="text"
-            name="nmsime"
-            defaultValue={cstm.CT_NMSIME.replace(/\s+$/g, "")}
-            ref={register({ minLength: 2, maxLength: 50 })}
-          />
-          {errors.nmsime && <p>nmsime is Strings from 2 to 50 characters</p>}
-        </div>
-
-        <div className="cstmDetai-gridContainer-column">
-          <p>住所１</p>
-          <input
-            type="text"
-            name="address1"
-            defaultValue={cstm.CT_ADCST1.replace(/\s+$/g, "")}
-            ref={register({ minLength: 2, maxLength: 50 })}
-          />
-          {errors.address1 && (
-            <p>address1 is Strings from 2 to 50 characters</p>
-          )}
-        </div>
-
-        <div className="cstmDetai-gridContainer-column">
-          <p>住所２</p>
-          <input
-            type="text"
-            name="address2"
-            defaultValue={cstm.CT_ADCST2.replace(/\s+$/g, "")}
-            ref={register({ minLength: 2, maxLength: 50 })}
-          />
-          {errors.address2 && (
-            <p>address2 is Strings from 2 to 50 characters</p>
-          )}
-        </div>
-
-        <div className="cstmDetai-gridContainer-column">
-          <p>住所３</p>
-          <input
-            type="text"
-            name="address3"
-            defaultValue={cstm.CT_ADCST3.replace(/\s+$/g, "")}
-            ref={register({ minLength: 2, maxLength: 50 })}
-          />
-          {errors.address3 && (
-            <p>address3 is Strings from 2 to 50 characters</p>
-          )}
-        </div>
-        {/* <button type="submit">更新</button> */}
-        {/* <input type="submit">更新</input> */}
+        {cstm.CT_TXBIKO.replace(/\s+$/g, "") !== "" && (
+          <div className="kiykCstm-columnContainer">
+            <div className="kiykCstm-label">備考</div>
+            <textarea
+              className="kiykCstm-column kiykCstm-textarea"
+              defaultValue={cstm.CT_TXBIKO.replace(/\s+$/g, "")}
+              style={{ height: "30px" }}
+            />
+          </div>
+        )}
       </form>
     </div>
   );
