@@ -361,7 +361,9 @@ const KiykListTable: React.FC<Props> = ({
                     }}
                     // className="commonTable-addButton"
                     type="button"
-                    onClick={() => switchKiyk(kiyks, row.KYLIST_NOKIYK)}
+                    onClick={() =>
+                      switchKiyk(kiyks, row.KYLIST_NOKIYK.toString())
+                    }
                   >
                     {index + 1}
                   </button>
@@ -377,7 +379,7 @@ const KiykListTable: React.FC<Props> = ({
                     // className="commonTable-addButton"
                     type="button"
                     onClick={() => {
-                      switchKiyk(kiyks, row.KYLIST_NOKIYK);
+                      switchKiyk(kiyks, row.KYLIST_NOKIYK.toString());
                       history.push(`/kiyk-detail?&nokiyk=${row.KYLIST_NOKIYK}`);
                     }}
                   >

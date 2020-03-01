@@ -213,7 +213,7 @@ export const reducer = (state = initialState(), action: Actions): State => {
 
     case types.switchKiyk:
       return Object.assign({}, state, {
-        kiyk: action.payload.kiyks.filter(row => row.KY_NOKIYK === action.payload.nokiyk)[0]
+        kiyk: action.payload.kiyks.filter(row => row.KY_NOKIYK.toString() === action.payload.nokiyk)[0]
       });
 
     case types.getKiykCstmStart:

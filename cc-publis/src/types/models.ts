@@ -142,8 +142,8 @@ export type Ctzh = {
 export type Ctzhs = Ctzh[]
 
 export type Kiyk = {
-  KY_NOKIYK: string;
-  KY_NOSQSY: string;
+  KY_NOKIYK: number;
+  KY_NOSQSY: number;
   KY_CDZASS: string;
   KY_KBCSTM: string;
   KY_KBMSKM: string;
@@ -161,7 +161,7 @@ export type Kiyk = {
   KY_CDBAIT: string;
   KY_CDSYTN: string;
   KY_CDTKSY: string;
-  KY_SUKIYK: string;
+  KY_SUKIYK: number;
   KY_YMKIYK: string;
   KY_YMKIYE: string;
   KY_DTKIYK: string;
@@ -175,21 +175,21 @@ export type Kiyk = {
   KY_KBCYUS: string;
   KY_KBZOUT: string;
   KY_NMZOUT: string;
-  KY_CTKIYK: string;
-  KY_CTHSOY: string;
-  KY_CTHSSM: string;
-  KY_KGKYSZ: string;
-  KY_KGKYSR: string;
-  KY_TNSIDZ: string;
-  KY_TNENDZ: string;
-  KY_TNSORY: string;
-  KY_TNSORE: string;
+  KY_CTKIYK: number;
+  KY_CTHSOY: number;
+  KY_CTHSSM: number;
+  KY_KGKYSZ: number;
+  KY_KGKYSR: number;
+  KY_TNSIDZ: number;
+  KY_TNENDZ: number;
+  KY_TNSORY: number;
+  KY_TNSORE: number;
   KY_TXBIKO: string;
   KY_KBSAKJ: string;
   KY_YMNGDO: string;
-  KY_NOKYIN: string;
-  KY_NOSQSR: string;
-  KY_NOKIZK: string;
+  KY_NOKYIN: number;
+  KY_NOSQSR: number;
+  KY_NOKIZK: number;
   KY_NOWBTY: string;
   KY_CDIDWB: string;
   KY_CDIDVT: string;
@@ -212,14 +212,14 @@ export type Kiyk = {
 export type Kiyks = Kiyk[]
 
 export type KiykList = {
-  KYLIST_NOKIYK: string;
-  KYLIST_NOSQSY: string;
+  KYLIST_NOKIYK: number;
+  KYLIST_NOSQSY: number;
   KYLIST_CDSQSK: string;
   KYLIST_SQ_NMCSTM: string;
   KYLIST_CDSHSK: string;
   KYLIST_SH_NMCSTM: string;
   KYLIST_CDKYPT: string;
-  KYLIST_SUKIYK: string;
+  KYLIST_SUKIYK: number;
   KYLIST_YMKIYK: string;
   KYLIST_YMKIYE: string;
   KYLIST_KBJYOT: string;
@@ -233,30 +233,30 @@ export type KiykList = {
 export type KiykLists = KiykList[]
 
 export type Kyzd = {
-  KS_NOKIYK: string;
-  KS_NOSQSY: string;
+  KS_NOKIYK: number;
+  KS_NOSQSY: number;
   KS_CDSQSK: string;
   KS_CDSHSK: string;
   KS_DTKYKJ: string;
-  KS_KGKJSZ: string;
-  KS_KGKJSR: string;
-  KS_KGKIYK: string;
-  KS_KGKYKJ: string;
+  KS_KGKJSZ: number;
+  KS_KGKJSR: number;
+  KS_KGKIYK: number;
+  KS_KGKYKJ: number;
   KS_DTNYKN: string;
-  KS_KGNYKN: string;
+  KS_KGNYKN: number;
   KS_DTURAG: string;
-  KS_KGURAG: string;
-  KS_ZNKIYK: string;
-  KS_ZNURKK: string;
-  KS_ZKMUKE: string;
-  KS_KGHSZZ: string;
-  KS_KGHSZS: string;
-  KS_CTHSZM: string;
-  KS_SUHSZM: string;
-  KS_CTHSZN: string;
-  KS_SUHSZN: string;
-  KS_ZNHASO: string;
-  KS_SIKYZN: string;
+  KS_KGURAG: number;
+  KS_ZNKIYK: number;
+  KS_ZNURKK: number;
+  KS_ZKMUKE: number;
+  KS_KGHSZZ: number;
+  KS_KGHSZS: number;
+  KS_CTHSZM: number;
+  KS_SUHSZM: number;
+  KS_CTHSZN: number;
+  KS_SUHSZN: number;
+  KS_ZNHASO: number;
+  KS_SIKYZN: number;
   KS_CCDATEC: string;
   KS_CCTIMEC: string;
   KS_CCTERMC: string;
@@ -274,15 +274,15 @@ export type Kyzd = {
 export type Kyzds = Kyzd[]
 
 export type Kyzh = {
-  VKM_NOKIYK: string;
+  VKM_NOKIYK: number;
   VKM_DTSYRI: string;
   VKM_NOSYRI: string;
   VKM_NMSYRI: string;
   VKM_NMSRSY: string;
-  VKM_KGSYRI: string;
-  VKM_SUSURY: string;
-  VKM_KGSRSZ: string;
-  VKM_KGSRSR: string;
+  VKM_KGSYRI: number;
+  VKM_SUSURY: number;
+  VKM_KGSRSZ: number;
+  VKM_KGSRSR: number;
   VKM_KBURKT: string;
 }
 

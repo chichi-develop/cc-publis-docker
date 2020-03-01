@@ -32,7 +32,7 @@ const KiykTankaZandakaContainer: React.FC = () => {
   useEffect(() => {
     console.log("KiykTankaZandakaContainer render!");
     if (kiyk.KY_NOKIYK !== kyzd.KS_NOKIYK) {
-      showListKiyk && kyzdSearch(kiyk.KY_NOKIYK);
+      showListKiyk && kyzdSearch(kiyk.KY_NOKIYK.toString());
     }
     return () => console.log("unmounting...");
   }, [kiyk, kyzd, kyzdSearch, showListKiyk]);
