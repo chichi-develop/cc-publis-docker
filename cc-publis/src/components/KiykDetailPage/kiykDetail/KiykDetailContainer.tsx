@@ -235,7 +235,44 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
           </div>
         </div>
         <div className="kiykDetail-frame kiykDetail-frame-2">
-          <div className="kiykDetail-frame-row"></div>
+          <div className="kiykDetail-frame-row">
+            <div className="kiykDetail-frame-column">
+              <div className="kiykDetail-label">顧客区分</div>
+              <input
+                className="kiykDetail-input"
+                type="text"
+                defaultValue={[
+                  kiyk.KY_KBCSTM.replace(/\s+$/g, ""),
+                  gycmConv("KBCSTM", kiyk.KY_KBCSTM.replace(/\s+$/g, ""))
+                ].join(": ")}
+                style={{ width: "6em" }}
+              />
+            </div>
+            <div className="kiykDetail-frame-column">
+              <div className="kiykDetail-label">購読区分</div>
+              <input
+                className="kiykDetail-input"
+                type="text"
+                defaultValue={[
+                  kiyk.KY_KBKODK.replace(/\s+$/g, ""),
+                  gycmConv("KBKODK", kiyk.KY_KBKODK.replace(/\s+$/g, ""))
+                ].join(": ")}
+                style={{ width: "6em" }}
+              />
+            </div>
+            <div className="kiykDetail-frame-column">
+              <div className="kiykDetail-label">申込区分</div>
+              <input
+                className="kiykDetail-input"
+                type="text"
+                defaultValue={[
+                  kiyk.KY_KBMSKM.replace(/\s+$/g, ""),
+                  gycmConv("KBMSKM", kiyk.KY_KBMSKM.replace(/\s+$/g, ""))
+                ].join(": ")}
+                style={{ width: "6em" }}
+              />
+            </div>
+          </div>
           <div className="kiykDetail-frame-row"></div>
           <div className="kiykDetail-frame-row"></div>
           <div className="kiykDetail-frame-row"></div>
