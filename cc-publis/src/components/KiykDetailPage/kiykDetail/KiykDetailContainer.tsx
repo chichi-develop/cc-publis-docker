@@ -211,25 +211,29 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
                 className="kiykDetail-input"
                 type="text"
                 defaultValue={kiyk.KY_NMZOUT.replace(/\s+$/g, "")}
+                style={{ width: "18em" }}
               />
             </div>
           </div>
           <div className="kiykDetail-frame-row">
-            <div className="kiykDetail-label">特別出荷</div>
-            <input
-              className="kiykDetail-input"
-              type="text"
-              defaultValue={[
-                kiyk.KY_KBTKBT.replace(/\s+$/g, ""),
-                gycmConv("KBTKBT", kiyk.KY_KBTKBT.replace(/\s+$/g, ""))
-              ].join(": ")}
-              style={{ width: "6em" }}
-            />
+            <div className="kiykDetail-frame-column">
+              <div className="kiykDetail-label">特別出荷</div>
+              <input
+                className="kiykDetail-input"
+                type="text"
+                defaultValue={[
+                  kiyk.KY_KBTKBT.replace(/\s+$/g, ""),
+                  gycmConv("KBTKBT", kiyk.KY_KBTKBT.replace(/\s+$/g, ""))
+                ].join(": ")}
+                style={{ width: "6em" }}
+              />
+            </div>
             <div className="kiykDetail-frame-column">
               <input
                 className="kiykDetail-input"
                 type="text"
                 defaultValue={kiyk.KY_TXTKBT.replace(/\s+$/g, "")}
+                style={{ width: "18em" }}
               />
             </div>
           </div>
@@ -273,16 +277,164 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
               />
             </div>
           </div>
-          <div className="kiykDetail-frame-row"></div>
-          <div className="kiykDetail-frame-row"></div>
-          <div className="kiykDetail-frame-row"></div>
-          <div className="kiykDetail-frame-row"></div>
-          <div className="kiykDetail-frame-row"></div>
+          <div className="kiykDetail-frame-row">
+            <div className="kiykDetail-frame-column">
+              <div className="kiykDetail-label">契約区分</div>
+              <input
+                className="kiykDetail-input"
+                type="text"
+                defaultValue={[
+                  kiyk.KY_KBKIYK.replace(/\s+$/g, ""),
+                  gycmConv("KBKIYK", kiyk.KY_KBKIYK.replace(/\s+$/g, ""))
+                ].join(": ")}
+                style={{ width: "7em" }}
+              />
+            </div>
+            <div className="kiykDetail-frame-column">
+              <div className="kiykDetail-label">契約日</div>
+              <div>
+                <input
+                  className="kiykDetail-input"
+                  type="text"
+                  defaultValue={
+                    kiyk.KY_DTKIYK.trim() !== ""
+                      ? moment(kiyk.KY_DTKIYK, "YYYYMMDD").format("YYYY/MM/DD")
+                      : ""
+                  }
+                  style={{ width: "8em" }}
+                />
+              </div>
+            </div>
+            <div className="kiykDetail-frame-column">
+              <div className="kiykDetail-label">契約回数</div>
+              <input
+                className="kiykDetail-input"
+                type="text"
+                defaultValue={kiyk.KY_CTKIYK}
+                style={{ width: "3em" }}
+              />
+            </div>
+          </div>
+          <div className="kiykDetail-frame-row">
+            <div className="kiykDetail-frame-column">
+              <div className="kiykDetail-label">請求書No.</div>
+              <input
+                className="kiykDetail-input"
+                type="text"
+                defaultValue={kiyk.KY_NOSQSY}
+                style={{ width: "6em" }}
+              />
+            </div>
+
+            <div className="kiykDetail-frame-column">
+              <div className="kiykDetail-label">請求日</div>
+              <div>
+                <input
+                  className="kiykDetail-input"
+                  type="text"
+                  defaultValue={
+                    kiyk.KY_DTSQBI.trim() !== ""
+                      ? moment(kiyk.KY_DTSQBI, "YYYYMMDD").format("YYYY/MM/DD")
+                      : ""
+                  }
+                  style={{ width: "8em" }}
+                />
+              </div>
+            </div>
+            <div className="kiykDetail-frame-column">
+              <div className="kiykDetail-label">後払区分</div>
+              <input
+                className="kiykDetail-input"
+                type="text"
+                defaultValue={[
+                  kiyk.KY_KBATBR.replace(/\s+$/g, ""),
+                  gycmConv("KBATBR", kiyk.KY_KBATBR.replace(/\s+$/g, ""))
+                ].join(": ")}
+                style={{ width: "8em" }}
+              />
+            </div>
+          </div>
+          <div className="kiykDetail-frame-row">
+            <div className="kiykDetail-frame-column">
+              <div className="kiykDetail-label">継続区分</div>
+              <input
+                className="kiykDetail-input"
+                type="text"
+                defaultValue={[
+                  kiyk.KY_KBKIZK.replace(/\s+$/g, ""),
+                  gycmConv("KBKIZK", kiyk.KY_KBKIZK.replace(/\s+$/g, ""))
+                ].join(": ")}
+                style={{ width: "8em" }}
+              />
+            </div>
+            <div className="kiykDetail-frame-column">
+              <div className="kiykDetail-label">中止区分</div>
+              <input
+                className="kiykDetail-input"
+                type="text"
+                defaultValue={[
+                  // kiyk.KY_KBCYUS.replace(/\s+$/g, ""),
+                  // gycmConv("KBCYUS", kiyk.KY_KBCYUS.replace(/\s+$/g, ""))
+                  kiyk.KY_KBCYUS,
+                  gycmConv("KBCYUS", kiyk.KY_KBCYUS)
+                ].join(": ")}
+                style={{ width: "8em" }}
+              />
+            </div>
+            <div className="kiykDetail-frame-column">
+              <div className="kiykDetail-label">中止日</div>
+              <div>
+                <input
+                  className="kiykDetail-input"
+                  type="text"
+                  defaultValue={
+                    kiyk.KY_DTSTOP.trim() !== ""
+                      ? moment(kiyk.KY_DTSTOP, "YYYYMMDD").format("YYYY/MM/DD")
+                      : ""
+                  }
+                  style={{ width: "8em" }}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="kiykDetail-frame-row">
+            <div className="kiykDetail-frame-column">
+              <div className="kiykDetail-label">備考</div>
+              <input
+                className="kiykDetail-input"
+                type="text"
+                defaultValue={kiyk.KY_TXBIKO.replace(/\s+$/g, "")}
+                style={{ width: "30em" }}
+              />
+            </div>
+          </div>
+          <div className="kiykDetail-frame-row">
+            <div className="kiykDetail-frame-column">
+              <div className="kiykDetail-label">CCユーザーID</div>
+              <input
+                className="kiykDetail-input"
+                type="text"
+                defaultValue={kiyk.KY_CDIDVT.replace(/\s+$/g, "")}
+                style={{ width: "6em" }}
+              />
+            </div>
+            <div className="kiykDetail-frame-column">
+              <div className="kiykDetail-label">CC取引ID</div>
+              <input
+                className="kiykDetail-input"
+                type="text"
+                defaultValue={kiyk.KY_CDIDTH.replace(/\s+$/g, "")}
+                style={{ width: "15em" }}
+              />
+            </div>
+          </div>
         </div>
         <div className="kiykDetail-frame kiykDetail-frame-3">
           <div className="kiykDetail-frame-row">
             <div className="kiykDetail-frame-column">
-              <div className="kiykDetail-label">請求先No.</div>
+              <div className="kiykDetail-label" style={{ width: "7em" }}>
+                請求先No.
+              </div>
               <input
                 className="kiykDetail-input"
                 type="text"
@@ -293,6 +445,9 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
           </div>
           <div className="kiykDetail-frame-row">
             <div className="kiykDetail-frame-column">
+              <div className="kiykDetail-label" style={{ width: "7em" }}>
+                請求先
+              </div>
               <textarea
                 className="kiykDetail-column kiykDetail-textarea"
                 defaultValue={[
@@ -302,6 +457,18 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
                     ? sqsk.CT_NMSIME.replace(/\s+$/g, "")
                     : ""
                 ].join("\n")}
+                style={{ height: "4em", width: "25em" }}
+              />
+            </div>
+          </div>
+          <div className="kiykDetail-frame-row">
+            <div className="kiykDetail-frame-column">
+              <div className="kiykDetail-label">次回請求先No.</div>
+              <input
+                className="kiykDetail-input"
+                type="text"
+                defaultValue={kiyk.KY_NOJSQS.replace("/s+$/g", "")}
+                style={{ width: "7em" }}
               />
             </div>
           </div>
@@ -309,7 +476,9 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
         <div className="kiykDetail-frame kiykDetail-frame-4">
           <div className="kiykDetail-frame-row">
             <div className="kiykDetail-frame-column">
-              <div className="kiykDetail-label"> 送本先No.</div>
+              <div className="kiykDetail-label" style={{ width: "7em" }}>
+                送本先No.
+              </div>
               <input
                 className="kiykDetail-input"
                 type="text"
@@ -320,6 +489,9 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
           </div>
           <div className="kiykDetail-frame-row">
             <div className="kiykDetail-frame-column">
+              <div className="kiykDetail-label" style={{ width: "7em" }}>
+                送本先
+              </div>
               <textarea
                 className="kiykDetail-column kiykDetail-textarea"
                 defaultValue={[
@@ -329,15 +501,120 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
                     ? shsk.CT_NMSIME.replace(/\s+$/g, "")
                     : ""
                 ].join("\n")}
+                style={{ height: "4em", width: "25em" }}
               />
             </div>
-          </div>{" "}
+          </div>
+          <div className="kiykDetail-frame-row">
+            <div className="kiykDetail-frame-column">
+              <div className="kiykDetail-label">送本先付替履歴</div>
+              <textarea
+                className="kiykDetail-column kiykDetail-textarea"
+                defaultValue={kiyk.KY_TXSHSK.replace(/\s+$/g, "")}
+                style={{ width: "25em" }}
+              />
+            </div>
+          </div>
         </div>
         <div className="kiykDetail-frame kiykDetail-frame-5">
-          <div className="kiykDetail-frame-row"></div>
+          <div className="kiykDetail-frame-row">
+            <div className="kiykDetail-frame-column">
+              <div className="kiykDetail-label">作成日</div>
+              <div>
+                <input
+                  className="kiykDetail-input"
+                  type="text"
+                  defaultValue={
+                    kiyk.KY_CCDATEC.trim() !== ""
+                      ? moment(kiyk.KY_CCDATEC, "YYYYMMDD").format("YYYY/MM/DD")
+                      : ""
+                  }
+                  style={{ width: "8em" }}
+                />
+              </div>
+            </div>
+            <div className="kiykDetail-frame-column">
+              <div className="kiykDetail-label">更新日</div>
+              <div>
+                <input
+                  className="kiykDetail-input"
+                  type="text"
+                  defaultValue={
+                    kiyk.KY_CCDATEX.trim() !== ""
+                      ? moment(kiyk.KY_CCDATEX, "YYYYMMDD").format("YYYY/MM/DD")
+                      : ""
+                  }
+                  style={{ width: "8em" }}
+                />
+              </div>
+            </div>
+          </div>
         </div>
         <div className="kiykDetail-frame kiykDetail-frame-6">
-          <div className="kiykDetail-frame-row"></div>
+          <div className="kiykDetail-frame-row">
+            <div className="kiykDetail-frame-column">
+              <div className="kiykDetail-label">キャンペーン</div>
+              <input
+                className="kiykDetail-input"
+                type="text"
+                defaultValue={[
+                  // kiyk.KY_KBCYUS.replace(/\s+$/g, ""),
+                  // gycmConv("KBCYUS", kiyk.KY_KBCYUS.replace(/\s+$/g, ""))
+                  kiyk.KY_CDCANP,
+                  gycmConv("CDCANP", kiyk.KY_CDCANP)
+                ].join(": ")}
+                style={{ width: "10em" }}
+              />
+            </div>
+            <div className="kiykDetail-frame-column">
+              <div className="kiykDetail-label">担当者</div>
+              <input
+                className="kiykDetail-input"
+                type="text"
+                defaultValue={[
+                  // kiyk.KY_KBCYUS.replace(/\s+$/g, ""),
+                  // gycmConv("KBCYUS", kiyk.KY_KBCYUS.replace(/\s+$/g, ""))
+                  kiyk.KY_CDSYTN,
+                  gycmConv("CDSYTN", kiyk.KY_CDSYTN)
+                ].join(": ")}
+                style={{ width: "10em" }}
+              />
+            </div>
+          </div>
+          <div className="kiykDetail-frame-row">
+            <div className="kiykDetail-frame-column">
+              <div className="kiykDetail-label">申込媒体</div>
+              <input
+                className="kiykDetail-input"
+                type="text"
+                defaultValue={[
+                  // kiyk.KY_KBCYUS.replace(/\s+$/g, ""),
+                  // gycmConv("KBCYUS", kiyk.KY_KBCYUS.replace(/\s+$/g, ""))
+                  kiyk.KY_CDBAIT,
+                  gycmConv("CDBAIT", kiyk.KY_CDBAIT)
+                ].join(": ")}
+                style={{ width: "8em" }}
+              />
+            </div>
+            <div className="kiykDetail-frame-column">
+              <div className="kiykDetail-label">特別社内木鶏</div>
+              <input
+                className="kiykDetail-input"
+                type="text"
+                defaultValue={
+                  kiyk.KY_CDTKSY.trim() !== ""
+                    ? [
+                        // kiyk.KY_KBCYUS.replace(/\s+$/g, ""),
+                        // gycmConv("KBCYUS", kiyk.KY_KBCYUS.replace(/\s+$/g, ""))
+                        kiyk.KY_CDTKSY,
+                        gycmConv("CDSYKS", kiyk.KY_CDTKSY)
+                      ].join(": ")
+                    : ""
+                }
+                style={{ width: "8em" }}
+              />
+            </div>
+          </div>
         </div>
       </form>
     </div>
