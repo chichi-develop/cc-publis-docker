@@ -3,8 +3,8 @@
   width: 800px;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 12fr;
   row-gap: 0.5em;
-  margin-top: 5em;
-  margin-left: 4.5em;
+  margin-top: 7em;
+  margin-left: 5.5em;
 }
 
 .cstmLabel-row-1 {
