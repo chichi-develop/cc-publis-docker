@@ -41,8 +41,6 @@ create table cm_aclg (
   , al_nmcstm varchar(200) comment '顧客名'
   , al_nmtnbu varchar(200) comment '部署名'
   , al_nmtnto varchar(200) comment '担当者名'
-  , createdAt date not null comment '作成日'
-  , updatedAt date not null comment '更新日'
   , constraint cm_aclg_pkc primary key (al_idactv)
 ) comment 'アクティビティログ' ;
 

@@ -181,22 +181,28 @@ const CsmmTable: React.FC<Props> = ({ csmms }) => {
         <thead className="commonTable-thead">
           <tr>
             <th rowSpan={2} onClick={() => handleSort("CM_RBCSMM")}>
-              <p>メモ連番{sort.key === "CM_RBCSMM" ? sort.icon : <span />}</p>
+              <p className="pointer">
+                メモ連番{sort.key === "CM_RBCSMM" ? sort.icon : <span />}
+              </p>
             </th>
             <th onClick={() => handleSort("CM_NMCMBR")}>
-              <p>分類{sort.key === "CM_NMCMBR" ? sort.icon : <span />}</p>
+              <p className="pointer">
+                分類{sort.key === "CM_NMCMBR" ? sort.icon : <span />}
+              </p>
             </th>
             <th onClick={() => handleSort("CM_TXCSMM")}>
-              <p>メモ{sort.key === "CM_TXCSMM" ? sort.icon : <span />}</p>
+              <p className="pointer">
+                メモ{sort.key === "CM_TXCSMM" ? sort.icon : <span />}
+              </p>
             </th>
             <th rowSpan={2} onClick={() => handleSort("CM_CCDATEX")}>
-              <p>
+              <p className="pointer">
                 作成日
                 {sort.key === "CM_CCDATEX" ? sort.icon : <span />}
               </p>
             </th>
             <th rowSpan={2} onClick={() => handleSort("CM_CCDATEC")}>
-              <p>
+              <p className="pointer">
                 更新日
                 {sort.key === "CM_CCDATEC" ? sort.icon : <span />}
               </p>
@@ -256,8 +262,12 @@ const CsmmTable: React.FC<Props> = ({ csmms }) => {
                 <td style={{ textAlign: "right" }}>{row.CM_RBCSMM}</td>
                 <td>{row.CM_NMCMBR}</td>
                 <td>{row.CM_TXCSMM}</td>
-                <td style={{ textAlign: "center" }}>{moment(row.CM_CCDATEC).format("YYYY/MM/DD")}</td>
-                <td style={{ textAlign: "center" }}>{moment(row.CM_CCDATEX).format("YYYY/MM/DD")}</td>
+                <td style={{ textAlign: "center" }}>
+                  {moment(row.CM_CCDATEC).format("YYYY/MM/DD")}
+                </td>
+                <td style={{ textAlign: "center" }}>
+                  {moment(row.CM_CCDATEX).format("YYYY/MM/DD")}
+                </td>
                 {/* <td>{row.CT_NMCSTM}</td> */}
                 {/* <td style={{ textAlign: "right" }}>{row.CT_NOTEL1}</td> */}
                 {/* <td style={{ textAlign: "right" }}>

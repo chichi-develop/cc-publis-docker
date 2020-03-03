@@ -220,10 +220,14 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
               <p></p>
             </th>
             <th rowSpan={2} onClick={() => handleSort("CT_CDCSTM")}>
-              <p>読者番号{sort.key === "CT_CDCSTM" ? sort.icon : <span />}</p>
+              <p className="pointer">
+                読者番号{sort.key === "CT_CDCSTM" ? sort.icon : <span />}
+              </p>
             </th>
             <th onClick={() => handleSort("CT_KBCSTM")}>
-              <p>区分{sort.key === "CT_KBCSTM" ? sort.icon : <span />}</p>
+              <p className="pointer">
+                区分{sort.key === "CT_KBCSTM" ? sort.icon : <span />}
+              </p>
             </th>
             <th rowSpan={2}>
               <p>顧客名</p>
@@ -238,7 +242,9 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
               <p>氏名カナ</p>
             </th>
             <th onClick={() => handleSort("CT_ADCST1")}>
-              <p>住所{sort.key === "CT_ADCST1" ? sort.icon : <span />}</p>
+              <p className="pointer">
+                住所{sort.key === "CT_ADCST1" ? sort.icon : <span />}
+              </p>
             </th>
             <th rowSpan={2}>
               <p>TEL1</p>

@@ -48,7 +48,8 @@ const useStyles = makeStyles(theme => ({
     color: "#668ad8",
     "&:hover": {
       // color: '#0b7dda',
-      color: blue[800]
+      color: blue[800],
+      cursor: "pointer"
     }
   }
 }));
@@ -88,32 +89,29 @@ const MdmmContainer: React.FC = () => {
 
   return (
     <div className="mdmm-body">
-      {showListMdmms ? (
+      <div className="mdmm-menu">
+        <p className="frame-title">お客様窓口メモ</p>
+        <Modal
+          title="新規メモ登録"
+          // open={handleOpenModal => <button className='mdmmTable-addButton' onClick={handleOpenModal}>新規メモ登録</button>}
+          open={(handleOpenModal: () => void) => (
+            <button
+              className="commonTable-addButton"
+              type="button"
+              onClick={handleOpenModal}
+            >
+              新規
+            </button>
+          )}
+          content={(handleCloseModal: () => void) => (
+            <MdmmAdd mdmmAdd={mdmmAdd} handleCloseModal={handleCloseModal} />
+          )}
+          outClickClose={false}
+        />
+        <LinkList cdcstm={cdcstm || "0"} showLinkMdmm={false} />
+      </div>
+      {showListMdmms && (
         <>
-          <div className="mdmm-menu">
-            <p className="frame-title">お客様窓口メモ</p>
-            <Modal
-              title="新規メモ登録"
-              // open={handleOpenModal => <button className='mdmmTable-addButton' onClick={handleOpenModal}>新規メモ登録</button>}
-              open={(handleOpenModal: () => void) => (
-                <button
-                  className="commonTable-addButton"
-                  type="button"
-                  onClick={handleOpenModal}
-                >
-                  新規
-                </button>
-              )}
-              content={(handleCloseModal: () => void) => (
-                <MdmmAdd
-                  mdmmAdd={mdmmAdd}
-                  handleCloseModal={handleCloseModal}
-                />
-              )}
-              outClickClose={false}
-            />
-            <LinkList cdcstm={cdcstm || "0"} showLinkMdmm={false} />
-          </div>
           <MdmmTable
             mdmms={cm_mdmms}
             mdmmEdit={mdmmEdit}
@@ -126,8 +124,6 @@ const MdmmContainer: React.FC = () => {
             </div>
           )} */}
         </>
-      ) : (
-        <LinkList cdcstm={cdcstm || "0"} showLinkMdmm={false} />
       )}
     </div>
   );
@@ -261,16 +257,24 @@ const MdmmTable: React.FC<Props> = ({
         <thead className="commonTable-thead">
           <tr>
             <th rowSpan={2} onClick={() => handleSort("updatedAt")}>
-              <p>更新日付 {sort.key === "updatedAt" ? sort.icon : <span />}</p>
+              <p className="pointer">
+                更新日付 {sort.key === "updatedAt" ? sort.icon : <span />}
+              </p>
             </th>
             <th rowSpan={2} onClick={() => handleSort("md_nommrb")}>
-              <p>メモ連番 {sort.key === "md_nommrb" ? sort.icon : <span />}</p>
+              <p className="pointer">
+                メモ連番 {sort.key === "md_nommrb" ? sort.icon : <span />}
+              </p>
             </th>
             <th onClick={() => handleSort("md_nmmmbr")}>
-              <p>メモ分類 {sort.key === "md_nmmmbr" ? sort.icon : <span />}</p>
+              <p className="pointer">
+                メモ分類 {sort.key === "md_nmmmbr" ? sort.icon : <span />}
+              </p>
             </th>
             <th onClick={() => handleSort("md_txmdmm")}>
-              <p>内容 {sort.key === "md_txmdmm" ? sort.icon : <span />}</p>
+              <p className="pointer">
+                内容 {sort.key === "md_txmdmm" ? sort.icon : <span />}
+              </p>
             </th>
             <th rowSpan={2} style={{ padding: "0", width: "4em" }}>
               <p>編集</p>

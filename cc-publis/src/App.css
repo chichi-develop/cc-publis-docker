@@ -136,3 +136,11 @@ p.frame-title {
   font-size: 16px;
   margin: 0;
 }
+
+button {
+  cursor: pointer;
+}
+
+.pointer {
+  cursor: pointer;
+}
