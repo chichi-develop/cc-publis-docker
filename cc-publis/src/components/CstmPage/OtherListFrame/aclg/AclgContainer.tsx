@@ -173,19 +173,25 @@ const AclgTable: React.FC<Props> = ({ aclgs }) => {
         <thead className="commonTable-thead">
           <tr>
             <th rowSpan={2} onClick={() => handleSort("al_dtactv")}>
-              <p>
+              <p className="pointer">
                 日付
                 {sort.key === "al_dtactv" ? sort.icon : <span />}
               </p>
             </th>
             <th rowSpan={2} onClick={() => handleSort("al_noactv")}>
-              <p>メモ連番 {sort.key === "al_noactv" ? sort.icon : <span />}</p>
+              <p className="pointer">
+                売掛No.{sort.key === "al_noactv" ? sort.icon : <span />}
+              </p>
             </th>
             <th onClick={() => handleSort("al_nmactv")}>
-              <p>区分{sort.key === "al_nmactv" ? sort.icon : <span />}</p>
+              <p className="pointer">
+                区分{sort.key === "al_nmactv" ? sort.icon : <span />}
+              </p>
             </th>
             <th onClick={() => handleSort("al_txactv")}>
-              <p>商品名{sort.key === "al_txactv" ? sort.icon : <span />}</p>
+              <p className="pointer">
+                商品名{sort.key === "al_txactv" ? sort.icon : <span />}
+              </p>
             </th>
             <th rowSpan={2}>
               <p>送り先</p>

@@ -183,31 +183,37 @@ const CstmZandakaHistoryTable: React.FC<Props> = ({ ctzhs }) => {
         <thead className="commonTable-thead">
           <tr>
             <th rowSpan={2} onClick={() => handleSort("VUN_NOSQSY")}>
-              <p>
+              <p className="pointer">
                 請求書番号
                 {sort.key === "VUN_NOSQSY" ? sort.icon : <span />}
               </p>
             </th>
             <th rowSpan={2} onClick={() => handleSort("VUN_DTSYRI")}>
-              <p>
+              <p className="pointer">
                 処理日
                 {sort.key === "VUN_DTSYRI" ? sort.icon : <span />}
               </p>
             </th>
             <th rowSpan={2} onClick={() => handleSort("VUN_TMSYRI")}>
-              <p>
+              <p className="pointer">
                 処理時間
                 {sort.key === "VUN_TMSYRI" ? sort.icon : <span />}
               </p>
             </th>
             <th rowSpan={2} onClick={() => handleSort("VUN_NOSYRI")}>
-              <p>処理番号{sort.key === "VUN_NOSYRI" ? sort.icon : <span />}</p>
+              <p className="pointer">
+                処理番号{sort.key === "VUN_NOSYRI" ? sort.icon : <span />}
+              </p>
             </th>
             <th onClick={() => handleSort("VUN_NMSYRI")}>
-              <p>処理名{sort.key === "VUN_NMSYRI" ? sort.icon : <span />}</p>
+              <p className="pointer">
+                処理名{sort.key === "VUN_NMSYRI" ? sort.icon : <span />}
+              </p>
             </th>
             <th onClick={() => handleSort("VUN_KBSYRI")}>
-              <p>処理区分{sort.key === "VUN_KBSYRI" ? sort.icon : <span />}</p>
+              <p className="pointer">
+                処理区分{sort.key === "VUN_KBSYRI" ? sort.icon : <span />}
+              </p>
             </th>
             <th rowSpan={2}>
               <p>契約金額</p>

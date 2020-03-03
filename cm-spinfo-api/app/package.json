@@ -22,7 +22,7 @@
     "sequelize-cli": "^5.4.0"
   },
   "devDependencies": {
-    "casual": "^1.6.0",
+    "casual": "^1.6.2",
     "lodash": "^4.17.11",
     "nodemon": "^1.18.11",
     "request": "^2.88.0"

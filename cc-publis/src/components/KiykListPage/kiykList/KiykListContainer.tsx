@@ -229,32 +229,32 @@ const KiykListTable: React.FC<Props> = ({
               <p></p>
             </th>
             <th rowSpan={2} onClick={() => handleSort("KYLIST_NOKIYK")}>
-              <p>
+              <p className="pointer">
                 契約番号{sort.key === "KYLIST_NOKIYK" ? sort.icon : <span />}
               </p>
             </th>
             <th rowSpan={2} onClick={() => handleSort("KYLIST_NOSQSY")}>
-              <p>
+              <p className="pointer">
                 請求書番号{sort.key === "KYLIST_NOSQSY" ? sort.icon : <span />}
               </p>
             </th>
             <th rowSpan={2} onClick={() => handleSort("KYLIST_CDSQSK")}>
-              <p>
+              <p className="pointer">
                 請求先番号{sort.key === "KYLIST_CDSQSK" ? sort.icon : <span />}
               </p>
             </th>
             <th rowSpan={2} onClick={() => handleSort("KYLIST_SQ_NMCSTM")}>
-              <p>
+              <p className="pointer">
                 請求先名{sort.key === "KYLIST_SQ_NMCSTM" ? sort.icon : <span />}
               </p>
             </th>
             <th rowSpan={2} onClick={() => handleSort("KYLIST_CDSHSK")}>
-              <p>
+              <p className="pointer">
                 送本先番号{sort.key === "KYLIST_CDSHSK" ? sort.icon : <span />}
               </p>
             </th>
             <th rowSpan={1} onClick={() => handleSort("KYLIST_SH_NMCSTM")}>
-              <p>
+              <p className="pointer">
                 送本先名{sort.key === "KYLIST_SH_NMCSTM" ? sort.icon : <span />}
               </p>
             </th>
@@ -271,7 +271,9 @@ const KiykListTable: React.FC<Props> = ({
               <p>終了号</p>
             </th>
             <th rowSpan={1} onClick={() => handleSort("KYLIST_KBJYOT")}>
-              <p>状態{sort.key === "KYLIST_KBJYOT" ? sort.icon : <span />}</p>
+              <p className="pointer">
+                状態{sort.key === "KYLIST_KBJYOT" ? sort.icon : <span />}
+              </p>
             </th>
             <th rowSpan={2}>
               <p>申込区分</p>

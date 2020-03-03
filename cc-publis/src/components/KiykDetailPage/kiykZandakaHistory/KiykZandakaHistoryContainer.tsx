@@ -183,19 +183,25 @@ const KiykZandakaHistory: React.FC<Props> = ({ kyzhs }) => {
         <thead className="commonTable-thead">
           <tr>
             <th rowSpan={2} onClick={() => handleSort("VKM_DTSYRI")}>
-              <p>
+              <p className="pointer">
                 処理日
                 {sort.key === "VKM_DTSYRI" ? sort.icon : <span />}
               </p>
             </th>
             <th rowSpan={2} onClick={() => handleSort("VKM_NOSYRI")}>
-              <p>処理番号{sort.key === "VKM_NOSYRI" ? sort.icon : <span />}</p>
+              <p className="pointer">
+                処理番号{sort.key === "VKM_NOSYRI" ? sort.icon : <span />}
+              </p>
             </th>
             <th onClick={() => handleSort("VKM_NMSYRI")}>
-              <p>処理名{sort.key === "VKM_NMSYRI" ? sort.icon : <span />}</p>
+              <p className="pointer">
+                処理名{sort.key === "VKM_NMSYRI" ? sort.icon : <span />}
+              </p>
             </th>
             <th onClick={() => handleSort("VKM_NMSRSY")}>
-              <p>処理詳細{sort.key === "VKM_NMSRSY" ? sort.icon : <span />}</p>
+              <p className="pointer">
+                処理詳細{sort.key === "VKM_NMSRSY" ? sort.icon : <span />}
+              </p>
             </th>
             <th rowSpan={2}>
               <p>処理金額</p>
