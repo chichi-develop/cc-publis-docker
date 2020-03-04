@@ -17,7 +17,7 @@ import "./App.css";
 
 const App: React.FC = () => {
   const title = "「致知」顧客情報参照システム";
-  const footerText = "Chichi Publishing Co.,Ltd. © 2019";
+  const footerText = "Chichi Publishing Co.,Ltd. © 2020";
 
   const authState = useSelector((state: StoreState) => state.auth);
   const dispatch = useDispatch();
