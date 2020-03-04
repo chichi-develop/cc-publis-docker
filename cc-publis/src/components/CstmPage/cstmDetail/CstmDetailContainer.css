@@ -127,7 +127,7 @@
 
   grid-template-areas:
     /* "  1               2             3             4             5            6             7              8            9            10               1            2             3              4              5              6              7              8              9              20              21             22             23         "  */
-    "ctCdcstmLabel ctCdcstmLabel ctCdcstmInput ctCdcstmInput ctCdcstmInput  ctKbcstmLabel  ctKbcstmLabel  ctKbcstmInput  ctKbcstmGycms  ctKbcstmGyms  ctKbksyoLabel  ctKbksyoLabel  ctKbksyoInput  ctKbksyoGycms  ctKbksyoGycms  ctCdskaiLabel  ctCdskaiLabel  ctCdskaiInput  ctCdskaiInput  ctCdbaitGycms  ctCdbaitGycms  ctKbjyctLabel  ctKbjyctLabel  ctKbjyctInput"
+    "ctCdcstmLabel ctCdcstmLabel ctCdcstmInput ctCdcstmInput ctCdcstmInput  ctKbcstmLabel  ctKbcstmLabel  ctKbcstmInput  ctKbcstmGycms  ctKbcstmGyms  ctKbksyoLabel  ctKbksyoLabel  ctKbksyoInput  ctKbksyoGycms  ctKbksyoGycms  ctCdskaiLabel  ctCdskaiLabel  ctCdskaiInput  ctCdskaiInput  ctCdskaiGycms  ctCdskaiGycms  ctKbjyctLabel  ctKbjyctLabel  ctKbjyctInput"
     "ctNmcstmLabel ctNmcstmLabel ctNmcstmInput ctNmcstmInput ctNmcstmInput ctNmcstmInput  ctNmcstmInput  ctNmcstmInput  ctNmcstmInput  ctNmcstmInput  ctKbsebtLabel  ctKbsebtLabel  ctKbsebtInput  ctKbsebtGycms  ctKbsebtGycms  ctCdbaitLabel  ctCdbaitLabel  ctCdbaitInput  ctCdbaitInput  ctCdbaitGycms  ctCdbaitGycms  ctKbtkskLabel  ctKbtkskLabel  ctKbtkskInput"
     "ctNkcstmLabel ctNkcstmLabel ctNkcstmInput ctNkcstmInput ctNkcstmInput ctNkcstmInput  ctNkcstmInput  ctNkcstmInput  ctNkcstmInput  ctNkcstmInput  ctCdsyokLabel  ctCdsyokLabel  ctCdsyokInput  ctCdsyokGycms  ctCdsyokGycms  ctCdsyksLabel  ctCdsyksLabel  ctCdsyksInput  ctCdsyksInput  ctCdsyksGycms  ctCdsyksGycms  ctKbjik1Label  ctKbjik1Label  ctKbjik1Input"
     "ctNmtnbuLabel ctNmtnbuLabel ctNmtnbuInput ctNmtnbuInput ctNmtnbuInput ctNmtnbuInput  ctNmtnbuInput  ctNmtnbuInput  ctNmtnbuInput  ctNmtnbuInput  ctKbdmprLabel  ctKbdmprLabel  ctKbdmprInput  ctKbdmprGycms  ctKbdmprGycms  ctCdsytnLabel  ctCdsytnLabel  ctCdsytnInput  ctCdsytnInput  ctCdsytnGycms  ctCdsytnGycms  ctKbjik2Label  ctKbjik2Label  ctKbjik2Input"
@@ -271,6 +271,9 @@
 .cstmDetail-ctCdbaitInput {
   grid-area: ctCdbaitInput;
   width: var(--input-box-size-small);
+}
+.cstmDetail-ctCdbaitGycms {
+  grid-area: ctCdbaitGycms;
 }
 
 .cstmDetail-ctKbtkskLabel {

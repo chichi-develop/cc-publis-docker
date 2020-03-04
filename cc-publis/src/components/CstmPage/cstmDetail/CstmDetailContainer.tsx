@@ -771,6 +771,9 @@ const CstmDetail: React.FC<Props> = ({
             ref={register()}
           />
           {errors.CT_KBJIK1 && <p>エラーメッセージ</p>}
+          <div className="cstmDetail-container-label cstmDetail-ctKbjik2Label">
+            事故(売掛)
+          </div>
           <input
             className={classNames("cstmDetail-ctKbjik2Input", editModeStyle())}
             type="text"
