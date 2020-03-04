@@ -327,7 +327,7 @@ const KiykListTable: React.FC<Props> = ({
           className="commonTable-tbody"
           style={{ scrollBehavior: "smooth", height: "300px" }}
         >
-          {filteredKiyk.map((row, index) => {
+          {filteredKiyk.slice(0, 100).map((row, index) => {
             return (
               // <tr key={kiyk.KYLIST_NOKIYK}>
               // className={[ 'post', isPublished ? 'published' : 'unpublished' ].join(' ')}
