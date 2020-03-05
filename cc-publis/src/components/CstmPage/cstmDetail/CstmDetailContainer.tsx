@@ -126,10 +126,10 @@ const CstmDetail: React.FC<Props> = ({
 
   const { register, handleSubmit, setValue, watch, errors } = useForm();
 
-  const kbcstmCode = watch("CT_KBCSTM");
   const kbksyoCode = watch("CT_KBKSYO");
   const kbsebtCode = watch("CT_KBSEBT");
   const kbdmprCode = watch("CT_KBDMPR");
+  const cdsyokCode = watch("CT_CDSYOK");
 
   const onSubmit = (data: Record<string, any>) => {
     //   history.push(`/cstm?columnName=ct_cdcstm&key=${data.cdcstm}%`);
@@ -193,6 +193,7 @@ const CstmDetail: React.FC<Props> = ({
       <form
         autoComplete="off"
         onSubmit={handleSubmit(onSubmit)}
+        // key={(cstm.CT_CDCSTM, cstm.CT_KBSEBT, kbsebtCode)}
         key={cstm.CT_CDCSTM}
       >
         <div className="cstmDetail-gridContainer">
@@ -251,10 +252,7 @@ const CstmDetail: React.FC<Props> = ({
 
           {errors.CT_KBCSTM && <p>エラーメッセージ</p>}
           <div className="cstmDetail-ctKbcstmGycms gycms">
-            {gycmConv(
-              "KBCSTM",
-              kbcstmCode || cstm.CT_KBCSTM.replace(/\s+$/g, "")
-            )}
+            {gycmConv("KBCSTM", cstm.CT_KBCSTM)}
           </div>
           {errors.CT_KBCSTM && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctNmcstmLabel">
@@ -336,7 +334,7 @@ const CstmDetail: React.FC<Props> = ({
             className={classNames(
               "cstmDetail-ctKbksyoInput",
               "cstmDetail-container-selectBox",
-              editModeStyle()
+              editModeStyle(true)
             )}
             name="CT_KBKSYO"
             ref={register()}
@@ -350,10 +348,12 @@ const CstmDetail: React.FC<Props> = ({
 
           {errors.CT_KBKSYO && <p>エラーメッセージ</p>}
           <div className="cstmDetail-ctKbksyoGycms gycms">
-            {gycmConv(
-              "KBKSYO",
-              kbksyoCode || cstm.CT_KBKSYO.replace(/\s+$/g, "")
-            )}
+            {editMode
+              ? gycmConv(
+                  "KBKSYO",
+                  kbksyoCode || cstm.CT_KBKSYO.replace(/\s+$/g, "")
+                )
+              : gycmConv("KBKSYO", cstm.CT_KBKSYO)}
           </div>
           <div className="cstmDetail-container-label cstmDetail-ctNoyubnLabel">
             郵便番号
@@ -532,11 +532,12 @@ const CstmDetail: React.FC<Props> = ({
 
           {errors.CT_KBDMPR && <p>エラーメッセージ</p>}
           <div className="cstmDetail-ctKbdmprGycms gycms">
-            {/* {gycmConv("KBDMPR", cstm.CT_KBDMPR)} */}
-            {gycmConv(
-              "KBDMPR",
-              kbdmprCode || cstm.CT_KBDMPR.replace(/\s+$/g, "")
-            )}
+            {editMode
+              ? gycmConv(
+                  "KBDMPR",
+                  kbdmprCode || cstm.CT_KBDMPR.replace(/\s+$/g, "")
+                )
+              : gycmConv("KBDMPR", cstm.CT_KBDMPR)}
           </div>
 
           <div className="cstmDetail-container-label cstmDetail-ctTxbikoLabel">
@@ -592,10 +593,12 @@ const CstmDetail: React.FC<Props> = ({
             {gycmConv("KBSEBT", cstm.CT_KBSEBT)}
           </div> */}
           <div className="cstmDetail-ctKbsebtGycms gycms">
-            {gycmConv(
-              "KBSEBT",
-              kbsebtCode || cstm.CT_KBSEBT.replace(/\s+$/g, "")
-            )}
+            {editMode
+              ? gycmConv(
+                  "KBSEBT",
+                  kbsebtCode || cstm.CT_KBSEBT.replace(/\s+$/g, "")
+                )
+              : gycmConv("KBSEBT", cstm.CT_KBSEBT)}
           </div>
           <div className="cstmDetail-container-label cstmDetail-ctDtsngpLabel">
             生年月日
@@ -618,7 +621,7 @@ const CstmDetail: React.FC<Props> = ({
           <div className="cstmDetail-container-label cstmDetail-ctCdsyokLabel">
             職種
           </div>
-          <input
+          {/* <input
             className={classNames(
               "cstmDetail-ctCdsyokInput",
               editModeStyle(true)
@@ -627,10 +630,31 @@ const CstmDetail: React.FC<Props> = ({
             name="CT_CDSYOK"
             defaultValue={cstm.CT_CDSYOK.replace(/\s+$/g, "")}
             ref={register()}
-          />
+          /> */}
+
+          <select
+            className={classNames(
+              "cstmDetail-ctCdsyokInput",
+              "cstmDetail-container-selectBox",
+              editModeStyle(true)
+            )}
+            name="CT_CDSYOK"
+            ref={register()}
+            defaultValue={cstm.CT_CDSYOK.replace(/\s+$/g, "")}
+            onChange={e => {
+              setValue("CT_CDSYOK", e.target.value, true);
+            }}
+          >
+            {gycmOption("CDSYOK")}
+          </select>
           {errors.CT_CDSYOK && <p>エラーメッセージ</p>}
           <div className="cstmDetail-ctCdsyokGycms gycms">
-            {gycmConv("CDSYOK", cstm.CT_CDSYOK)}
+            {editMode
+              ? gycmConv(
+                  "CDSYOK",
+                  cdsyokCode || cstm.CT_CDSYOK.replace(/\s+$/g, "")
+                )
+              : gycmConv("CDSYOK", cstm.CT_CDSYOK)}
           </div>
           <div className="cstmDetail-container-label cstmDetail-ctCdbaitLabel">
             申込媒体
@@ -827,8 +851,8 @@ const CstmDetail: React.FC<Props> = ({
           {errors.CT_CCDATEX && <p>エラーメッセージ</p>}
         </div>
         <div className="cstmDetail-buttonContainer">
-          {isAuth && privilege.editPublisCstm && (
-            // {true && (
+          {/* {isAuth && privilege.editPublisCstm && ( */}
+          {true && (
             <div className="cstmDetail-buttonList">
               {/* <div> */}
               {!editMode ? (
