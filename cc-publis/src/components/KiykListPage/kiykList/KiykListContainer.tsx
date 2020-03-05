@@ -267,15 +267,18 @@ const KiykListTable: React.FC<Props> = ({
             <th rowSpan={2}>
               <p>開始号</p>
             </th>
-            <th rowSpan={2}>
+            {/*
+              <th rowSpan={2}>
               <p>終了号</p>
-            </th>
+              </th>
+            */}
             <th rowSpan={1} onClick={() => handleSort("KYLIST_KBJYOT")}>
               <p className="pointer">
                 状態{sort.key === "KYLIST_KBJYOT" ? sort.icon : <span />}
               </p>
             </th>
-            <th rowSpan={2}>
+            {/*
+              <th rowSpan={2}>
               <p>申込区分</p>
             </th>
             <th rowSpan={2}>
@@ -290,6 +293,7 @@ const KiykListTable: React.FC<Props> = ({
             <th rowSpan={2}>
               <p>売掛</p>
             </th>
+          */}
           </tr>
           <tr>
             <th>
@@ -396,7 +400,9 @@ const KiykListTable: React.FC<Props> = ({
                 <td style={{ textAlign: "center" }}>{row.KYLIST_CDKYPT}</td>
                 <td style={{ textAlign: "right" }}>{row.KYLIST_SUKIYK}</td>
                 <td style={{ textAlign: "center" }}>{row.KYLIST_YMKIYK}</td>
+                {/*
                 <td style={{ textAlign: "center" }}>{row.KYLIST_YMKIYE}</td>
+                */}
                 {/* <td>
                   {
                     gycms.filter(
@@ -408,11 +414,13 @@ const KiykListTable: React.FC<Props> = ({
                 </td> */}
                 {/* <td>{row.KYLIST_KBMSKM}</td> */}
                 <td>{gycmConv("KBJYOT", row.KYLIST_KBJYOT)}</td>
+                {/*
                 <td>{gycmConv("KBMSKM", row.KYLIST_KBMSKM)}</td>
                 <td>{gycmConv("KBKIZK", row.KYLIST_KBKIZK)}</td>
                 <td>{gycmConv("KBKSYB", row.KYLIST_KBKSYB)}</td>
                 <td>{gycmConv("KBTKBT", row.KYLIST_KBTKBT)}</td>
                 <td style={{ textAlign: "right" }}>{row.KSLIST_ZNURKK}</td>
+                */}
                 {/* <td>{moment(row.KYLIST_DTKIYK).format("YYYY/MM/DD")}</td> */}
                 {/* <td style={{ textAlign: "right" }}>{row.KYLIST_NOKIYK}</td> */}
                 {/* TODO: redux */}

@@ -232,9 +232,9 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
             <th rowSpan={2}>
               <p>顧客名</p>
             </th>
-            <th rowSpan={2}>
+            {/*<th rowSpan={2}>
               <p>カナ</p>
-            </th>
+            </th>*/}
             <th rowSpan={2}>
               <p>氏名</p>
             </th>
@@ -252,9 +252,9 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
             <th rowSpan={2}>
               <p>TEL2</p>
             </th>
-            <th rowSpan={2}>
+            {/*<th rowSpan={2}>
               <p>生年月日</p>
-            </th>
+          // </th>*/}
           </tr>
           <tr>
             <th>
@@ -371,8 +371,10 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
                 </td> */}
                 <td>{gycmConv("KBCSTM", row.CT_KBCSTM)}</td>
                 <td>{row.CT_NMCSTM}</td>
-                <td>{row.CT_NKCSTM}</td>
                 <td>{row.CT_NMSIME}</td>
+                {/*
+                <td>{row.CT_NKCSTM}</td>
+              */}
                 <td>{row.CT_NKSIME}</td>
                 <td>{row.CT_ADCST1}</td>
                 <td style={{ textAlign: "right" }}>{row.CT_NOTEL1}</td>
@@ -384,11 +386,11 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
                       ${row.CT_DTSNGP.slice(4, 6)}/
                       ${row.CT_DTSNGP.slice(6, 8)}`}
                 </td> */}
-                <td>
+                {/*<td>
                   {row.CT_DTSNGP.trim() !== ""
                     ? moment(row.CT_DTSNGP).format("YYYY/MM/DD")
                     : ""}
-                </td>
+                </td>*/}
               </tr>
             );
           })}
