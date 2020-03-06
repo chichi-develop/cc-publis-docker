@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Actions } from "../../../store/actions";
 import { StoreState } from "../../../store";
 import { useLocation, useHistory } from "react-router-dom";
+import classNames from "classnames";
 
 // import moment from "moment";
 import _ from "lodash";
@@ -61,7 +62,6 @@ const KiykListContainer: React.FC = () => {
     console.log("KiykListContainer render!");
     if (key !== null && columnName !== null) {
       kiykSearch(columnName, key);
-      console.log("KiykListContainer render!");
     }
     if (!setGycm) {
       getGycmStart();
@@ -110,6 +110,8 @@ const KiykListTable: React.FC<Props> = ({
     icon?: JSX.Element;
   };
 
+  const pageLimit = 100;
+
   const initialState = {
     kylist_kbjyot: [],
     kylist_kbjyot_key: "",
@@ -120,18 +122,32 @@ const KiykListTable: React.FC<Props> = ({
     },
     filterQuery: {
       kylist_kbjyot_key: ""
+    },
+    paginateParam: {
+      offset: 0,
+      currentPage: 1,
+      totalRecords: kiykLists.length,
+      totalPage: Math.ceil(kiykLists.length / pageLimit),
+      showPageStart: 0
     }
   };
 
   const [ky_kbjyots, setKbkiyks] = useState<string[]>(
     initialState.kylist_kbjyot
   );
-  // 検索条件
+
+  // フィルタ
   const [filterQuery, setFilterQuery] = useState<FilterQuery>(
     initialState.filterQuery
   );
-  // ソート条件
+
+  // ソート
   const [sort, setSort] = useState<Sort>(initialState.sort);
+
+  // ページネーション
+  const [paginateParam, setPaginateParam] = useState(
+    initialState.paginateParam
+  );
 
   useEffect(() => {
     console.log("KiykListTable render!");
@@ -185,6 +201,14 @@ const KiykListTable: React.FC<Props> = ({
       });
     }
 
+    setPaginateParam({
+      offset: 0,
+      currentPage: 1,
+      totalRecords: tmpKiyks.length,
+      totalPage: Math.ceil(tmpKiyks.length / pageLimit),
+      showPageStart: 0
+    });
+
     return tmpKiyks;
   }, [filterQuery, sort, kiykLists]);
 
@@ -213,197 +237,268 @@ const KiykListTable: React.FC<Props> = ({
     }
   };
 
+  // ページ選択
+  const handlePage = (page: number) => {
+    let start;
+    if (paginateParam.totalPage < 10 || page < 5) {
+      start = 0;
+    } else if (page < paginateParam.totalPage - 4) {
+      start = page - 5;
+    } else {
+      start = paginateParam.totalPage - 10;
+    }
+    setPaginateParam({
+      ...paginateParam,
+      offset: (page - 1) * pageLimit,
+      currentPage: page,
+      showPageStart: start
+    });
+  };
+
   const gycmConv = (cdbnri: string, cdbnsy: string) =>
     gycms.filter(r => r.GY_CDBNRI === cdbnri && r.GY_CDBNSY === cdbnsy)[0]
       .GY_NMBNSY;
 
   return (
-    <div
-      className="kiykList-container"
-      style={kiykLists.length < 12 ? { overflowY: "hidden" } : {}}
-    >
-      <table className="commonTable-table">
-        <thead className="commonTable-thead">
-          <tr>
-            <th rowSpan={2}>
-              <p></p>
-            </th>
-            <th rowSpan={2} onClick={() => handleSort("KYLIST_NOKIYK")}>
-              <p className="pointer">
-                契約番号{sort.key === "KYLIST_NOKIYK" ? sort.icon : <span />}
-              </p>
-            </th>
-            <th rowSpan={2} onClick={() => handleSort("KYLIST_NOSQSY")}>
-              <p className="pointer">
-                請求書番号{sort.key === "KYLIST_NOSQSY" ? sort.icon : <span />}
-              </p>
-            </th>
-            <th rowSpan={2} onClick={() => handleSort("KYLIST_CDSQSK")}>
-              <p className="pointer">
-                請求先番号{sort.key === "KYLIST_CDSQSK" ? sort.icon : <span />}
-              </p>
-            </th>
-            <th rowSpan={2} onClick={() => handleSort("KYLIST_SQ_NMCSTM")}>
-              <p className="pointer">
-                請求先名{sort.key === "KYLIST_SQ_NMCSTM" ? sort.icon : <span />}
-              </p>
-            </th>
-            <th rowSpan={2} onClick={() => handleSort("KYLIST_CDSHSK")}>
-              <p className="pointer">
-                送本先番号{sort.key === "KYLIST_CDSHSK" ? sort.icon : <span />}
-              </p>
-            </th>
-            <th rowSpan={1} onClick={() => handleSort("KYLIST_SH_NMCSTM")}>
-              <p className="pointer">
-                送本先名{sort.key === "KYLIST_SH_NMCSTM" ? sort.icon : <span />}
-              </p>
-            </th>
-            <th rowSpan={2}>
-              <p>契約PT</p>
-            </th>
-            <th rowSpan={2}>
-              <p>部数</p>
-            </th>
-            <th rowSpan={2}>
-              <p>開始号</p>
-            </th>
-            {/*
+    <>
+      {paginateParam.totalPage !== 1 && (
+        <div className="kiykList-pagination">
+          {paginateParam.currentPage !== 1 && (
+            <span onClick={() => handlePage(1)}>先頭へ</span>
+          )}
+          {paginateParam.currentPage !== 1 &&
+            paginateParam.currentPage !== 2 && (
+              <span onClick={() => handlePage(paginateParam.currentPage - 1)}>
+                ＜
+              </span>
+            )}
+          <ul className="kiykList-pagination-ul">
+            {[...Array(paginateParam.totalPage)]
+              .slice(
+                paginateParam.showPageStart,
+                paginateParam.showPageStart + 10
+              )
+              .map((_, i) => {
+                i++;
+                let page = i + paginateParam.showPageStart;
+                return (
+                  <li
+                    className={classNames("kiykList-pagination-list", {
+                      "kiykList-pagination-active":
+                        page === paginateParam.currentPage
+                    })}
+                    key={page}
+                    onClick={() => handlePage(page)}
+                  >
+                    {page}
+                  </li>
+                );
+              })}
+          </ul>
+          {paginateParam.currentPage !== paginateParam.totalPage &&
+            paginateParam.currentPage !== paginateParam.totalPage - 1 && (
+              <span onClick={() => handlePage(paginateParam.currentPage + 1)}>
+                ＞
+              </span>
+            )}
+          {paginateParam.currentPage !== paginateParam.totalPage && (
+            <span onClick={() => handlePage(paginateParam.totalPage)}>
+              最後へ
+            </span>
+          )}
+        </div>
+      )}
+      <div
+        className="kiykList-container"
+        style={kiykLists.length < 12 ? { overflowY: "hidden" } : {}}
+      >
+        <table className="commonTable-table">
+          <thead className="commonTable-thead">
+            <tr>
               <th rowSpan={2}>
-              <p>終了号</p>
+                <p></p>
               </th>
-            */}
-            <th rowSpan={1} onClick={() => handleSort("KYLIST_KBJYOT")}>
-              <p className="pointer">
-                状態{sort.key === "KYLIST_KBJYOT" ? sort.icon : <span />}
-              </p>
-            </th>
-            {/*
+              <th rowSpan={2} onClick={() => handleSort("KYLIST_NOKIYK")}>
+                <p className="pointer">
+                  契約番号{sort.key === "KYLIST_NOKIYK" ? sort.icon : <span />}
+                </p>
+              </th>
+              <th rowSpan={2} onClick={() => handleSort("KYLIST_NOSQSY")}>
+                <p className="pointer">
+                  請求書番号
+                  {sort.key === "KYLIST_NOSQSY" ? sort.icon : <span />}
+                </p>
+              </th>
+              <th rowSpan={2} onClick={() => handleSort("KYLIST_CDSQSK")}>
+                <p className="pointer">
+                  請求先番号
+                  {sort.key === "KYLIST_CDSQSK" ? sort.icon : <span />}
+                </p>
+              </th>
+              <th rowSpan={2} onClick={() => handleSort("KYLIST_SQ_NMCSTM")}>
+                <p className="pointer">
+                  請求先名
+                  {sort.key === "KYLIST_SQ_NMCSTM" ? sort.icon : <span />}
+                </p>
+              </th>
+              <th rowSpan={2} onClick={() => handleSort("KYLIST_CDSHSK")}>
+                <p className="pointer">
+                  送本先番号
+                  {sort.key === "KYLIST_CDSHSK" ? sort.icon : <span />}
+                </p>
+              </th>
+              <th rowSpan={1} onClick={() => handleSort("KYLIST_SH_NMCSTM")}>
+                <p className="pointer">
+                  送本先名
+                  {sort.key === "KYLIST_SH_NMCSTM" ? sort.icon : <span />}
+                </p>
+              </th>
               <th rowSpan={2}>
-              <p>申込区分</p>
-            </th>
-            <th rowSpan={2}>
-              <p>継続区分</p>
-            </th>
-            <th rowSpan={2}>
-              <p>発送区分</p>
-            </th>
-            <th rowSpan={2}>
-              <p>特別出荷区分</p>
-            </th>
-            <th rowSpan={2}>
-              <p>売掛</p>
-            </th>
-          */}
-          </tr>
-          <tr>
-            <th>
-              <input
-                type="text"
-                name="KYLIST_SH_NMCSTM"
-                placeholder="絞り込み検索"
-                value={filterQuery.KYLIST_SH_NMCSTM || ""}
-                autoComplete="off"
-                onChange={handleFilter}
-              />
-            </th>
-            <th>
-              <select
-                name="kylist_kbjyot_key"
-                // value={filterQuery.md_nmmmbr_key||""}
-                value={filterQuery.kylist_kbjyot_key}
-                onChange={handleFilter}
-              >
-                <option value="">選択</option>
-                {ky_kbjyots.map((item: string) => {
-                  return (
-                    // <option key={index} value={item}>
-                    <option key={item} value={item}>
-                      {/* {item} */}
-                      {gycmConv("KBJYOT", item)}
-                    </option>
-                  );
-                })}
-              </select>
-            </th>
-          </tr>
-        </thead>
-        <tbody
-          className="commonTable-tbody"
-          style={{ scrollBehavior: "smooth", height: "300px" }}
-        >
-          {filteredKiyk.slice(0, 100).map((row, index) => {
-            return (
-              // <tr key={kiyk.KYLIST_NOKIYK}>
-              // className={[ 'post', isPublished ? 'published' : 'unpublished' ].join(' ')}
-              <tr
-                key={row.KYLIST_NOKIYK}
-                // style={
-                //   row.KYLIST_NOKIYK === kiyk.KY_NOKIYK
-                //     ? { background: "#ffe4e1" }
-                //     : {}
-                // }
-                style={(() => {
-                  switch (true) {
-                    case row.KYLIST_NOKIYK === kiyk.KY_NOKIYK:
-                      return { background: "#d9efff" };
-                    case row.KYLIST_KBJYOT === "3":
-                      return { background: "#ededed" };
-                    case row.KYLIST_KBJYOT === "4":
-                      return { background: "#ededed" };
-                    case row.KYLIST_KBJYOT === "5":
-                      return { background: "#ededed" };
-                    case row.KYLIST_KBJYOT === "8":
-                      return { background: "#ffe4e1" };
-                    default:
-                  }
-                })()}
-              >
-                <td style={{ textAlign: "right" }}>
-                  <button
-                    style={{
-                      color: "#668ad8",
-                      borderStyle: "none",
-                      backgroundColor: "transparent"
-                    }}
-                    // className="commonTable-addButton"
-                    type="button"
-                    onClick={() =>
-                      switchKiyk(kiyks, row.KYLIST_NOKIYK.toString())
-                    }
+                <p>契約PT</p>
+              </th>
+              <th rowSpan={2}>
+                <p>部数</p>
+              </th>
+              <th rowSpan={2}>
+                <p>開始号</p>
+              </th>
+              {/* <th rowSpan={2}>
+                <p>終了号</p>
+              </th> */}
+              <th rowSpan={1} onClick={() => handleSort("KYLIST_KBJYOT")}>
+                <p className="pointer">
+                  状態{sort.key === "KYLIST_KBJYOT" ? sort.icon : <span />}
+                </p>
+              </th>
+              {/* <th rowSpan={2}>
+                <p>申込区分</p>
+              </th>
+              <th rowSpan={2}>
+                <p>継続区分</p>
+              </th>
+              <th rowSpan={2}>
+                <p>発送区分</p>
+              </th>
+              <th rowSpan={2}>
+                <p>特別出荷区分</p>
+              </th>
+              <th rowSpan={2}>
+                <p>売掛</p>
+              </th> */}
+            </tr>
+            <tr>
+              <th>
+                <input
+                  type="text"
+                  name="KYLIST_SH_NMCSTM"
+                  placeholder="絞り込み検索"
+                  value={filterQuery.KYLIST_SH_NMCSTM || ""}
+                  autoComplete="off"
+                  onChange={handleFilter}
+                />
+              </th>
+              <th>
+                <select
+                  name="kylist_kbjyot_key"
+                  // value={filterQuery.md_nmmmbr_key||""}
+                  value={filterQuery.kylist_kbjyot_key}
+                  onChange={handleFilter}
+                >
+                  <option value="">選択</option>
+                  {ky_kbjyots.map((item: string) => {
+                    return (
+                      // <option key={index} value={item}>
+                      <option key={item} value={item}>
+                        {/* {item} */}
+                        {gycmConv("KBJYOT", item)}
+                      </option>
+                    );
+                  })}
+                </select>
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            className="commonTable-tbody"
+            style={{ scrollBehavior: "smooth", height: "300px" }}
+          >
+            {filteredKiyk
+              .slice(paginateParam.offset, paginateParam.offset + pageLimit)
+              .map((row, index) => {
+                return (
+                  // <tr key={kiyk.KYLIST_NOKIYK}>
+                  // className={[ 'post', isPublished ? 'published' : 'unpublished' ].join(' ')}
+                  <tr
+                    key={row.KYLIST_NOKIYK}
+                    // style={
+                    //   row.KYLIST_NOKIYK === kiyk.KY_NOKIYK
+                    //     ? { background: "#ffe4e1" }
+                    //     : {}
+                    // }
+                    style={(() => {
+                      switch (true) {
+                        case row.KYLIST_NOKIYK === kiyk.KY_NOKIYK:
+                          return { background: "#d9efff" };
+                        case row.KYLIST_KBJYOT === "3":
+                          return { background: "#ededed" };
+                        case row.KYLIST_KBJYOT === "4":
+                          return { background: "#ededed" };
+                        case row.KYLIST_KBJYOT === "5":
+                          return { background: "#ededed" };
+                        case row.KYLIST_KBJYOT === "8":
+                          return { background: "#ffe4e1" };
+                        default:
+                      }
+                    })()}
                   >
-                    {index + 1}
-                  </button>
-                </td>
-                <td>
-                  <button
-                    style={{
-                      textAlign: "right",
-                      color: "#FF9265",
-                      borderStyle: "none",
-                      backgroundColor: "transparent"
-                    }}
-                    // className="commonTable-addButton"
-                    type="button"
-                    onClick={() => {
-                      switchKiyk(kiyks, row.KYLIST_NOKIYK.toString());
-                      history.push(`/kiyk-detail?&nokiyk=${row.KYLIST_NOKIYK}`);
-                    }}
-                  >
-                    {row.KYLIST_NOKIYK}
-                  </button>
-                </td>
-                <td style={{ textAlign: "right" }}>{row.KYLIST_NOSQSY}</td>
-                <td style={{ textAlign: "center" }}>{row.KYLIST_CDSQSK}</td>
-                <td>{row.KYLIST_SQ_NMCSTM}</td>
-                <td>{row.KYLIST_CDSHSK}</td>
-                <td>{row.KYLIST_SH_NMCSTM}</td>
-                <td style={{ textAlign: "center" }}>{row.KYLIST_CDKYPT}</td>
-                <td style={{ textAlign: "right" }}>{row.KYLIST_SUKIYK}</td>
-                <td style={{ textAlign: "center" }}>{row.KYLIST_YMKIYK}</td>
-                {/*
-                <td style={{ textAlign: "center" }}>{row.KYLIST_YMKIYE}</td>
-                */}
-                {/* <td>
+                    <td style={{ textAlign: "right" }}>
+                      <button
+                        style={{
+                          color: "#668ad8",
+                          borderStyle: "none",
+                          backgroundColor: "transparent"
+                        }}
+                        // className="commonTable-addButton"
+                        type="button"
+                        onClick={() =>
+                          switchKiyk(kiyks, row.KYLIST_NOKIYK.toString())
+                        }
+                      >
+                        {index +
+                          1 +
+                          (paginateParam.currentPage - 1) * pageLimit}
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        style={{
+                          textAlign: "right",
+                          color: "#FF9265",
+                          borderStyle: "none",
+                          backgroundColor: "transparent"
+                        }}
+                        // className="commonTable-addButton"
+                        type="button"
+                        onClick={() => {
+                          switchKiyk(kiyks, row.KYLIST_NOKIYK.toString());
+                          history.push(
+                            `/kiyk-detail?&nokiyk=${row.KYLIST_NOKIYK}`
+                          );
+                        }}
+                      >
+                        {row.KYLIST_NOKIYK}
+                      </button>
+                    </td>
+                    <td style={{ textAlign: "right" }}>{row.KYLIST_NOSQSY}</td>
+                    <td style={{ textAlign: "center" }}>{row.KYLIST_CDSQSK}</td>
+                    <td>{row.KYLIST_SQ_NMCSTM}</td>
+                    <td>{row.KYLIST_CDSHSK}</td>
+                    <td>{row.KYLIST_SH_NMCSTM}</td>
+                    <td style={{ textAlign: "center" }}>{row.KYLIST_CDKYPT}</td>
+                    <td style={{ textAlign: "right" }}>{row.KYLIST_SUKIYK}</td>
+                    <td style={{ textAlign: "center" }}>{row.KYLIST_YMKIYK}</td>
+                    {/* <td style={{ textAlign: "center" }}>{row.KYLIST_YMKIYE}</td> */}
+                    {/* <td>
                   {
                     gycms.filter(
                       r =>
@@ -412,27 +507,28 @@ const KiykListTable: React.FC<Props> = ({
                     )[0].GY_NMBNSY
                   }
                 </td> */}
-                {/* <td>{row.KYLIST_KBMSKM}</td> */}
-                <td>{gycmConv("KBJYOT", row.KYLIST_KBJYOT)}</td>
-                {/*
+                    {/* <td>{row.KYLIST_KBMSKM}</td> */}
+                    <td>{gycmConv("KBJYOT", row.KYLIST_KBJYOT)}</td>
+                    {/*
                 <td>{gycmConv("KBMSKM", row.KYLIST_KBMSKM)}</td>
                 <td>{gycmConv("KBKIZK", row.KYLIST_KBKIZK)}</td>
                 <td>{gycmConv("KBKSYB", row.KYLIST_KBKSYB)}</td>
                 <td>{gycmConv("KBTKBT", row.KYLIST_KBTKBT)}</td>
                 <td style={{ textAlign: "right" }}>{row.KSLIST_ZNURKK}</td>
                 */}
-                {/* <td>{moment(row.KYLIST_DTKIYK).format("YYYY/MM/DD")}</td> */}
-                {/* <td style={{ textAlign: "right" }}>{row.KYLIST_NOKIYK}</td> */}
-                {/* TODO: redux */}
-                {/* <td style={{ textAlign: "right" }}>
+                    {/* <td>{moment(row.KYLIST_DTKIYK).format("YYYY/MM/DD")}</td> */}
+                    {/* <td style={{ textAlign: "right" }}>{row.KYLIST_NOKIYK}</td> */}
+                    {/* TODO: redux */}
+                    {/* <td style={{ textAlign: "right" }}>
                   {row.CT_NOTEL2.toLocaleString()}
                 </td> */}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+                  </tr>
+                );
+              })}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 };
 
