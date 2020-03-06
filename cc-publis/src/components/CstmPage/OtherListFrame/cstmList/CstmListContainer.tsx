@@ -3,8 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { Actions } from "../../../../store/actions";
 import { StoreState } from "../../../../store";
 import { useLocation, useHistory } from "react-router-dom";
+import classNames from "classnames";
 
-import moment from "moment";
+// import moment from "moment";
 import _ from "lodash";
 
 import {
@@ -59,7 +60,6 @@ const CstmListContainer: React.FC = () => {
 
   useEffect(() => {
     console.log("CstmListContainer render!");
-    console.log("CstmListContainer render!");
     if (key !== null && columnName !== null) {
       cstmSearch(columnName, key, "cstm");
     }
@@ -103,6 +103,8 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
     icon?: JSX.Element;
   };
 
+  const pageLimit = 100;
+
   const initialState = {
     ct_kbcstm: [],
     ct_kbcstm_key: "",
@@ -113,16 +115,30 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
     },
     filterQuery: {
       ct_kbcstm_key: ""
+    },
+    paginateParam: {
+      offset: 0,
+      currentPage: 1,
+      totalRecords: cstms.length,
+      totalPage: Math.ceil(cstms.length / pageLimit),
+      showPageStart: 0
     }
   };
 
   const [ct_kbcstms, setKbcstms] = useState<string[]>(initialState.ct_kbcstm);
-  // 検索条件
+
+  // フィルタ
   const [filterQuery, setFilterQuery] = useState<FilterQuery>(
     initialState.filterQuery
   );
-  // ソート条件
+
+  // ソート
   const [sort, setSort] = useState<Sort>(initialState.sort);
+
+  // ページネーション
+  const [paginateParam, setPaginateParam] = useState(
+    initialState.paginateParam
+  );
 
   useEffect(() => {
     console.log("CstmList render!");
@@ -176,6 +192,14 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
       });
     }
 
+    setPaginateParam({
+      offset: 0,
+      currentPage: 1,
+      totalRecords: tmpCstms.length,
+      totalPage: Math.ceil(tmpCstms.length / pageLimit),
+      showPageStart: 0
+    });
+
     return tmpCstms;
   }, [filterQuery, sort, cstms]);
 
@@ -204,143 +228,213 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
     }
   };
 
+  // ページ選択
+  const handlePage = (page: number) => {
+    let start;
+    if (paginateParam.totalPage < 10 || page < 5) {
+      start = 0;
+    } else if (page < paginateParam.totalPage - 4) {
+      start = page - 5;
+    } else {
+      start = paginateParam.totalPage - 10;
+    }
+    setPaginateParam({
+      ...paginateParam,
+      offset: (page - 1) * pageLimit,
+      currentPage: page,
+      showPageStart: start
+    });
+  };
+
   const gycmConv = (cdbnri: string, cdbnsy: string) =>
     gycms.filter(r => r.GY_CDBNRI === cdbnri && r.GY_CDBNSY === cdbnsy)[0]
       .GY_NMBNSY;
 
   return (
-    <div
-      className="cstmList-container"
-      style={cstms.length < 12 ? { overflowY: "hidden" } : {}}
-    >
-      <table className="commonTable-table">
-        <thead className="commonTable-thead">
-          <tr>
-            <th rowSpan={2}>
-              <p></p>
-            </th>
-            <th rowSpan={2} onClick={() => handleSort("CT_CDCSTM")}>
-              <p className="pointer">
-                読者番号{sort.key === "CT_CDCSTM" ? sort.icon : <span />}
-              </p>
-            </th>
-            <th onClick={() => handleSort("CT_KBCSTM")}>
-              <p className="pointer">
-                区分{sort.key === "CT_KBCSTM" ? sort.icon : <span />}
-              </p>
-            </th>
-            <th rowSpan={2}>
-              <p>顧客名</p>
-            </th>
-            {/*<th rowSpan={2}>
+    <>
+      {paginateParam.totalPage !== 1 && (
+        <div className="cstmList-pagination">
+          {paginateParam.currentPage !== 1 && (
+            <span onClick={() => handlePage(1)}>先頭へ</span>
+          )}
+          {paginateParam.currentPage !== 1 &&
+            paginateParam.currentPage !== 2 && (
+              <span onClick={() => handlePage(paginateParam.currentPage - 1)}>
+                ＜
+              </span>
+            )}
+          <ul className="cstmList-pagination-ul">
+            {[...Array(paginateParam.totalPage)]
+              .slice(
+                paginateParam.showPageStart,
+                paginateParam.showPageStart + 10
+              )
+              .map((_, i) => {
+                i++;
+                let page = i + paginateParam.showPageStart;
+                return (
+                  <li
+                    className={classNames("cstmList-pagination-list", {
+                      "cstmList-pagination-active":
+                        page === paginateParam.currentPage
+                    })}
+                    key={page}
+                    onClick={() => handlePage(page)}
+                  >
+                    {page}
+                  </li>
+                );
+              })}
+          </ul>
+          {paginateParam.currentPage !== paginateParam.totalPage &&
+            paginateParam.currentPage !== paginateParam.totalPage - 1 && (
+              <span onClick={() => handlePage(paginateParam.currentPage + 1)}>
+                ＞
+              </span>
+            )}
+          {paginateParam.currentPage !== paginateParam.totalPage && (
+            <span onClick={() => handlePage(paginateParam.totalPage)}>
+              最後へ
+            </span>
+          )}
+        </div>
+      )}
+      <div
+        className="cstmList-container"
+        style={cstms.length < 12 ? { overflowY: "hidden" } : {}}
+      >
+        <table className="commonTable-table">
+          <thead className="commonTable-thead">
+            <tr>
+              <th rowSpan={2}>
+                <p></p>
+              </th>
+              <th rowSpan={2} onClick={() => handleSort("CT_CDCSTM")}>
+                <p className="pointer">
+                  読者番号{sort.key === "CT_CDCSTM" ? sort.icon : <span />}
+                </p>
+              </th>
+              <th onClick={() => handleSort("CT_KBCSTM")}>
+                <p className="pointer">
+                  区分{sort.key === "CT_KBCSTM" ? sort.icon : <span />}
+                </p>
+              </th>
+              <th rowSpan={2}>
+                <p>顧客名</p>
+              </th>
+              {/*<th rowSpan={2}>
               <p>カナ</p>
             </th>*/}
-            <th rowSpan={2}>
-              <p>氏名</p>
-            </th>
-            <th rowSpan={2}>
-              <p>氏名カナ</p>
-            </th>
-            <th onClick={() => handleSort("CT_ADCST1")}>
-              <p className="pointer">
-                住所{sort.key === "CT_ADCST1" ? sort.icon : <span />}
-              </p>
-            </th>
-            <th rowSpan={2}>
-              <p>TEL1</p>
-            </th>
-            <th rowSpan={2}>
-              <p>TEL2</p>
-            </th>
-            {/*<th rowSpan={2}>
+              <th rowSpan={2}>
+                <p>氏名</p>
+              </th>
+              <th rowSpan={2}>
+                <p>氏名カナ</p>
+              </th>
+              <th onClick={() => handleSort("CT_ADCST1")}>
+                <p className="pointer">
+                  住所{sort.key === "CT_ADCST1" ? sort.icon : <span />}
+                </p>
+              </th>
+              <th rowSpan={2}>
+                <p>TEL1</p>
+              </th>
+              <th rowSpan={2}>
+                <p>TEL2</p>
+              </th>
+              {/*<th rowSpan={2}>
               <p>生年月日</p>
           // </th>*/}
-          </tr>
-          <tr>
-            <th>
-              <select
-                name="ct_kbcstm_key"
-                // value={filterQuery.md_nmmmbr_key||""}
-                value={filterQuery.ct_kbcstm_key}
-                onChange={handleFilter}
-              >
-                <option value="">選択</option>
-                {ct_kbcstms.map((item: string) => {
-                  return (
-                    // <option key={index} value={item}>
-                    <option key={item} value={item}>
-                      {item}
-                    </option>
-                  );
-                })}
-              </select>
-            </th>
-            <th>
-              <input
-                type="text"
-                name="CT_ADCST1"
-                placeholder="絞り込み検索"
-                value={filterQuery.CT_ADCST1 || ""}
-                autoComplete="off"
-                onChange={handleFilter}
-              />
-            </th>
-          </tr>
-        </thead>
-        <tbody
-          className="commonTable-tbody"
-          style={{ scrollBehavior: "smooth", height: "300px" }}
-        >
-          {filteredCstm.map((row, index) => {
-            return (
-              // <tr key={cstm.CT_CDCSTM}>
-              // className={[ 'post', isPublished ? 'published' : 'unpublished' ].join(' ')}
-              <tr
-                key={row.CT_CDCSTM}
-                style={
-                  row.CT_CDCSTM === cstm.CT_CDCSTM
-                    ? { background: "#d9efff" }
-                    : {}
-                }
-              >
-                <td style={{ textAlign: "right" }}>
-                  <button
-                    style={{
-                      color: "#668ad8",
-                      borderStyle: "none",
-                      backgroundColor: "transparent"
-                    }}
-                    // className="commonTable-addButton"
-                    type="button"
-                    onClick={() => switchCstm(cstms, row.CT_CDCSTM)}
+            </tr>
+            <tr>
+              <th>
+                <select
+                  name="ct_kbcstm_key"
+                  // value={filterQuery.md_nmmmbr_key||""}
+                  value={filterQuery.ct_kbcstm_key}
+                  onChange={handleFilter}
+                >
+                  <option value="">選択</option>
+                  {ct_kbcstms.map((item: string) => {
+                    return (
+                      // <option key={index} value={item}>
+                      <option key={item} value={item}>
+                        {item}
+                      </option>
+                    );
+                  })}
+                </select>
+              </th>
+              <th>
+                <input
+                  type="text"
+                  name="CT_ADCST1"
+                  placeholder="絞り込み検索"
+                  value={filterQuery.CT_ADCST1 || ""}
+                  autoComplete="off"
+                  onChange={handleFilter}
+                />
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            className="commonTable-tbody"
+            style={{ scrollBehavior: "smooth", height: "300px" }}
+          >
+            {filteredCstm
+              .slice(paginateParam.offset, paginateParam.offset + pageLimit)
+              .map((row, index) => {
+                return (
+                  // <tr key={cstm.CT_CDCSTM}>
+                  // className={[ 'post', isPublished ? 'published' : 'unpublished' ].join(' ')}
+                  <tr
+                    key={row.CT_CDCSTM}
+                    style={
+                      row.CT_CDCSTM === cstm.CT_CDCSTM
+                        ? { background: "#d9efff" }
+                        : {}
+                    }
                   >
-                    {index + 1}
-                  </button>
-                </td>
-                {/* <td>{moment(row.CT_CCDATEX).format("YYYY/MM/DD")}</td> */}
-                {/* <td style={{ textAlign: "right" }}>{row.CT_CDCSTM}</td> */}
-                {/* TODO: redux */}
-                <td>
-                  <div style={{ display: "flex" }}>
-                    <button
-                      style={{
-                        color: "#FF9265",
-                        borderStyle: "none",
-                        backgroundColor: "transparent",
-                        padding: "0"
-                      }}
-                      // className="commonTable-addButton"
-                      type="button"
-                      onClick={() => {
-                        switchCstm(cstms, row.CT_CDCSTM);
-                        history.push(
-                          `/kiyk-list?columnName=ky_cdsqsk_cdshsk&key=${row.CT_CDCSTM}`
-                        );
-                      }}
-                    >
-                      {row.CT_CDCSTM}
-                    </button>
-                    {/* <div className="maru">
+                    <td style={{ textAlign: "right" }}>
+                      <button
+                        style={{
+                          color: "#668ad8",
+                          borderStyle: "none",
+                          backgroundColor: "transparent"
+                        }}
+                        // className="commonTable-addButton"
+                        type="button"
+                        onClick={() => switchCstm(cstms, row.CT_CDCSTM)}
+                      >
+                        {index +
+                          1 +
+                          (paginateParam.currentPage - 1) * pageLimit}
+                      </button>
+                    </td>
+                    {/* <td>{moment(row.CT_CCDATEX).format("YYYY/MM/DD")}</td> */}
+                    {/* <td style={{ textAlign: "right" }}>{row.CT_CDCSTM}</td> */}
+                    {/* TODO: redux */}
+                    <td>
+                      <div style={{ display: "flex" }}>
+                        <button
+                          style={{
+                            color: "#FF9265",
+                            borderStyle: "none",
+                            backgroundColor: "transparent",
+                            padding: "0"
+                          }}
+                          // className="commonTable-addButton"
+                          type="button"
+                          onClick={() => {
+                            switchCstm(cstms, row.CT_CDCSTM);
+                            history.push(
+                              `/kiyk-list?columnName=ky_cdsqsk_cdshsk&key=${row.CT_CDCSTM}`
+                            );
+                          }}
+                        >
+                          {row.CT_CDCSTM}
+                        </button>
+                        {/* <div className="maru">
                       <button
                         style={{
                           borderStyle: "none",
@@ -358,9 +452,9 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
                         契
                       </button>
                     </div> */}
-                  </div>
-                </td>
-                {/* <td>
+                      </div>
+                    </td>
+                    {/* <td>
                   {
                     gycms.filter(
                       r =>
@@ -369,34 +463,35 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
                     )[0].GY_NMBNSY
                   }
                 </td> */}
-                <td>{gycmConv("KBCSTM", row.CT_KBCSTM)}</td>
-                <td>{row.CT_NMCSTM}</td>
-                <td>{row.CT_NMSIME}</td>
-                {/*
+                    <td>{gycmConv("KBCSTM", row.CT_KBCSTM)}</td>
+                    <td>{row.CT_NMCSTM}</td>
+                    <td>{row.CT_NMSIME}</td>
+                    {/*
                 <td>{row.CT_NKCSTM}</td>
               */}
-                <td>{row.CT_NKSIME}</td>
-                <td>{row.CT_ADCST1}</td>
-                <td style={{ textAlign: "right" }}>{row.CT_NOTEL1}</td>
-                <td style={{ textAlign: "right" }}>
-                  {row.CT_NOTEL2.toLocaleString()}
-                </td>
-                {/* <td>
+                    <td>{row.CT_NKSIME}</td>
+                    <td>{row.CT_ADCST1}</td>
+                    <td style={{ textAlign: "right" }}>{row.CT_NOTEL1}</td>
+                    <td style={{ textAlign: "right" }}>
+                      {row.CT_NOTEL2.toLocaleString()}
+                    </td>
+                    {/* <td>
                   {`${row.CT_DTSNGP.slice(0, 4)}/
                       ${row.CT_DTSNGP.slice(4, 6)}/
                       ${row.CT_DTSNGP.slice(6, 8)}`}
                 </td> */}
-                {/*<td>
+                    {/*<td>
                   {row.CT_DTSNGP.trim() !== ""
                     ? moment(row.CT_DTSNGP).format("YYYY/MM/DD")
                     : ""}
                 </td>*/}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+                  </tr>
+                );
+              })}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 };
 
