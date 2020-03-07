@@ -359,7 +359,8 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
                     return (
                       // <option key={index} value={item}>
                       <option key={item} value={item}>
-                        {item}
+                        {/* {item} */}
+                        {gycmConv("KBCSTM", item)}
                       </option>
                     );
                   })}
