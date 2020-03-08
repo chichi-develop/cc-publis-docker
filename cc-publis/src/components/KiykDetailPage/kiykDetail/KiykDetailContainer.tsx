@@ -2,7 +2,7 @@ import React, { useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Actions } from "../../../store/actions";
 import { StoreState } from "../../../store";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 // import { useParams, useLocation } from "react-router-dom";
 import moment from "moment";
 
@@ -18,6 +18,7 @@ type Props = {
 };
 
 const KiykDetailContainer: React.FC = () => {
+  let history = useHistory();
   const location = useLocation();
   const search = location.search;
   const query = new URLSearchParams(search);
@@ -52,11 +53,20 @@ const KiykDetailContainer: React.FC = () => {
 
   useEffect(() => {
     console.log("KiykDetailContainer render!");
+    return () => console.log("unmounting...");
+  }, []);
+
+  useEffect(() => {
     if (nokiyk !== undefined && nokiyk !== null) {
       if (Number(nokiyk) !== Number(kiyk.KY_NOKIYK)) {
         console.log(`${nokiyk}:${kiyk.KY_NOKIYK}`);
         kiykSearch("ky_nokiyk", nokiyk);
       }
+    }
+  }, [nokiyk, kiyk.KY_NOKIYK, kiykSearch]);
+
+  useEffect(() => {
+    if (showListKiyk) {
       if (
         kiyk.KY_CDSQSK !== sqsk.CT_CDCSTM ||
         kiyk.KY_CDSHSK !== shsk.CT_CDCSTM
@@ -64,29 +74,31 @@ const KiykDetailContainer: React.FC = () => {
         kiykCstmSearch(kiyk.KY_CDSQSK, kiyk.KY_CDSHSK);
       }
     }
-    if (!setGycm) {
+  }, [kiyk, sqsk, shsk, kiykCstmSearch, showListKiyk]);
+
+  useEffect(() => {
+    if (!setGycm && showListKiyk) {
       getGycmStart();
     }
-    return () => console.log("unmounting...");
-  }, [
-    nokiyk,
-    kiyk,
-    sqsk,
-    shsk,
-    kiykSearch,
-    kiykCstmSearch,
-    gycms,
-    setGycm,
-    getGycmStart
-  ]);
+  }, [showListKiyk, setGycm, getGycmStart]);
 
   return (
     <div className="kiykDetail-body">
-      {showListKiyk && showListKiykCstm && (
+      {showListKiyk && showListKiykCstm && setGycm ? (
         <>
           <p className="frame-title">契約詳細</p>
           <KiykDetail kiyk={kiyk} sqsk={sqsk} shsk={shsk} gycms={gycms} />
         </>
+      ) : (
+        <div className="kiykDetail-noData">
+          <p>契約はありません。（{nokiyk}）</p>
+          <p
+            className="kiykDetail-noData-goBack"
+            onClick={() => history.push("/cstm")}
+          >
+            顧客マスタ画面に戻る
+          </p>
+        </div>
       )}
     </div>
   );

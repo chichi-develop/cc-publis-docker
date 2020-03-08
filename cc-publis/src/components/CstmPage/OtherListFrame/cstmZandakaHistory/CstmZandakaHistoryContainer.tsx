@@ -13,6 +13,7 @@ import {
 } from "@material-ui/icons";
 
 import LinkList from "../common/LinkList";
+import NoData from "../common/NoData";
 import { Ctzhs, Ctzh } from "../../../../types/models";
 
 import "./CstmZandakaHistoryContainer.css";
@@ -37,24 +38,27 @@ const CstmZandakaHistoryContainer: React.FC = () => {
 
   useEffect(() => {
     console.log("CstmZandakaHistoryContainer render!");
-    ctzhSearch(cdcstm || "0");
     return () => console.log("unmounting...");
+  }, []);
+
+  useEffect(() => {
+    ctzhSearch(cdcstm || "0");
   }, [ctzhSearch, cdcstm]);
+
   return (
     <div className="ctzh-body">
-      {showListCtzh ? (
-        <>
-          <div className="ctzh-menu">
-            <p className="frame-title">顧客マスタメモ</p>
-            <LinkList
-              cdcstm={cdcstm || "0"}
-              showLinkCstmZandakaHistory={false}
-            />
-          </div>
-          <CstmZandakaHistoryTable ctzhs={ctzhs} />
-        </>
-      ) : (
+      <div className="ctzh-menu">
+        <p className="frame-title">顧客残高履歴</p>
         <LinkList cdcstm={cdcstm || "0"} showLinkCstmZandakaHistory={false} />
+      </div>
+
+      {showListCtzh ? (
+        <CstmZandakaHistoryTable ctzhs={ctzhs} />
+      ) : (
+        <NoData
+          searchKey={cdcstm || "0"}
+          message="顧客残高履歴データはありません。"
+        />
       )}
     </div>
   );
@@ -96,15 +100,13 @@ const CstmZandakaHistoryTable: React.FC<Props> = ({ ctzhs }) => {
 
   useEffect(() => {
     console.log("CstmZandakaHistoryTable render!");
-    // setCtzhs(publisState.ctzhs);
+    return () => console.log("unmounting...");
+  }, []);
+
+  useEffect(() => {
     setKbcstms(_.uniq(_.map(ctzhs, "VUN_NMSYRI"))); // TODO: 要検討、select絞り込み
     setFilterQuery({ vun_nmsyri_key: "" });
     setSort({ key: "ct_kbcstm", order: 0, icon: <span /> });
-    // if (aclgState.clearSortFilter) {
-    //   setFilterQuery({ vun_nmsyri_key: "" });
-    //   setSort({ key: "ct_kbcstm", order: 0, icon: <span /> });
-    // }
-    // }, [aclgState.cm_aclgs, aclgState.clearSortFilter]);
   }, [ctzhs]);
 
   const filteredCtzh = useMemo(() => {
@@ -112,9 +114,8 @@ const CstmZandakaHistoryTable: React.FC<Props> = ({ ctzhs }) => {
     let tmpCtzhs = ctzhs;
     // 入力した文字は小文字にする
     const filterTxctzh: string | undefined = filterQuery.VUN_KBSYRI;
-    // 絞り込み検索
     tmpCtzhs = tmpCtzhs.filter(row => {
-      // タイトルで絞り込み
+      // フィルタ
       if (
         filterQuery.VUN_KBSYRI &&
         String(row.VUN_KBSYRI)
@@ -124,7 +125,7 @@ const CstmZandakaHistoryTable: React.FC<Props> = ({ ctzhs }) => {
         return false;
       }
 
-      // カテゴリーで絞り込み
+      // フィルタ
       if (
         filterQuery.vun_nmsyri_key &&
         // row.md_nmmmbr !== parseInt(filterQuery.md_nmmmbr_key)
@@ -149,7 +150,7 @@ const CstmZandakaHistoryTable: React.FC<Props> = ({ ctzhs }) => {
     return tmpCtzhs;
   }, [filterQuery, sort, ctzhs]);
 
-  // 入力した情報をfilterQueryに入れる
+  // フィルタ
   const handleFilter = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -157,7 +158,7 @@ const CstmZandakaHistoryTable: React.FC<Props> = ({ ctzhs }) => {
     setFilterQuery({ ...filterQuery, [name]: value });
   };
 
-  // 選択したカラムをSortに入れる
+  // ソート
   const handleSort = (column: string) => {
     if (sort.key === column) {
       setSort({

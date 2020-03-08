@@ -37,30 +37,27 @@ const KiykCstmContainer: React.FC = () => {
 
   useEffect(() => {
     console.log("KiykCstmContainer render!");
+    return () => console.log("unmounting...");
+  }, []);
+
+  useEffect(() => {
     if (
       kiyk.KY_CDSQSK !== sqsk.CT_CDCSTM ||
       kiyk.KY_CDSHSK !== shsk.CT_CDCSTM
     ) {
       showListKiyk && kiykCstmSearch(kiyk.KY_CDSQSK, kiyk.KY_CDSHSK);
     }
-    if (!setGycm) {
+  }, [kiyk, sqsk, shsk, kiykCstmSearch, showListKiyk]);
+
+  useEffect(() => {
+    if (!setGycm && showListKiykCstm) {
       getGycmStart();
     }
-    return () => console.log("unmounting...");
-  }, [
-    kiyk,
-    sqsk,
-    shsk,
-    kiykCstmSearch,
-    showListKiyk,
-    gycms,
-    setGycm,
-    getGycmStart
-  ]);
+  }, [showListKiykCstm, setGycm, getGycmStart]);
 
   return (
     <div className="kiykCstm-body">
-      {showListKiyk && showListKiykCstm && (
+      {showListKiyk && showListKiykCstm && setGycm && (
         <>
           <p className="frame-title">契約顧客マスタ</p>
           <div className="kiykCstm-frame">
