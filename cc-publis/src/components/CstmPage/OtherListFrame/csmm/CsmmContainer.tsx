@@ -13,6 +13,7 @@ import {
 } from "@material-ui/icons";
 
 import LinkList from "../common/LinkList";
+import NoData from "../common/NoData";
 import { Csmms, Csmm } from "../../../../types/models";
 
 import "./CsmmContainer.css";
@@ -37,22 +38,26 @@ const CsmmContainer: React.FC = () => {
 
   useEffect(() => {
     console.log("CstmContainer render!");
-    csmmSearch(cdcstm || "0");
     return () => console.log("unmounting...");
+  }, []);
+
+  useEffect(() => {
+    csmmSearch(cdcstm || "0");
   }, [csmmSearch, cdcstm]);
 
   return (
     <div className="csmm-body">
-      {showListCsmm ? (
-        <>
-          <div className="csmm-menu">
-            <p className="frame-title">顧客マスタメモ</p>
-            <LinkList cdcstm={cdcstm || "0"} showLinkCsmm={false} />
-          </div>
-          <CsmmTable csmms={csmms} />
-        </>
-      ) : (
+      <div className="csmm-menu">
+        <p className="frame-title">顧客マスタメモ</p>
         <LinkList cdcstm={cdcstm || "0"} showLinkCsmm={false} />
+      </div>
+      {showListCsmm ? (
+        <CsmmTable csmms={csmms} />
+      ) : (
+        <NoData
+          searchKey={cdcstm || "0"}
+          message="顧客マスタメモデータはありません。"
+        />
       )}
     </div>
   );
@@ -85,34 +90,30 @@ const CsmmTable: React.FC<Props> = ({ csmms }) => {
   };
 
   const [ct_kbcstms, setKbcstms] = useState<string[]>(initialState.ct_kbcstm);
-  // 検索条件
+  // フィルタ
   const [filterQuery, setFilterQuery] = useState<FilterQuery>(
     initialState.filterQuery
   );
-  // ソート条件
+  // フィルタ
   const [sort, setSort] = useState<Sort>(initialState.sort);
 
   useEffect(() => {
     console.log("Csmm render!");
-    // setCsmms(publisState.csmms);
+    return () => console.log("unmounting...");
+  }, []);
+
+  useEffect(() => {
     setKbcstms(_.uniq(_.map(csmms, "CM_NMCMBR"))); // TODO: 要検討、select絞り込み
     setFilterQuery({ cm_nmcmbr_key: "" });
     setSort({ key: "ct_kbcstm", order: 0, icon: <span /> });
-    // if (aclgState.clearSortFilter) {
-    //   setFilterQuery({ cm_nmcmbr_key: "" });
-    //   setSort({ key: "ct_kbcstm", order: 0, icon: <span /> });
-    // }
-    // }, [aclgState.cm_aclgs, aclgState.clearSortFilter]);
   }, [csmms]);
 
   const filteredCsmm = useMemo(() => {
-    // cnst filteredMdmm = (() => {
     let tmpCsmms = csmms;
     // 入力した文字は小文字にする
     const filterTxcsmm: string | undefined = filterQuery.CM_TXCSMM;
-    // 絞り込み検索
     tmpCsmms = tmpCsmms.filter(row => {
-      // タイトルで絞り込み
+      // フィルタ
       if (
         filterQuery.CM_TXCSMM &&
         String(row.CM_TXCSMM)
@@ -122,7 +123,7 @@ const CsmmTable: React.FC<Props> = ({ csmms }) => {
         return false;
       }
 
-      // カテゴリーで絞り込み
+      // フィルタ
       if (
         filterQuery.cm_nmcmbr_key &&
         // row.md_nmmmbr !== parseInt(filterQuery.md_nmmmbr_key)
@@ -147,7 +148,7 @@ const CsmmTable: React.FC<Props> = ({ csmms }) => {
     return tmpCsmms;
   }, [filterQuery, sort, csmms]);
 
-  // 入力した情報をfilterQueryに入れる
+  // フィルタ
   const handleFilter = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -155,7 +156,7 @@ const CsmmTable: React.FC<Props> = ({ csmms }) => {
     setFilterQuery({ ...filterQuery, [name]: value });
   };
 
-  // 選択したカラムをSortに入れる
+  // ソート
   const handleSort = (column: string) => {
     if (sort.key === column) {
       setSort({

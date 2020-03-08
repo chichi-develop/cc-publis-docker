@@ -4,6 +4,30 @@
   margin: 0 1.8em 0 1.8em;
 }
 
+.kiykDetail-noData {
+  display: flex;
+  font-size: 16px;
+  color: #555;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid #c5c5c5;
+}
+
+.kiykDetail-noData-goBack {
+  padding: 0.3em;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  color: #668ad8;
+  border-bottom: thin solid #668ad8;
+  cursor: pointer;
+}
+
+.kiykDetail-noData-goBack:hover {
+  background-color: #ddd;
+  color: rgb(167, 147, 147);
+}
+
 .kiykDetail-container {
   display: grid;
   /* min-height: 500px; */

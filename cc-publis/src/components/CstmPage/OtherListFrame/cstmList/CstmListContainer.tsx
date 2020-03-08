@@ -14,6 +14,7 @@ import {
 } from "@material-ui/icons";
 
 import LinkList from "../common/LinkList";
+import ErrorMessageFrame from "../../../Common/ErrorMessageFrame";
 import { Cstms, Cstm, Gycms } from "../../../../types/models";
 
 import "./CstmListContainer.css";
@@ -54,24 +55,33 @@ const CstmListContainer: React.FC = () => {
   let cstm = publisState.cstm as Cstm;
   let cstms = publisState.cstms;
   let showListCstm = publisState.showListCstm;
-  // let gycms = publisState.gycms as Gycms;
   let gycms = publisState.gycms;
   let setGycm = publisState.setGycm;
+  let errorCode = publisState.error.code || "0";
 
   useEffect(() => {
     console.log("CstmListContainer render!");
+    return () => console.log("unmounting...");
+  }, []);
+
+  useEffect(() => {
     if (key !== null && columnName !== null) {
       cstmSearch(columnName, key, "cstm");
     }
-    if (!setGycm) {
+  }, [columnName, key, cstmSearch]);
+
+  useEffect(() => {
+    if (!setGycm && showListCstm) {
       getGycmStart();
     }
-    return () => console.log("unmounting...");
-  }, [cstmSearch, columnName, key, gycms, setGycm, getGycmStart]);
+  }, [showListCstm, setGycm, getGycmStart]);
 
   return (
     <div className="cstmList-body">
-      {showListCstm && (
+      {errorCode === "ECONNABORTED" && (
+        <ErrorMessageFrame message="APIサーバへのリクエストで、タイムアウトしました。" />
+      )}
+      {showListCstm && setGycm && (
         <>
           <div className="cstmList-menu">
             <p className="frame-title">顧客マスタリスト</p>
@@ -142,15 +152,13 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
 
   useEffect(() => {
     console.log("CstmList render!");
-    // setCstms(publisState.cstms);
+    return () => console.log("unmounting...");
+  }, []);
+
+  useEffect(() => {
     setKbcstms(_.uniq(_.map(cstms, "CT_KBCSTM"))); // TODO: 要検討、select絞り込み
     setFilterQuery({ ct_kbcstm_key: "" });
     setSort({ key: "ct_kbcstm", order: 0, icon: <span /> });
-    // if (aclgState.clearSortFilter) {
-    //   setFilterQuery({ ct_kbcstm_key: "" });
-    //   setSort({ key: "ct_kbcstm", order: 0, icon: <span /> });
-    // }
-    // }, [aclgState.cm_aclgs, aclgState.clearSortFilter]);
   }, [cstms]);
 
   const filteredCstm = useMemo(() => {
@@ -158,9 +166,8 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
     let tmpCstms = cstms;
     // 入力した文字は小文字にする
     const filterTxactv: string | undefined = filterQuery.CT_ADCST1;
-    // 絞り込み検索
     tmpCstms = tmpCstms.filter(row => {
-      // タイトルで絞り込み
+      // フィルタ
       if (
         filterQuery.CT_ADCST1 &&
         String(row.CT_ADCST1)
@@ -170,7 +177,7 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
         return false;
       }
 
-      // カテゴリーで絞り込み
+      // フィルタ
       if (
         filterQuery.ct_kbcstm_key &&
         // row.md_nmmmbr !== parseInt(filterQuery.md_nmmmbr_key)
@@ -203,7 +210,7 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
     return tmpCstms;
   }, [filterQuery, sort, cstms]);
 
-  // 入力した情報をfilterQueryに入れる
+  // フィルタ
   const handleFilter = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -211,7 +218,7 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
     setFilterQuery({ ...filterQuery, [name]: value });
   };
 
-  // 選択したカラムをSortに入れる
+  // ソート
   const handleSort = (column: string) => {
     if (sort.key === column) {
       setSort({

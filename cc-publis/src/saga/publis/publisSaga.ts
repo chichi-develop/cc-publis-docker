@@ -44,6 +44,7 @@ function* runGetCstm(action: ReturnType<typeof Actions.getCstmStart>) {
       },
     });
   } catch (error) {
+    console.log(error)
     yield put({ type: Types.getCstmFail, payload: { error } });
   }
 }

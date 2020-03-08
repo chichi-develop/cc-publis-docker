@@ -1,0 +1,9 @@
+.common-errorMessageFrame {
+  display: flex;
+  font-size: 16px;
+  color: #555;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid #c5c5c5;
+}

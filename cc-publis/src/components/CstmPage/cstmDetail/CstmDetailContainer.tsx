@@ -63,15 +63,18 @@ const CstmDetailContainer: React.FC = () => {
 
   useEffect(() => {
     console.log("CstmDetailContainer render!");
-    if (!setGycm) {
+    return () => console.log("unmounting...");
+  }, []);
+
+  useEffect(() => {
+    if (!setGycm && showListCstm) {
       getGycmStart();
     }
-    return () => console.log("unmounting...");
-  }, [cstm, showListCstm, gycms, setGycm, getGycmStart, privilege]);
+  }, [cstm, showListCstm, setGycm, getGycmStart]);
 
   return (
     <div className="cstmDetail-body">
-      {showListCstm && (
+      {showListCstm && setGycm && (
         <>
           <div className="cstmDetail-menu">
             <p className="frame-title">顧客情報詳細</p>
@@ -83,6 +86,13 @@ const CstmDetailContainer: React.FC = () => {
               >
                 ラベル印刷
               </button> */}
+              <button
+                onClick={() =>
+                  alert(`表示履歴を表示します: ${JSON.stringify(cstm)}`)
+                }
+              >
+                表示履歴
+              </button>
               <ReactToPrint
                 trigger={() => <button>ラベル印刷</button>}
                 content={() => componentRef.current}
@@ -117,14 +127,11 @@ const CstmDetail: React.FC<Props> = ({
   userID
 }) => {
   const [editMode, setEditMode] = useState(false);
-  // const handleEditMode = () => setEditMode(!editMode);
   const handleEditMode = () => {
-    console.log("button test");
-    console.log(editMode);
     setEditMode(!editMode);
   };
 
-  const { register, handleSubmit, setValue, watch, errors } = useForm();
+  const { register, handleSubmit, setValue, watch, errors, reset } = useForm();
 
   const kbksyoCode = watch("CT_KBKSYO");
   const kbsebtCode = watch("CT_KBSEBT");
@@ -162,8 +169,11 @@ const CstmDetail: React.FC<Props> = ({
 
   useEffect(() => {
     console.log("CstmDetail render!");
-    setEditMode(false);
     return () => console.log("unmounting...");
+  }, []);
+
+  useEffect(() => {
+    setEditMode(false);
   }, [cstm]);
 
   const gycmConv = (cdbnri: string, cdbnsy: string) =>
@@ -868,7 +878,10 @@ const CstmDetail: React.FC<Props> = ({
                   <button
                     className="cstmDetail-container-button"
                     type="button"
-                    onClick={handleEditMode}
+                    onClick={() => {
+                      handleEditMode();
+                      reset();
+                    }}
                   >
                     キャンセル
                   </button>

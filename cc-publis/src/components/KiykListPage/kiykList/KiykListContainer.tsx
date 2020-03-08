@@ -26,6 +26,7 @@ type Props = {
 };
 
 const KiykListContainer: React.FC = () => {
+  let history = useHistory();
   const location = useLocation();
   const search = location.search;
   const query = new URLSearchParams(search);
@@ -60,18 +61,24 @@ const KiykListContainer: React.FC = () => {
 
   useEffect(() => {
     console.log("KiykListContainer render!");
+    return () => console.log("unmounting...");
+  }, []);
+
+  useEffect(() => {
     if (key !== null && columnName !== null) {
       kiykSearch(columnName, key);
     }
-    if (!setGycm) {
+  }, [columnName, key, kiykSearch]);
+
+  useEffect(() => {
+    if (!setGycm && showListKiyk) {
       getGycmStart();
     }
-    return () => console.log("unmounting...");
-  }, [kiykSearch, columnName, key, gycms, setGycm, getGycmStart]);
+  }, [showListKiyk, setGycm, getGycmStart]);
 
   return (
     <div className="kiykList-body">
-      {showListKiyk && (
+      {showListKiyk && setGycm ? (
         <>
           <div className="kiykList-menu">
             <p className="frame-title">契約一覧</p>
@@ -84,6 +91,16 @@ const KiykListContainer: React.FC = () => {
             gycms={gycms}
           />
         </>
+      ) : (
+        <div className="kiykList-noData">
+          <p>契約はありません。（{key}）</p>
+          <p
+            className="kiykList-noData-goBack"
+            onClick={() => history.push("/cstm")}
+          >
+            顧客マスタ画面に戻る
+          </p>
+        </div>
       )}
     </div>
   );
@@ -151,25 +168,21 @@ const KiykListTable: React.FC<Props> = ({
 
   useEffect(() => {
     console.log("KiykListTable render!");
-    // setKiyks(publisState.kiykLists);
+    return () => console.log("unmounting...");
+  }, []);
+
+  useEffect(() => {
     setKbkiyks(_.uniq(_.map(kiykLists, "KYLIST_KBJYOT"))); // TODO: 要検討、select絞り込み
     setFilterQuery({ kylist_kbjyot_key: "" });
     setSort({ key: "KYLIST_NOKIyk", order: -1, icon: <span /> });
-    // if (aclgState.clearSortFilter) {
-    //   setFilterQuery({ kylist_kbjyot_key: "" });
-    //   setSort({ key: "kylist_kbjyot", order: 0, icon: <span /> });
-    // }
-    // }, [aclgState.cm_aclgs, aclgState.clearSortFilter]);
   }, [kiykLists]);
 
   const filteredKiyk = useMemo(() => {
-    // cnst filteredMdmm = (() => {
     let tmpKiyks = kiykLists;
     // 入力した文字は小文字にする
     const filterTxactv: string | undefined = filterQuery.KYLIST_SH_NMCSTM;
-    // 絞り込み検索
     tmpKiyks = tmpKiyks.filter(row => {
-      // タイトルで絞り込み
+      // フィルタ
       if (
         filterQuery.KYLIST_SH_NMCSTM &&
         String(row.KYLIST_SH_NMCSTM)
@@ -179,7 +192,7 @@ const KiykListTable: React.FC<Props> = ({
         return false;
       }
 
-      // カテゴリーで絞り込み
+      // フィルタ
       if (
         filterQuery.kylist_kbjyot_key &&
         // row.md_nmmmbr !== parseInt(filterQuery.md_nmmmbr_key)
@@ -212,7 +225,7 @@ const KiykListTable: React.FC<Props> = ({
     return tmpKiyks;
   }, [filterQuery, sort, kiykLists]);
 
-  // 入力した情報をfilterQueryに入れる
+  // フィルタ
   const handleFilter = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -220,7 +233,7 @@ const KiykListTable: React.FC<Props> = ({
     setFilterQuery({ ...filterQuery, [name]: value });
   };
 
-  // 選択したカラムをSortに入れる
+  // ソート
   const handleSort = (column: string) => {
     if (sort.key === column) {
       setSort({

@@ -1,29 +1,32 @@
 import axios from 'axios';
 import { Cstm, Cstms, Csmms, Ctzhs, Kiyks, Kyzd, Kyzhs, Gycms, KiykLists } from '../../types/models';
-import { ORACLE_API_HOST, ORACLE_API_PORT } from '../../config/constants';
+import { PUBLIS_API_HOST, PUBLIS_API_PORT, PUBLIS_API_TIMEOUT } from '../../config/constants';
 
-const baseUrlPublis = `http://${ORACLE_API_HOST}:${ORACLE_API_PORT}/ccdb`;
+const baseUrlPublis = `http://${PUBLIS_API_HOST}:${PUBLIS_API_PORT}/ccdb`;
 
 export async function getCstmFactory(columnName: string, key: string): Promise<Cstms | object> {
   try {
-    const res = await axios.get<Cstms>(`${baseUrlPublis}/cstm/${columnName}/${encodeURIComponent(key)}`);
-
+    const res = await axios.get<Cstms>(`${baseUrlPublis}/cstm/${columnName}/${encodeURIComponent(key)}`, { timeout: PUBLIS_API_TIMEOUT });
     return res.data;
   } catch (res) {
-    const error = res.response;
+    let error
+    if (res.response) { error = res.response }
+    else if (res.code === 'ECONNABORTED') { error = { code: res.code } } else {
+      error = res
+    };
     throw error;
   }
 }
 
 export async function deleteCstmFactory(cdcstm: string) {
   try {
-    await axios.delete(`${baseUrlPublis}/${cdcstm}`);
-    const res = await axios.get<Cstms>(`${baseUrlPublis}/cstm/${cdcstm}`);
+    await axios.delete(`${baseUrlPublis}/${cdcstm}`, { timeout: PUBLIS_API_TIMEOUT });
+    const res = await axios.get<Cstms>(`${baseUrlPublis}/cstm/${cdcstm}`, { timeout: PUBLIS_API_TIMEOUT });
 
     return res.data;
   } catch (res) {
     const error = res.response;
-    throw error;
+    return error
   }
 }
 
@@ -32,9 +35,9 @@ export async function editCstmFactory(
   cstm: Cstm,
 ) {
   try {
-    // const ret = await axios.put(`${baseUrlPublis}/cstm` + cdcstm, cstm);
-    const ret = await axios.put(`${baseUrlPublis}/cstm`, { cdcstm, cstm });
-    const res = await axios.get<Cstms>(`${baseUrlPublis}/cstm/ct_cdcstm/${cdcstm}`);
+    // const ret = await axios.put(`${baseUrlPublis}/cstm` + cdcstm, cstm, { timeout: PUBLIS_API_TIMEOUT });
+    const ret = await axios.put(`${baseUrlPublis}/cstm`, { cdcstm, cstm }, { timeout: PUBLIS_API_TIMEOUT });
+    const res = await axios.get<Cstms>(`${baseUrlPublis}/cstm/ct_cdcstm/${cdcstm}`, { timeout: PUBLIS_API_TIMEOUT });
 
     console.log(ret)
 
@@ -47,8 +50,8 @@ export async function editCstmFactory(
 
 export async function addCstmFactory(cdcstm: string, cstm: Cstm) {
   try {
-    await axios.post(`${baseUrlPublis}`, cstm);
-    const res = await axios.get<Cstms>(`${baseUrlPublis}/cstm/${cdcstm}`);
+    await axios.post(`${baseUrlPublis}`, cstm, { timeout: PUBLIS_API_TIMEOUT });
+    const res = await axios.get<Cstms>(`${baseUrlPublis}/cstm/${cdcstm}`, { timeout: PUBLIS_API_TIMEOUT });
     return res.data;
   } catch (res) {
     const error = res.response;
@@ -58,7 +61,7 @@ export async function addCstmFactory(cdcstm: string, cstm: Cstm) {
 
 export async function getCsmmFactory(cdcstm: string): Promise<Csmms | object> {
   try {
-    const res = await axios.get<Csmms>(`${baseUrlPublis}/csmm/${cdcstm}`);
+    const res = await axios.get<Csmms>(`${baseUrlPublis}/csmm/${cdcstm}`, { timeout: PUBLIS_API_TIMEOUT });
 
     return res.data;
   } catch (res) {
@@ -69,7 +72,7 @@ export async function getCsmmFactory(cdcstm: string): Promise<Csmms | object> {
 
 export async function getCtzhFactory(cdcstm: string): Promise<Ctzhs | object> {
   try {
-    const res = await axios.get<Ctzhs>(`${baseUrlPublis}/ctzh/${cdcstm}`);
+    const res = await axios.get<Ctzhs>(`${baseUrlPublis}/ctzh/${cdcstm}`, { timeout: PUBLIS_API_TIMEOUT });
 
     return res.data;
   } catch (res) {
@@ -80,7 +83,7 @@ export async function getCtzhFactory(cdcstm: string): Promise<Ctzhs | object> {
 
 export async function getKiykFactory(columnName: string, key: string): Promise<Kiyks & KiykLists | object> {
   try {
-    const res = await axios.get<Kiyks & KiykLists>(`${baseUrlPublis}/kiyk/${columnName}/${key}`);
+    const res = await axios.get<Kiyks & KiykLists>(`${baseUrlPublis}/kiyk/${columnName}/${key}`, { timeout: PUBLIS_API_TIMEOUT });
 
     return res.data;
   } catch (res) {
@@ -91,7 +94,7 @@ export async function getKiykFactory(columnName: string, key: string): Promise<K
 
 export async function getKyzdFactory(nokiyk: string): Promise<Kyzd | object> {
   try {
-    const res = await axios.get<Kyzd>(`${baseUrlPublis}/kyzd/${nokiyk}`);
+    const res = await axios.get<Kyzd>(`${baseUrlPublis}/kyzd/${nokiyk}`, { timeout: PUBLIS_API_TIMEOUT });
 
     return res.data;
   } catch (res) {
@@ -103,7 +106,7 @@ export async function getKyzdFactory(nokiyk: string): Promise<Kyzd | object> {
 
 export async function getKyzhFactory(nokiyk: string): Promise<Kyzhs | object> {
   try {
-    const res = await axios.get<Kyzhs>(`${baseUrlPublis}/kyzh/${nokiyk}`);
+    const res = await axios.get<Kyzhs>(`${baseUrlPublis}/kyzh/${nokiyk}`, { timeout: PUBLIS_API_TIMEOUT });
 
     return res.data;
   } catch (res) {
@@ -114,7 +117,7 @@ export async function getKyzhFactory(nokiyk: string): Promise<Kyzhs | object> {
 
 export async function getGycmFactory(): Promise<Gycms | object> {
   try {
-    const res = await axios.get<Gycms>(`${baseUrlPublis}/gycm`);
+    const res = await axios.get<Gycms>(`${baseUrlPublis}/gycm`, { timeout: PUBLIS_API_TIMEOUT });
 
     return res.data;
   } catch (res) {

@@ -27,7 +27,7 @@ interface State {
   isUpdating: boolean;
   clearSortFilter: boolean;
   searchHistory: [];
-  error: {};
+  error: { code?: string };
 }
 
 export const initialState = (injects?: State): State => ({
@@ -206,6 +206,7 @@ export const reducer = (state = initialState(), action: Actions): State => {
         // eslint-disable-next-line @typescript-eslint/camelcase
         kiyks: [],
         kiyk: {},
+        kiykLists: [],
         showListKiyk: false,
         isLoading: false,
         error: action.payload.error,

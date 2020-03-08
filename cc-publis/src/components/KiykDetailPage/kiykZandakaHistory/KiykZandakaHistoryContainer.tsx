@@ -39,11 +39,14 @@ const KiykZandakaHistoryContainer: React.FC = () => {
 
   useEffect(() => {
     console.log("KiykZandakaHistoryContainer render!");
+    return () => console.log("unmounting...");
+  }, []);
+
+  useEffect(() => {
     if (nokiyk !== null) {
       kyzhSearch(nokiyk);
       console.log("KiykZandakaHistoryContainer render!");
     }
-    return () => console.log("unmounting...");
   }, [kyzhSearch, nokiyk]);
 
   return (
@@ -96,25 +99,21 @@ const KiykZandakaHistory: React.FC<Props> = ({ kyzhs }) => {
 
   useEffect(() => {
     console.log("KiykZandakaHistory render!");
-    // setKiyks(publisState.kiyks);
+    return () => console.log("unmounting...");
+  }, []);
+
+  useEffect(() => {
     setNmsyris(_.uniq(_.map(kyzhs, "VKM_NMSYRI"))); // TODO: 要検討、select絞り込み
     setFilterQuery({ vkm_nmsyri_key: "" });
     setSort({ key: "VKM_DTSYRI", order: -1, icon: <span /> });
-    // if (aclgState.clearSortFilter) {
-    //   setFilterQuery({ vkm_nmsyri_key: "" });
-    //   setSort({ key: "vkm_nmsyri", order: 0, icon: <span /> });
-    // }
-    // }, [aclgState.cm_aclgs, aclgState.clearSortFilter]);
   }, [kyzhs]);
 
   const filteredKyzh = useMemo(() => {
-    // cnst filteredMdmm = (() => {
     let tmpKyzhs = kyzhs;
     // 入力した文字は小文字にする
     const filterTxactv: string | undefined = filterQuery.VKM_NMSRSY;
-    // 絞り込み検索
     tmpKyzhs = tmpKyzhs.filter(row => {
-      // タイトルで絞り込み
+      // フィルタ
       if (
         filterQuery.VKM_NMSRSY &&
         String(row.VKM_NMSRSY)
@@ -124,7 +123,7 @@ const KiykZandakaHistory: React.FC<Props> = ({ kyzhs }) => {
         return false;
       }
 
-      // カテゴリーで絞り込み
+      // フィルタ
       if (
         filterQuery.vkm_nmsyri_key &&
         // row.md_nmmmbr !== parseInt(filterQuery.md_nmmmbr_key)
@@ -149,7 +148,7 @@ const KiykZandakaHistory: React.FC<Props> = ({ kyzhs }) => {
     return tmpKyzhs;
   }, [filterQuery, sort, kyzhs]);
 
-  // 入力した情報をfilterQueryに入れる
+  // フィルタ
   const handleFilter = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -157,7 +156,7 @@ const KiykZandakaHistory: React.FC<Props> = ({ kyzhs }) => {
     setFilterQuery({ ...filterQuery, [name]: value });
   };
 
-  // 選択したカラムをSortに入れる
+  // ソート
   const handleSort = (column: string) => {
     if (sort.key === column) {
       setSort({
@@ -225,10 +224,10 @@ const KiykZandakaHistory: React.FC<Props> = ({ kyzhs }) => {
                 onChange={handleFilter}
               >
                 <option value="">選択</option>
-                {vkm_nmsyris.map((item: string) => {
+                {vkm_nmsyris.map((item: string, i) => {
                   return (
                     // <option key={index} value={item}>
-                    <option key={item} value={item}>
+                    <option key={i} value={item}>
                       {item}
                     </option>
                   );
