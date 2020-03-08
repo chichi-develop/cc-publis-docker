@@ -17,6 +17,7 @@ import {
 } from "@material-ui/icons";
 
 import LinkList from "../common/LinkList";
+import NoData from "../common/NoData";
 import { Mdmms, Mdmm } from "../../../../types/models";
 
 // import CircularProgress from '@material-ui/core/CircularProgress';
@@ -83,8 +84,11 @@ const MdmmContainer: React.FC = () => {
 
   useEffect(() => {
     console.log("MdmmContainer render!");
-    mdmmSearch(cdcstm || "0");
     return () => console.log("unmounting...");
+  }, []);
+
+  useEffect(() => {
+    mdmmSearch(cdcstm || "0");
   }, [mdmmSearch, cdcstm]);
 
   return (
@@ -110,7 +114,7 @@ const MdmmContainer: React.FC = () => {
         />
         <LinkList cdcstm={cdcstm || "0"} showLinkMdmm={false} />
       </div>
-      {showListMdmms && (
+      {showListMdmms ? (
         <>
           <MdmmTable
             mdmms={cm_mdmms}
@@ -124,6 +128,11 @@ const MdmmContainer: React.FC = () => {
             </div>
           )} */}
         </>
+      ) : (
+        <NoData
+          searchKey={cdcstm || "0"}
+          message="お客様窓口用メモデータはありません。"
+        />
       )}
     </div>
   );
@@ -172,23 +181,24 @@ const MdmmTable: React.FC<Props> = ({
 
   useEffect(() => {
     console.log("MdmmTable render!");
+    return () => console.log("unmounting...");
+  }, []);
+
+  useEffect(() => {
     setNmmmbrs(_.uniq(_.map(mdmms, "md_nmmmbr")));
     if (clearSortFilter) {
       setFilterQuery({ md_nmmmbr_key: "" });
       setSort({ key: "md_nmmmbr", order: 0, icon: <span /> });
       setSort({ key: "md_nmmmbr", order: 0, icon: <span /> });
     }
-    return () => console.log("unmounting...");
   }, [mdmms, clearSortFilter]);
 
   const filteredMdmm = useMemo(() => {
-    // const filteredMdmm = (() => {
     let tmpMdmms = mdmms;
     // 入力した文字は小文字にする
     const filterTxmdmm: string | undefined = filterQuery.md_txmdmm;
-    // 絞り込み検索
     tmpMdmms = tmpMdmms.filter(row => {
-      // タイトルで絞り込み
+      // フィルタ
       if (
         filterQuery.md_txmdmm &&
         String(row.md_txmdmm)
@@ -198,7 +208,7 @@ const MdmmTable: React.FC<Props> = ({
         return false;
       }
 
-      // カテゴリーで絞り込み
+      // フィルタ
       if (
         filterQuery.md_nmmmbr_key &&
         row.md_nmmmbr !== filterQuery.md_nmmmbr_key
@@ -223,7 +233,7 @@ const MdmmTable: React.FC<Props> = ({
   }, [filterQuery, sort, mdmms]);
   // })();
 
-  // 入力した情報をfilterQueryに入れる
+  // フィルタ
   const handleFilter = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -231,7 +241,7 @@ const MdmmTable: React.FC<Props> = ({
     setFilterQuery({ ...filterQuery, [name]: value });
   };
 
-  // 選択したカラムをSortに入れる
+  // ソート
   const handleSort = (column: string) => {
     if (sort.key === column) {
       setSort({

@@ -18,8 +18,8 @@ const KiykDetailPage: React.FC = () => {
   return (
     <div className="kiykDetailPage-body">
       <div className="kiykDetailPage-link">
-        {/* <button onClick={() => history.push("/kiyk-list")}>戻る</button> */}
-        <button onClick={() => history.goBack()}>戻る</button>
+        <button onClick={() => history.push("/kiyk-list")}>契約一覧</button>
+        {/* <button onClick={() => history.goBack()}>戻る</button> */}
         <button onClick={() => history.push("/cstm")}>顧客マスタ</button>
       </div>
       <KiykDetailContainer />

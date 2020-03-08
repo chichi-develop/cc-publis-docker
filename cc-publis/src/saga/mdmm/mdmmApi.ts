@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { Mdmm, Mdmms } from '../../types/models';
-import { SPI_API_HOST, SPI_API_PORT } from '../../config/constants';
+import { SPI_API_HOST, SPI_API_PORT, SPI_API_TIMEOUT } from '../../config/constants';
 
 const baseUrlMdmms = `http://${SPI_API_HOST}:${SPI_API_PORT}/api/v1/cm_mdmms`;
 
 export async function getMdmmsFactory(cdcstm: string): Promise<Mdmms | object> {
   try {
-    const res = await axios.get<Mdmms>(`${baseUrlMdmms}/${cdcstm}`);
+    const res = await axios.get<Mdmms>(`${baseUrlMdmms}/${cdcstm}`, { timeout: SPI_API_TIMEOUT });
 
     return res.data;
   } catch (res) {
@@ -17,8 +17,8 @@ export async function getMdmmsFactory(cdcstm: string): Promise<Mdmms | object> {
 
 export async function deleteMdmmsFactory(cdcstm: string, nommrb: number) {
   try {
-    await axios.delete(`${baseUrlMdmms}/${cdcstm}/${nommrb}`);
-    const res = await axios.get<Mdmms>(`${baseUrlMdmms}/${cdcstm}`);
+    await axios.delete(`${baseUrlMdmms}/${cdcstm}/${nommrb}`, { timeout: SPI_API_TIMEOUT });
+    const res = await axios.get<Mdmms>(`${baseUrlMdmms}/${cdcstm}`, { timeout: SPI_API_TIMEOUT });
 
     return res.data;
   } catch (res) {
@@ -33,8 +33,8 @@ export async function editMdmmsFactory(
   mdmm: Mdmm,
 ) {
   try {
-    await axios.put(`${baseUrlMdmms}/${cdcstm}/${nommrb}`, mdmm);
-    const res = await axios.get<Mdmms>(`${baseUrlMdmms}/${cdcstm}`);
+    await axios.put(`${baseUrlMdmms}/${cdcstm}/${nommrb}`, mdmm, { timeout: SPI_API_TIMEOUT });
+    const res = await axios.get<Mdmms>(`${baseUrlMdmms}/${cdcstm}`, { timeout: SPI_API_TIMEOUT });
 
     return res.data;
   } catch (res) {
@@ -45,8 +45,8 @@ export async function editMdmmsFactory(
 
 export async function addMdmmsFactory(mdmm: Mdmm) {
   try {
-    await axios.post(`${baseUrlMdmms}`, mdmm);
-    const res = await axios.get<Mdmms>(`${baseUrlMdmms}/${mdmm.md_cdcstm}`);
+    await axios.post(`${baseUrlMdmms}`, mdmm, { timeout: SPI_API_TIMEOUT });
+    const res = await axios.get<Mdmms>(`${baseUrlMdmms}/${mdmm.md_cdcstm}`, { timeout: SPI_API_TIMEOUT });
 
     return res.data;
   } catch (res) {

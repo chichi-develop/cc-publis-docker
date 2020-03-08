@@ -31,10 +31,13 @@ const KiykTankaZandakaContainer: React.FC = () => {
 
   useEffect(() => {
     console.log("KiykTankaZandakaContainer render!");
+    return () => console.log("unmounting...");
+  }, []);
+
+  useEffect(() => {
     if (kiyk.KY_NOKIYK !== kyzd.KS_NOKIYK) {
       showListKiyk && kyzdSearch(kiyk.KY_NOKIYK.toString());
     }
-    return () => console.log("unmounting...");
   }, [kiyk, kyzd, kyzdSearch, showListKiyk]);
 
   return (
@@ -57,6 +60,7 @@ const KiykTankaZandakaContainer: React.FC = () => {
 const KiykDetailTanka: React.FC<TankaProps> = ({ kiyk }) => {
   useEffect(() => {
     console.log("KiykDetailTanka render!");
+    return () => console.log("unmounting...");
   }, []);
 
   return (

@@ -13,6 +13,7 @@ import {
 } from "@material-ui/icons";
 
 import LinkList from "../common/LinkList";
+import NoData from "../common/NoData";
 import { Aclgs, Aclg } from "../../../../types/models";
 
 import "./AclgContainer.css";
@@ -35,22 +36,26 @@ const AclgContainer: React.FC = () => {
 
   useEffect(() => {
     console.log("AclgContainer render!");
-    aclgSearch(cdcstm || "0");
     return () => console.log("unmounting...");
+  }, []);
+
+  useEffect(() => {
+    aclgSearch(cdcstm || "0");
   }, [aclgSearch, cdcstm]);
 
   return (
     <div className="aclg-body">
-      {showListAclgs ? (
-        <>
-          <div className="aclg-menu">
-            <p className="frame-title">書籍・セミナー・大会履歴</p>
-            <LinkList cdcstm={cdcstm || "0"} showLinkAclg={false} />
-          </div>
-          <AclgTable aclgs={cm_aclgs} />
-        </>
-      ) : (
+      <div className="aclg-menu">
+        <p className="frame-title">書籍・セミナー・大会履歴</p>
         <LinkList cdcstm={cdcstm || "0"} showLinkAclg={false} />
+      </div>
+      {showListAclgs ? (
+        <AclgTable aclgs={cm_aclgs} />
+      ) : (
+        <NoData
+          searchKey={cdcstm || "0"}
+          message="書籍・セミナー・大会履歴データはありません。"
+        />
       )}
     </div>
   );
@@ -83,18 +88,23 @@ const AclgTable: React.FC<Props> = ({ aclgs }) => {
   };
 
   const [al_nmactvs, setNmactvs] = useState<string[]>(initialState.al_nmactv);
-  // 検索条件
+
+  // フィルタ
   const [filterQuery, setFilterQuery] = useState<FilterQuery>(
     initialState.filterQuery
   );
-  // ソート条件
+
+  // ソート
   const [sort, setSort] = useState<Sort>(initialState.sort);
 
   useEffect(() => {
     console.log("AclgTable render!");
+    return () => console.log("unmounting...");
+  }, []);
+
+  useEffect(() => {
     setNmactvs(_.uniq(_.map(aclgs, "al_nmactv")));
     setSort({ key: "al_dtactv", order: -1, icon: <span /> });
-    return () => console.log("unmounting...");
   }, [aclgs]);
 
   const filteredAclg = useMemo(() => {
@@ -102,9 +112,8 @@ const AclgTable: React.FC<Props> = ({ aclgs }) => {
     let tmpAclgs = aclgs;
     // 入力した文字は小文字にする
     const filterTxactv: string | undefined = filterQuery.al_txactv;
-    // 絞り込み検索
     tmpAclgs = tmpAclgs.filter(row => {
-      // タイトルで絞り込み
+      // フィルタ
       if (
         filterQuery.al_txactv &&
         String(row.al_txactv)
@@ -114,7 +123,7 @@ const AclgTable: React.FC<Props> = ({ aclgs }) => {
         return false;
       }
 
-      // カテゴリーで絞り込み
+      // フィルタ
       if (
         filterQuery.al_nmactv_key &&
         // row.md_nmmmbr !== parseInt(filterQuery.md_nmmmbr_key)
@@ -139,7 +148,7 @@ const AclgTable: React.FC<Props> = ({ aclgs }) => {
     return tmpAclgs;
   }, [filterQuery, sort, aclgs]);
 
-  // 入力した情報をfilterQueryに入れる
+  // フィルタ
   const handleFilter = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -147,7 +156,7 @@ const AclgTable: React.FC<Props> = ({ aclgs }) => {
     setFilterQuery({ ...filterQuery, [name]: value });
   };
 
-  // 選択したカラムをSortに入れる
+  // ソート
   const handleSort = (column: string) => {
     if (sort.key === column) {
       setSort({

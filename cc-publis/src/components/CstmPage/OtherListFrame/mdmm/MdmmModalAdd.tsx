@@ -136,7 +136,7 @@ const MdmmAdd = withFormik<MdmmAddProps, MdmmAddValues>({
   validationSchema: Yup.object().shape({
     md_cdcstm: Yup.string()
       // .matches(/^[0-9]{8}/,('md_cdcstm is 8-digit number'))
-      .matches(/^2[0-9]{7}/, "8-digit number starting from 2 [2XXXXXXX]")
+      // .matches(/^2[0-9]{7}/, "8-digit number starting from 2 [2XXXXXXX]")
       .length(8, "md_cdcstm is 8 characters")
       .required("Enter a md_cdcstm"),
     md_nmmmbr: Yup.string().required("Enter a md_nmmmbr"),

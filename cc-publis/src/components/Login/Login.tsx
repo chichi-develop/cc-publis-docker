@@ -14,7 +14,7 @@ const Login: React.FC<Props> = ({ loginAuth }) => {
   useEffect(() => {
     console.log("Login render!");
     return () => console.log("unmounting...");
-  });
+  }, []);
 
   return (
     <div className="login-container">
