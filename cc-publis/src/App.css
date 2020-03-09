@@ -61,7 +61,8 @@
   font-size: 12px;
   color: white; /*文字色*/
   background-color: hsl(60, 3%, 27%); /*背景色*/
-  border: solid 1px #aaaaaa;
+  /* border: solid 1px #aaaaaa; */
+
   padding: 0.5em 1em;
 }
 
@@ -83,7 +84,9 @@
   appearance: none;
   padding: 5px 10px;
   /* border:1px solid #ddd; */
-  border: 1px solid #aaaaaa;
+  /* border: 1px solid #aaaaaa; */
+  border-top: 1px solid #aaaaaa;
+  border-bottom: 1px solid #aaaaaa;
   /* color:#828c9a; */
   color: #d6d8db;
   width: 100%;
@@ -127,7 +130,9 @@
 }
 
 .commonTable-tbody td {
-  border: solid 1px #aaaaaa;
+  border-top: 1px solid #aaaaaa;
+  border-bottom: 1px solid #aaaaaa;
+  /* border: solid 1px #aaaaaa; */
   padding: 0.5em 1em;
 }
 

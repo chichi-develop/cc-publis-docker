@@ -325,60 +325,88 @@ const KiykListTable: React.FC<Props> = ({
         className="kiykList-container"
         style={kiykLists.length < 12 ? { overflowY: "hidden" } : {}}
       >
-        <table className="commonTable-table">
-          <thead className="commonTable-thead">
+        <table className="kiykList-table">
+          <thead className="kiykList-table-thead">
             <tr>
-              <th rowSpan={2}>
-                <p></p>
+              <th rowSpan={2} className="kylist-kylist_numItem">
+                <p>項番</p>
               </th>
-              <th rowSpan={2} onClick={() => handleSort("KYLIST_NOKIYK")}>
+              <th
+                rowSpan={2}
+                onClick={() => handleSort("KYLIST_ NOKIYK")}
+                className="kylist-kylist_nokiyk-thead"
+              >
                 <p className="pointer">
-                  契約番号{sort.key === "KYLIST_NOKIYK" ? sort.icon : <span />}
+                  契約№{sort.key === "KYLIST_NOKIYK" ? sort.icon : <span />}
                 </p>
               </th>
-              <th rowSpan={2} onClick={() => handleSort("KYLIST_NOSQSY")}>
+              <th
+                rowSpan={2}
+                onClick={() => handleSort("KYLIST_NOSQSY")}
+                className="kylist-kylist_nosqsy"
+              >
                 <p className="pointer">
-                  請求書番号
+                  請求書№
                   {sort.key === "KYLIST_NOSQSY" ? sort.icon : <span />}
                 </p>
               </th>
-              <th rowSpan={2} onClick={() => handleSort("KYLIST_CDSQSK")}>
+              <th
+                rowSpan={2}
+                onClick={() => handleSort("KYLIST_CDSQSK")}
+                className="kylist-kylist_cdsqsk-thead"
+              >
                 <p className="pointer">
-                  請求先番号
+                  請求先№
                   {sort.key === "KYLIST_CDSQSK" ? sort.icon : <span />}
                 </p>
               </th>
-              <th rowSpan={2} onClick={() => handleSort("KYLIST_SQ_NMCSTM")}>
+              <th
+                rowSpan={2}
+                onClick={() => handleSort("KYLIST_SQ_NMCSTM")}
+                className="kylist-kylist_sq_nmcstm-thead"
+              >
                 <p className="pointer">
                   請求先名
                   {sort.key === "KYLIST_SQ_NMCSTM" ? sort.icon : <span />}
                 </p>
               </th>
-              <th rowSpan={2} onClick={() => handleSort("KYLIST_CDSHSK")}>
+              <th
+                rowSpan={2}
+                onClick={() => handleSort("KYLIST_CDSHSK")}
+                className="kylist-kylist_cdshsk-thead"
+              >
                 <p className="pointer">
-                  送本先番号
+                  送本先№
                   {sort.key === "KYLIST_CDSHSK" ? sort.icon : <span />}
                 </p>
               </th>
-              <th rowSpan={1} onClick={() => handleSort("KYLIST_SH_NMCSTM")}>
+              <th
+                rowSpan={1}
+                onClick={() => handleSort("KYLIST_SH_NMCSTM")}
+                className="kylist-kylist_sh_nmcstm"
+              >
                 <p className="pointer">
                   送本先名
                   {sort.key === "KYLIST_SH_NMCSTM" ? sort.icon : <span />}
                 </p>
               </th>
-              <th rowSpan={2}>
+              <th rowSpan={2} className="kylist-kylist_cdkypt">
                 <p>契約PT</p>
               </th>
-              <th rowSpan={2}>
+              <th rowSpan={2} className="kylist-kylist_sukiyk">
                 <p>部数</p>
               </th>
-              <th rowSpan={2}>
+              <th rowSpan={2} className="kylist-kylist_ymkiyk">
                 <p>開始号</p>
               </th>
               {/* <th rowSpan={2}>
                 <p>終了号</p>
               </th> */}
-              <th rowSpan={1} onClick={() => handleSort("KYLIST_KBJYOT")}>
+              <th
+                rowSpan={1}
+                onClick={() => handleSort("KYLIST_KBJYOT")}
+                className="kylist-kylist_kbjyot"
+              >
                 <p className="pointer">
                   状態{sort.key === "KYLIST_KBJYOT" ? sort.icon : <span />}
                 </p>
@@ -432,7 +460,7 @@ const KiykListTable: React.FC<Props> = ({
             </tr>
           </thead>
           <tbody
-            className="commonTable-tbody"
+            className="kiykList-table-tbody"
             style={{ scrollBehavior: "smooth", height: "300px" }}
           >
             {filteredKiyk
@@ -464,7 +492,10 @@ const KiykListTable: React.FC<Props> = ({
                       }
                     })()}
                   >
-                    <td style={{ textAlign: "right" }}>
+                    <td
+                      className="kylist-kylist_numItem"
+                      style={{ textAlign: "right" }}
+                    >
                       <button
                         style={{
                           color: "#668ad8",
@@ -482,7 +513,7 @@ const KiykListTable: React.FC<Props> = ({
                           (paginateParam.currentPage - 1) * pageLimit}
                       </button>
                     </td>
-                    <td>
+                    <td className="kylist-kylist_nokiyk">
                       <button
                         style={{
                           textAlign: "right",
@@ -502,14 +533,30 @@ const KiykListTable: React.FC<Props> = ({
                         {row.KYLIST_NOKIYK}
                       </button>
                     </td>
-                    <td style={{ textAlign: "right" }}>{row.KYLIST_NOSQSY}</td>
-                    <td style={{ textAlign: "center" }}>{row.KYLIST_CDSQSK}</td>
-                    <td>{row.KYLIST_SQ_NMCSTM}</td>
-                    <td>{row.KYLIST_CDSHSK}</td>
-                    <td>{row.KYLIST_SH_NMCSTM}</td>
-                    <td style={{ textAlign: "center" }}>{row.KYLIST_CDKYPT}</td>
-                    <td style={{ textAlign: "right" }}>{row.KYLIST_SUKIYK}</td>
-                    <td style={{ textAlign: "center" }}>{row.KYLIST_YMKIYK}</td>
+                    <td className="kylist-kylist_nosqsy">
+                      {row.KYLIST_NOSQSY}
+                    </td>
+                    <td className="kylist-kylist_cdsqsk">
+                      {row.KYLIST_CDSQSK}
+                    </td>
+                    <td className="kylist-kylist_sq_nmcstm">
+                      {row.KYLIST_SQ_NMCSTM}
+                    </td>
+                    <td className="kylist-kylist_cdshsk">
+                      {row.KYLIST_CDSHSK}
+                    </td>
+                    <td className="kylist-kylist_sh_nmcstm">
+                      {row.KYLIST_SH_NMCSTM}
+                    </td>
+                    <td className="kylist-kylist_cdkypt">
+                      {row.KYLIST_CDKYPT}
+                    </td>
+                    <td className="kylist-kylist_sukiyk">
+                      {row.KYLIST_SUKIYK}
+                    </td>
+                    <td className="kylist-kylist_ymkiyk">
+                      {row.KYLIST_YMKIYK}
+                    </td>
                     {/* <td style={{ textAlign: "center" }}>{row.KYLIST_YMKIYE}</td> */}
                     {/* <td>
                   {
@@ -521,7 +568,9 @@ const KiykListTable: React.FC<Props> = ({
                   }
                 </td> */}
                     {/* <td>{row.KYLIST_KBMSKM}</td> */}
-                    <td>{gycmConv("KBJYOT", row.KYLIST_KBJYOT)}</td>
+                    <td className="kylist-kylist_kbjyot">
+                      {gycmConv("KBJYOT", row.KYLIST_KBJYOT)}
+                    </td>
                     {/*
                 <td>{gycmConv("KBMSKM", row.KYLIST_KBMSKM)}</td>
                 <td>{gycmConv("KBKIZK", row.KYLIST_KBKIZK)}</td>
