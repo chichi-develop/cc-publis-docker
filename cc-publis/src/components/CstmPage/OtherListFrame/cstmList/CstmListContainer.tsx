@@ -57,7 +57,7 @@ const CstmListContainer: React.FC = () => {
   let showListCstm = publisState.showListCstm;
   let gycms = publisState.gycms;
   let setGycm = publisState.setGycm;
-  let errorCode = publisState.error.code || "0";
+  let errorCode = publisState.error.code || "null";
 
   useEffect(() => {
     console.log("CstmListContainer render!");

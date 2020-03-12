@@ -40,6 +40,21 @@
   margin: 0.5em;
 }
 
+.login-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffe8e7;
+  border: #fc544b solid 0.6px;
+  border-radius: 0.3em;
+  color: #f83126;
+  height: 2.7em;
+  width: 18.2em;
+  padding: 0 2em 0 2em;
+  font-size: 15.5px;
+  margin-top: 9px;
+}
+
 .login-form-submit {
   position: relative;
   display: block;
@@ -54,10 +69,10 @@
   color: rgb(23, 43, 77);
   text-decoration: none;
 
-  border-top-color: rgba(9, 30, 66, 0.13);
+  /* border-top-color: rgba(9, 30, 66, 0.13);
   border-top-style: solid;
-  border-top-width: 1px;
-  margin-top: 1em;
+  border-top-width: 1px; */
+  /* margin-top: 1em; */
   margin-left: 0.5em;
   margin-right: 0.5em;
 }
@@ -66,7 +81,7 @@
   display: inline-block;
   font-size: 14px;
   padding: 0.5em 1em;
-  margin-top: 0.5em;
+  margin-top: 1.5em;
   text-decoration: none;
   background: #668ad8;
   color: #fff;
