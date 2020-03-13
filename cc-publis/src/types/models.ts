@@ -39,11 +39,12 @@ export type Aclg = {
 export type Aclgs = Aclg[];
 
 export type Auth = {
-  sessionID: string
-  isAuthenticated: boolean
-  id: string
-  email: string
-  privilege: string[]
+  sessionID: string;
+  isAuthenticated: boolean;
+  id: string;
+  email: string;
+  privilege: string[];
+  error: {};
 };
 
 export type Cstm = {
@@ -99,9 +100,9 @@ export type Cstm = {
   CT_CCOUSRX: string;
   CT_CCUSERX: string;
   CT_CCFUNCX: string;
-}
+};
 
-export type Cstms = Cstm[]
+export type Cstms = Cstm[];
 
 export type Csmm = {
   CM_CDCSTM: string;
@@ -121,9 +122,9 @@ export type Csmm = {
   CM_CCOUSRX: string;
   CM_CCUSERX: string;
   CM_CCFUNCX: string;
-}
+};
 
-export type Csmms = Csmm[]
+export type Csmms = Csmm[];
 
 export type Ctzh = {
   VUN_CDSQSK: string;
@@ -137,9 +138,9 @@ export type Ctzh = {
   VUN_KGKIKJ: string;
   VUN_KGNYKN: string;
   VUN_KGZNDK: string;
-}
+};
 
-export type Ctzhs = Ctzh[]
+export type Ctzhs = Ctzh[];
 
 export type Kiyk = {
   KY_NOKIYK: number;
@@ -207,9 +208,9 @@ export type Kiyk = {
   KY_CCOUSRX: string;
   KY_CCUSERX: string;
   KY_CCFUNCX: string;
-}
+};
 
-export type Kiyks = Kiyk[]
+export type Kiyks = Kiyk[];
 
 export type KiykList = {
   KYLIST_NOKIYK: number;
@@ -228,9 +229,9 @@ export type KiykList = {
   KYLIST_KBKSYB: string;
   KYLIST_KBTKBT: string;
   KSLIST_ZNURKK: string;
-}
+};
 
-export type KiykLists = KiykList[]
+export type KiykLists = KiykList[];
 
 export type Kyzd = {
   KS_NOKIYK: number;
@@ -269,9 +270,9 @@ export type Kyzd = {
   KS_CCOUSRX: string;
   KS_CCUSERX: string;
   KS_CCFUNCX: string;
-}
+};
 
-export type Kyzds = Kyzd[]
+export type Kyzds = Kyzd[];
 
 export type Kyzh = {
   VKM_NOKIYK: number;
@@ -284,10 +285,9 @@ export type Kyzh = {
   VKM_KGSRSZ: number;
   VKM_KGSRSR: number;
   VKM_KBURKT: string;
-}
+};
 
-export type Kyzhs = Kyzh[]
-
+export type Kyzhs = Kyzh[];
 
 export type Gycm = {
   GY_CDBNRI: string;
@@ -304,12 +304,12 @@ export type Gycm = {
   GY_CCTERMX: string;
   GY_CCOUSRX: string;
   GY_CCUSERX: string;
-}
+};
 
-export type Gycms = Gycm[]
+export type Gycms = Gycm[];
 
 export type Privilege = {
   viewPublis?: string;
   editPublisCstm?: string;
   editMdmm?: string;
-}
+};

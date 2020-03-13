@@ -1,9 +1,9 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
-import Types from '../../store/auth/types'
-import { Auth } from '../../types/models';
-import { Actions } from '../../store/actions';
-import { loginAuthApi } from './authApi';
-import { logoutAuthApi } from './authApi';
+import { call, put, takeLatest } from "redux-saga/effects";
+import Types from "../../store/auth/types";
+import { Auth } from "../../types/models";
+import { Actions } from "../../store/actions";
+import { loginAuthApi } from "./authApi";
+import { logoutAuthApi } from "./authApi";
 
 // function* runCheckAuth(action: ReturnType<typeof Actions.checkAuthStart>) {
 //   try {
@@ -33,15 +33,19 @@ function* runLoginAuth(action: ReturnType<typeof Actions.loginAuthStart>) {
   try {
     // TODO: TS データかエラーが返ってくる場合にはどう型を付けるべきか
     const auth: Auth = yield call(loginAuthApi, loginID, password);
-    console.log('loginAuth OK!!!');
-    console.log('auth:');
-    console.log(auth);
     if (auth.sessionID === undefined) {
+      let err;
+      if (auth.error !== undefined) {
+        err = auth.error;
+      } else {
+        err = { ...auth };
+      }
+
       yield put({
         type: Types.loginAuthFail,
         payload: {
-          error: { ...auth },
-        },
+          error: err
+        }
       });
     } else {
       yield put({
@@ -50,16 +54,16 @@ function* runLoginAuth(action: ReturnType<typeof Actions.loginAuthStart>) {
           sessionID: auth.sessionID,
           isAuth: auth.isAuthenticated,
           userID: auth.email,
-          privilege: auth.privilege,
-        },
+          privilege: auth.privilege
+        }
       });
     }
   } catch (error) {
     yield put({
       type: Types.loginAuthFail,
       payload: {
-        error,
-      },
+        error
+      }
     });
   }
 }
@@ -68,17 +72,18 @@ function* runLogoutAuth(action: ReturnType<typeof Actions.logoutAuthStart>) {
   try {
     // TODO: TS データかエラーが返ってくる場合にはどう型を付けるべきか
     const res = yield call(logoutAuthApi);
-    console.log('logoutAuth OK!!!');
+    console.log("logoutAuth OK!!!");
     console.log(res);
     yield put({
-      type: Types.logoutAuthSucceed,
+      type: Types.logoutAuthSucceed
     });
   } catch (error) {
+    console.log(error);
     yield put({
       type: Types.logoutAuthFail,
       payload: {
-        error,
-      },
+        error
+      }
     });
   }
 }
