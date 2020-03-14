@@ -50,8 +50,8 @@ const App: React.FC = () => {
       />
 
       <div className="app-body">
-        {/* {!authState.isAuth || !authState.privilege.viewPublis ? ( */}
-        {!true ? (
+        {/* {!true ? ( */}
+        {!authState.isAuth || !authState.privilege.viewPublis ? (
           <>
             <Redirect to={"/"} />
             <Login loginAuth={loginAuth} />
