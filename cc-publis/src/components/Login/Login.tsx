@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import "./Login.css";
 import { StoreState } from "../../store";
 
@@ -7,10 +6,10 @@ import * as Actions from "../../store/auth/actions";
 
 type Props = {
   loginAuth: typeof Actions.loginAuthStart;
+  authState: StoreState["auth"];
 };
 
-const Login: React.FC<Props> = ({ loginAuth }) => {
-  const authState = useSelector((state: StoreState) => state.auth);
+const Login: React.FC<Props> = ({ loginAuth, authState }) => {
   const [loginID, setLoginID] = useState("");
   const [password, setPassword] = useState("");
 
@@ -42,7 +41,7 @@ const Login: React.FC<Props> = ({ loginAuth }) => {
           }}
         ></input>
         {errorMessage === "Invalid credentials.\n" && (
-          <div className="login-error">IDまたはPasswordが違います</div>
+          <div className="login-form-error">IDまたはPasswordが違います</div>
         )}
         <div className="login-form-submit">
           <button

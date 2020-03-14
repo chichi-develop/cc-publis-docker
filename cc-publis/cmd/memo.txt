@@ -1,3 +1,32 @@
+<リリース時の注意>
+
+・constantファイルのチェック
+　・cc-oracle-api/app/src/config/constants.ts
+　・cc-publis/src/config/constants.ts
+
+・docker-composeファイルのチェック
+　・cc-oracle-api/docker-compose.yml
+    command: yarn run build:prod
+    # command: yarn run dev
+
+・ログイン、編集ボタン出し分けのコメントアウトのチェック：原則、本番環境状態にしてからcommitする
+　・cc-publis/src/App.tsx
+　・cc-publis/src/components/cstmDetail/CstmDetailContainer.tsx
+
+
+<個別リソース＞
+
+cc-publis-docker $ tar zcvf cc-publis-docker-secret.tar.gz --exclude ".DS_Store" ./cc-oracle-api/app/src/config/ ./cc-oracle-api/cmd/constants.js ./cc-oracle-api/oracle ./cc-publis/src/config
+
+
+<コマンドメモ>
+
+docker container start cc-oracle-api cc-auth json-server cm-spinfo-api cm-spinfo-mysql oracle-11g_oracle11g_1 redis-server
+docker container stop cc-oracle-api cc-auth json-server cm-spinfo-api cm-spinfo-mysql oracle-11g_oracle11g_1 redis-server
+
+
+<その他>
+
 aclg
 20936132
 20933859

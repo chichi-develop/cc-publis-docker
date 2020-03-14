@@ -54,7 +54,7 @@ const App: React.FC = () => {
         {!authState.isAuth || !authState.privilege.viewPublis ? (
           <>
             <Redirect to={"/"} />
-            <Login loginAuth={loginAuth} />
+            <Login loginAuth={loginAuth} authState={authState} />
           </>
         ) : (
           <>

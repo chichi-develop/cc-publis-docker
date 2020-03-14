@@ -40,7 +40,7 @@
   margin: 0.5em;
 }
 
-.login-error {
+.login-form-error {
   display: flex;
   justify-content: center;
   align-items: center;
