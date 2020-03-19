@@ -14,6 +14,9 @@ import { watchGetKiykCstm } from './publis/publisSaga';
 import { watchGetKyzd } from './publis/publisSaga';
 import { watchGetKyzh } from './publis/publisSaga';
 import { watchGetGycm } from './publis/publisSaga';
+import { watchGetCCLog } from './cclog/cclogSaga';
+import { watchAddCCLog } from './cclog/cclogSaga';
+
 
 export default function* rootSaga() {
   yield all([
@@ -32,5 +35,7 @@ export default function* rootSaga() {
     fork(watchGetKyzd),
     fork(watchGetKyzh),
     fork(watchGetGycm),
+    fork(watchGetCCLog),
+    fork(watchAddCCLog),
   ]);
 }

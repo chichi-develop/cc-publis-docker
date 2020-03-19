@@ -8,6 +8,7 @@ import * as Auth from './auth'
 import * as Mdmm from './mdmm'
 import * as Aclg from './aclg'
 import * as Publis from './publis'
+import * as CCLog from './cclog'
 import { PersistPartial } from 'redux-persist/es/persistReducer';
 
 export const history = createBrowserHistory();
@@ -47,6 +48,7 @@ const reducer = combineReducers({
   mdmm: persistReducer(mdmmPersistConfig, Mdmm.reducer),
   aclg: persistReducer(aclgPersistConfig, Aclg.reducer),
   publis: persistReducer(publisPersistConfig, Publis.reducer),
+  cclog: CCLog.reducer,
   router: connectRouter(history),
 });
 
@@ -54,6 +56,7 @@ type AuthType = ReturnType<typeof Auth.initialState> & PersistPartial
 type MdmmType = ReturnType<typeof Mdmm.initialState> & PersistPartial
 type AclgType = ReturnType<typeof Aclg.initialState> & PersistPartial
 type PublisType = ReturnType<typeof Publis.initialState> & PersistPartial
+type CCLogType = ReturnType<typeof CCLog.initialState>
 
 export function initialState() {
   return {
@@ -61,6 +64,7 @@ export function initialState() {
     mdmm: Mdmm.initialState() as MdmmType,
     aclg: Aclg.initialState() as AclgType,
     publis: Publis.initialState() as PublisType,
+    cclog: CCLog.initialState() as CCLogType,
   }
 }
 

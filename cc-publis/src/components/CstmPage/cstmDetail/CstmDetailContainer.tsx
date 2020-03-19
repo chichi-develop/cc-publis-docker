@@ -4,7 +4,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { Actions } from "../../../store/actions";
 import { StoreState } from "../../../store";
 // import { useParams, useLocation } from "react-router-dom";
-import { Cstm, Gycms, Gycm, Privilege } from "../../../types/models";
+import {
+  Cstm,
+  Gycms,
+  Gycm,
+  Privilege,
+  CCLogQuery
+} from "../../../types/models";
 import classNames from "classnames";
 import ReactToPrint from "react-to-print";
 
@@ -12,8 +18,8 @@ import ReactToPrint from "react-to-print";
 
 import "./CstmDetailContainer.css";
 import moment from "moment";
-// import Profile from "./profile";
 import Print from "./print";
+import SimpleMenu from "./menu";
 
 // const CustomTextField = (props: any) => {
 //   return (
@@ -40,6 +46,7 @@ type Props = {
 const CstmDetailContainer: React.FC = () => {
   const authState = useSelector((state: StoreState) => state.auth);
   const publisState = useSelector((state: StoreState) => state.publis);
+  const cclogState = useSelector((state: StoreState) => state.cclog);
   const dispatch = useDispatch();
   const editCstmStart = useCallback(
     (cdcstm: string, cstm: Cstm) =>
@@ -51,6 +58,28 @@ const CstmDetailContainer: React.FC = () => {
     dispatch
   ]);
 
+  // const getCstmDetailHistory = useCallback(
+  //   (getQuery?: CCLogQuery) =>
+  //     dispatch(
+  //       Actions.getCCLogStart("cstmDetailHistory", {
+  //         userId: authState.userID.replace(/@.*$/, ""),
+  //         logId: "showCstmDetail"
+  //       })
+  //     ),
+  //   [dispatch, authState.userID]
+  // );
+
+  const addCstmDetailHistory = useCallback(
+    (cclog: CCLogQuery) =>
+      dispatch(
+        Actions.addCCLogStart("cstmDetailHistory", cclog, {
+          userId: authState.userID.replace(/@.*$/, ""),
+          logId: "showCstmDetail"
+        })
+      ),
+    [dispatch, authState.userID]
+  );
+
   const componentRef: any = useRef(null);
 
   let privilege = authState.privilege;
@@ -60,6 +89,7 @@ const CstmDetailContainer: React.FC = () => {
   let showListCstm = publisState.showListCstm;
   let gycms = publisState.gycms as Gycms;
   let setGycm = publisState.setGycm;
+  let cstmDetailHistory = cclogState.cstmDetailHistory;
 
   useEffect(() => {
     console.log("CstmDetailContainer render!");
@@ -72,6 +102,20 @@ const CstmDetailContainer: React.FC = () => {
     }
   }, [cstm, showListCstm, setGycm, getGycmStart]);
 
+  useEffect(() => {
+    if (cstm.CT_CDCSTM !== undefined) {
+      addCstmDetailHistory({
+        userId: "miyamoto",
+        applicationId: "cc-publis",
+        componentId: "CstmDetailContainer",
+        functionId: "CstmDetailContainer-show",
+        logId: "showCstmDetail",
+        cdcstm: cstm.CT_CDCSTM.trim(),
+        nmcstm: cstm.CT_NMCSTM.trim()
+      });
+    }
+  }, [cstm, addCstmDetailHistory]);
+
   return (
     <div className="cstmDetail-body">
       {showListCstm && setGycm && (
@@ -79,29 +123,14 @@ const CstmDetailContainer: React.FC = () => {
           <div className="cstmDetail-menu">
             <p className="frame-title">顧客情報詳細</p>
             <div className="cstmDetail-menu-container">
-              {/* <button
-                onClick={() =>
-                  alert(`ラベルを印刷します: ${JSON.stringify(cstm)}`)
-                }
-              >
-                ラベル印刷
-              </button> */}
-              <button
-                onClick={() =>
-                  alert(`表示履歴を表示します: ${JSON.stringify(cstm)}`)
-                }
-              >
-                表示履歴
-              </button>
+              <SimpleMenu cstmDetailHistory={cstmDetailHistory} />
               <ReactToPrint
                 trigger={() => <button>ラベル印刷</button>}
                 content={() => componentRef.current}
               />
-              {/* <Preview cstm={cstm} /> */}
               <div style={{ display: "none" }}>
                 <Print ref={componentRef} cstm={cstm} />
               </div>
-              {/* <Profile cstm={cstm} /> */}
             </div>
           </div>
           <CstmDetail
@@ -139,18 +168,8 @@ const CstmDetail: React.FC<Props> = ({
   const cdsyokCode = watch("CT_CDSYOK");
 
   const onSubmit = (data: Record<string, any>) => {
-    //   history.push(`/cstm?columnName=ct_cdcstm&key=${data.cdcstm}%`);
     // console.log(data);
     // alert(JSON.stringify(data));
-    // console.log( data.CT_CCDATEX.replace(/\//g, ""))
-    // console.log(
-    //   Object.assign({}, cstm, data, {
-    //     CT_DTSNGP: data.CT_DTSNGP.replace(/\//g, ""),
-    //     CT_CCDATEC: data.CT_CCDATEX.replace(/\//g, ""),
-    //     CT_CCDATEX: data.CT_CCDATEX.replace(/\//g, "")
-    //   })
-    // );
-    // editCstmStart(cdcstm, cstm)*
     editCstmStart(
       cstm.CT_CDCSTM,
       Object.assign({}, cstm, data, {
