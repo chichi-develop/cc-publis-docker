@@ -2,8 +2,10 @@ import * as authActions from './auth/actions'
 import * as aclgActions from './aclg/actions'
 import * as mdmmActions from './mdmm/actions'
 import * as publisActions from './publis/actions'
+import * as cclogActions from './cclog/actions'
 
-export const Actions = Object.assign(authActions, aclgActions, mdmmActions, publisActions)
+// export const Actions = Object.assign(authActions, aclgActions, mdmmActions, publisActions, cclogActions)
+export const Actions = Object.assign(authActions, aclgActions, mdmmActions, Object.assign(publisActions, cclogActions))
 
 type Unwrap<T> = T extends { [K in keyof T]: infer U } ? U : never;
 type ReturnTypes<T> = {
@@ -19,3 +21,4 @@ export type Actions =
   | CreatorsToActions<typeof import('./aclg/actions')>
   | CreatorsToActions<typeof import('./mdmm/actions')>
   | CreatorsToActions<typeof import('./publis/actions')>
+  | CreatorsToActions<typeof import('./cclog/actions')>

@@ -313,3 +313,23 @@ export type Privilege = {
   editPublisCstm?: string;
   editMdmm?: string;
 };
+
+export type CCLog = {
+  _id: string;
+  logId: string;
+  userId: string;
+  applicationId: string;
+  componentId: string;
+  functionId: string;
+  nokiyk: string;
+  nosqsy: string;
+  cdcstm: string;
+  nmcstm: string;
+  detail: string;
+  created: string;
+  updated: string;
+}
+
+export type CCLogs = CCLog[];
+
+export type CCLogQuery = Partial<CCLog>
