@@ -35,6 +35,8 @@ type Props = {
   clearSortFilter: boolean;
 };
 
+// TODO: Modal系見直し
+
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",

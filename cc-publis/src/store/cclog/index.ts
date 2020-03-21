@@ -5,6 +5,8 @@ import { CCLogs } from '../../types/models';
 interface State {
   cstmDetailHistory: CCLogs;
   showCstmDetailHistory: boolean;
+  editCstmHistory: CCLogs;
+  showEditCstmHistory: boolean;
   isLoading: boolean;
   isUpdating: boolean;
   error: {};
@@ -13,6 +15,8 @@ interface State {
 export const initialState = (injects?: State): State => ({
   cstmDetailHistory: [],
   showCstmDetailHistory: false,
+  editCstmHistory: [],
+  showEditCstmHistory: false,
   isLoading: false,
   isUpdating: false,
   error: {},
@@ -27,6 +31,7 @@ export const reducer = (state = initialState(), action: Actions): State => {
       return Object.assign({}, state, { isLoading: false, error: {} },
         // action.payload.logId === 'cstmDetailHistory' && { cstmDetailHistory: action.payload.cclogs.slice(0, 30), showCstmDetailHistory: true },
         action.payload.logId === 'cstmDetailHistory' && { cstmDetailHistory: action.payload.cclogs, showCstmDetailHistory: true },
+        action.payload.logId === 'editCstmHistory' && { editCstmHistory: action.payload.cclogs, showEditCstmHistory: true },
       );
     case types.getCCLogFail:
       return Object.assign({}, state, {
@@ -34,6 +39,7 @@ export const reducer = (state = initialState(), action: Actions): State => {
         error: action.payload.error,
       },
         action.payload.logId === 'cstmDetailHistory' && { cstmDetailHistory: [], showCstmDetailHistory: false },
+        action.payload.logId === 'editCstmHistory' && { editCstmHistory: [], showEditCstmHistory: false },
       );
 
     case types.addCCLogStart:
@@ -45,6 +51,7 @@ export const reducer = (state = initialState(), action: Actions): State => {
       },
         // action.payload.logId === 'cstmDetailHistory' && { cstmDetailHistory: action.payload.cclogs.slice(0, 30), showCstmDetailHistory: true },
         action.payload.logId === 'cstmDetailHistory' && { cstmDetailHistory: action.payload.cclogs, showCstmDetailHistory: true },
+        action.payload.logId === 'editCstmHistory' && { editCstmHistory: action.payload.cclogs, showEditCstmHistory: true },
       );
     case types.addCCLogFail:
       return Object.assign({}, state, {
@@ -61,6 +68,7 @@ export const reducer = (state = initialState(), action: Actions): State => {
       },
         // action.payload.logId === 'cstmDetailHistory' && { cstmDetailHistory: action.payload.cclogs.slice(0, 30), showCstmDetailHistory: true },
         action.payload.logId === 'cstmDetailHistory' && { cstmDetailHistory: action.payload.cclogs, showCstmDetailHistory: true },
+        action.payload.logId === 'editCstmHistory' && { editCstmHistory: action.payload.cclogs, showEditCstmHistory: true },
       );
     case types.deleteCCLogFail:
       return Object.assign({}, state, {

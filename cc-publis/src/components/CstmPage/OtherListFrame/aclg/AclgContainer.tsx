@@ -22,6 +22,8 @@ type Props = {
   aclgs: Aclgs;
 };
 
+// TODO: Modal系見直し
+
 const AclgContainer: React.FC = () => {
   const { cdcstm } = useParams();
   const aclgState = useSelector((state: StoreState) => state.aclg);

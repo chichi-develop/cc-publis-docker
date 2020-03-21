@@ -3,7 +3,7 @@ import { Route } from "react-router-dom";
 
 import SearchForm from "./search/SearchForm";
 import CstmDetailContainer from "./cstmDetail/CstmDetailContainer";
-import OtherListFrame from "./OtherListFrame/otherListFrameContainer";
+import OtherListFrame from "./OtherListFrame/OtherListFrameContainer";
 
 import "./CstmPage.css";
 
