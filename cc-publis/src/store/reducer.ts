@@ -43,12 +43,19 @@ const publisPersistConfig = {
   whitelist: ['searchHistory'],
 };
 
+const cclogPersistConfig = {
+  key: 'cclog',
+  storage,
+  whitelist: ['searchHistory'],
+};
+
+
 const reducer = combineReducers({
   auth: persistReducer(authPersistConfig, Auth.reducer),
   mdmm: persistReducer(mdmmPersistConfig, Mdmm.reducer),
   aclg: persistReducer(aclgPersistConfig, Aclg.reducer),
   publis: persistReducer(publisPersistConfig, Publis.reducer),
-  cclog: CCLog.reducer,
+  cclog: persistReducer(cclogPersistConfig, CCLog.reducer),
   router: connectRouter(history),
 });
 
@@ -56,7 +63,7 @@ type AuthType = ReturnType<typeof Auth.initialState> & PersistPartial
 type MdmmType = ReturnType<typeof Mdmm.initialState> & PersistPartial
 type AclgType = ReturnType<typeof Aclg.initialState> & PersistPartial
 type PublisType = ReturnType<typeof Publis.initialState> & PersistPartial
-type CCLogType = ReturnType<typeof CCLog.initialState>
+type CCLogType = ReturnType<typeof CCLog.initialState> & PersistPartial
 
 export function initialState() {
   return {

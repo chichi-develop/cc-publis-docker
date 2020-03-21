@@ -7,7 +7,7 @@ import CsmmContainer from "./csmm/CsmmContainer";
 import CstmListContainer from "./cstmList/CstmListContainer";
 import CstmZandakaHistoryContainer from "./cstmZandakaHistory/CstmZandakaHistoryContainer";
 
-import "./otherListFrameContainer.css";
+import "./OtherListFrameContainer.css";
 
 const OtherListFrame: React.FC = () => (
   <div className="otherListFrame-body">

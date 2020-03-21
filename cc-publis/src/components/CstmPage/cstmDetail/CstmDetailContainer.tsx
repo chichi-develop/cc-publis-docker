@@ -4,6 +4,19 @@ import { useSelector, useDispatch } from "react-redux";
 import { Actions } from "../../../store/actions";
 import { StoreState } from "../../../store";
 // import { useParams, useLocation } from "react-router-dom";
+import classNames from "classnames";
+import ReactToPrint from "react-to-print";
+import Modal from "react-modal";
+import _ from "lodash";
+import moment from "moment";
+// import { makeStyles } from "@material-ui/core/styles";
+// import { Close as CloseIcon } from "@material-ui/icons";
+// import TextField from "@material-ui/core/TextField";
+import Print from "./print";
+import CstmDetailShowHistory from "./CstmDetailShowHistory";
+import CstmEditHistoryModal from "./CstmEditHistoryModal";
+// import CstmEditHistoryMenu from "./CstmEditHistoryMenu";
+// import Modal from "../../Common/Modal";
 import {
   Cstm,
   Gycms,
@@ -11,15 +24,35 @@ import {
   Privilege,
   CCLogQuery
 } from "../../../types/models";
-import classNames from "classnames";
-import ReactToPrint from "react-to-print";
-
-// import TextField from "@material-ui/core/TextField";
-
 import "./CstmDetailContainer.css";
-import moment from "moment";
-import Print from "./print";
-import SimpleMenu from "./menu";
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)"
+  }
+};
+
+// const useStyles = makeStyles(theme => ({
+//   root: {
+//     display: "flex",
+//     justifyContent: "center",
+//     alignItems: "flex-end"
+//   },
+//   iconHover: {
+//     margin: theme.spacing(1),
+//     "&:hover": {
+//       // color: blue[800],
+//       color: "#172b4d"
+//     }
+//   }
+// }));
+
+Modal.setAppElement("#modal-root");
 
 // const CustomTextField = (props: any) => {
 //   return (
@@ -37,6 +70,7 @@ type Props = {
   cstm: Cstm;
   gycms: Gycms;
   editCstmStart: typeof Actions.editCstmStart;
+  addCCLogStart: typeof Actions.addCCLogStart;
   isAuth: boolean;
   privilege: Privilege;
   userID: string;
@@ -80,6 +114,23 @@ const CstmDetailContainer: React.FC = () => {
     [dispatch, authState.userID]
   );
 
+  const addCCLogStart = useCallback(
+    (logId: string, cclog: CCLogQuery, getQuery: CCLogQuery) =>
+      dispatch(Actions.addCCLogStart(logId, cclog, getQuery)),
+    [dispatch]
+  );
+
+  const getEditCstmHistoryStart = useCallback(
+    (cdcstm: string) =>
+      dispatch(
+        Actions.getCCLogStart("editCstmHistory", {
+          logId: "editCstmHistory",
+          cdcstm: cdcstm
+        })
+      ),
+    [dispatch]
+  );
+
   const componentRef: any = useRef(null);
 
   let privilege = authState.privilege;
@@ -90,6 +141,18 @@ const CstmDetailContainer: React.FC = () => {
   let gycms = publisState.gycms as Gycms;
   let setGycm = publisState.setGycm;
   let cstmDetailHistory = cclogState.cstmDetailHistory;
+  let editCstmHistory = cclogState.editCstmHistory;
+  let showEditCstmHistory = cclogState.showEditCstmHistory;
+
+  // const classes = useStyles();
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   useEffect(() => {
     console.log("CstmDetailContainer render!");
@@ -105,16 +168,17 @@ const CstmDetailContainer: React.FC = () => {
   useEffect(() => {
     if (cstm.CT_CDCSTM !== undefined) {
       addCstmDetailHistory({
-        userId: "miyamoto",
+        logId: "showCstmDetail",
+        userId: userID.replace(/@.*$/, ""),
         applicationId: "cc-publis",
         componentId: "CstmDetailContainer",
         functionId: "CstmDetailContainer-show",
-        logId: "showCstmDetail",
         cdcstm: cstm.CT_CDCSTM.trim(),
         nmcstm: cstm.CT_NMCSTM.trim()
       });
+      getEditCstmHistoryStart(cstm.CT_CDCSTM);
     }
-  }, [cstm, addCstmDetailHistory]);
+  }, [cstm, userID, addCstmDetailHistory, getEditCstmHistoryStart]);
 
   return (
     <div className="cstmDetail-body">
@@ -123,7 +187,40 @@ const CstmDetailContainer: React.FC = () => {
           <div className="cstmDetail-menu">
             <p className="frame-title">顧客情報詳細</p>
             <div className="cstmDetail-menu-container">
-              <SimpleMenu cstmDetailHistory={cstmDetailHistory} />
+              {/* <Modal
+                title="編集履歴（モーダル）"
+                open={(handleOpenModal: () => void) => (
+                  <button onClick={handleOpenModal}>
+                    編集履歴（モーダル）
+                  </button>
+                )}
+                content={(handleCloseModal: () => void) => (
+                  <CstmEditHistoryModal />
+                )}
+                outClickClose={false}
+              /> */}
+
+              <CstmDetailShowHistory cclogHistory={cstmDetailHistory} />
+              {showEditCstmHistory && editCstmHistory.length > 0 && (
+                <button onClick={openModal}>変更履歴</button>
+                // <CstmEditHistoryMenu cclogHistory={editCstmHistory} />
+              )}
+              <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                style={customStyles}
+                contentLabel="Example Modal"
+              >
+                {/* <button onClick={closeModal}>close</button> */}
+                {/* <CloseIcon
+                  className={classes.iconHover}
+                  fontSize="large"
+                  color="disabled"
+                  style={{ fontSize: 20 }}
+                  onClick={closeModal}
+                /> */}
+                <CstmEditHistoryModal cclogHistory={editCstmHistory} />
+              </Modal>
               <ReactToPrint
                 trigger={() => <button>ラベル印刷</button>}
                 content={() => componentRef.current}
@@ -137,6 +234,7 @@ const CstmDetailContainer: React.FC = () => {
             cstm={cstm}
             gycms={gycms}
             editCstmStart={editCstmStart}
+            addCCLogStart={addCCLogStart}
             isAuth={isAuth}
             privilege={privilege}
             userID={userID}
@@ -151,6 +249,7 @@ const CstmDetail: React.FC<Props> = ({
   cstm,
   gycms,
   editCstmStart,
+  addCCLogStart,
   isAuth,
   privilege,
   userID
@@ -159,6 +258,12 @@ const CstmDetail: React.FC<Props> = ({
   const handleEditMode = () => {
     setEditMode(!editMode);
   };
+
+  const editCstmHistory = (cclog: CCLogQuery) =>
+    addCCLogStart("editCstmHistory", cclog, {
+      logId: "editCstmHistory",
+      cdcstm: cstm.CT_CDCSTM
+    });
 
   const { register, handleSubmit, setValue, watch, errors, reset } = useForm();
 
@@ -170,19 +275,43 @@ const CstmDetail: React.FC<Props> = ({
   const onSubmit = (data: Record<string, any>) => {
     // console.log(data);
     // alert(JSON.stringify(data));
-    editCstmStart(
-      cstm.CT_CDCSTM,
-      Object.assign({}, cstm, data, {
-        CT_DTSNGP: data.CT_DTSNGP.replace(/\//g, ""),
-        CT_CCDATEC: data.CT_CCDATEC.replace(/\//g, ""),
-        CT_CCDATEX: moment().format("YYYYMMDD"),
-        CT_CCTIMEX: moment().format("HHmmss"),
-        CT_CCTERMX: "Web",
-        CT_CCOUSRX: userID.replace(/@.*$/, ""),
-        CT_CCUSERX: userID.replace(/@.*$/, ""),
-        CT_CCFUNCX: "editCstmStart"
-      })
+    const updateCstm = Object.assign({}, cstm, data, {
+      CT_DTSNGP: data.CT_DTSNGP.replace(/\//g, ""),
+      CT_CCDATEC: data.CT_CCDATEC.replace(/\//g, ""),
+      CT_CCDATEX: moment().format("YYYYMMDD"),
+      CT_CCTIMEX: moment().format("HHmmss"),
+      CT_CCTERMX: "Web",
+      CT_CCOUSRX: userID.replace(/@.*$/, ""),
+      CT_CCUSERX: userID.replace(/@.*$/, ""),
+      CT_CCFUNCX: "editCstmStart"
+    });
+
+    editCstmStart(cstm.CT_CDCSTM, Object.assign({}, cstm, data, updateCstm));
+
+    const editDetail = Object.entries(cstm).map(
+      ([key, value], index, array) => {
+        if (
+          _.trim(value) !== _.trim(updateCstm[`${key}`]) &&
+          key.slice(0, 5) !== "CT_CC"
+        ) {
+          return `【${key}】: [${_.trim(value)}] => [${_.trim(
+            updateCstm[`${key}`]
+          )}]`;
+        }
+        return null;
+      }
     );
+
+    editCstmHistory({
+      logId: "editCstmHistory",
+      userId: userID.replace(/@.*$/, ""),
+      applicationId: "cc-publis",
+      componentId: "CstmDetailContainer",
+      functionId: "CstmDetailContainer-show",
+      cdcstm: cstm.CT_CDCSTM.trim(),
+      nmcstm: cstm.CT_NMCSTM.trim(),
+      detail: editDetail.filter(n => n).join(",")
+    });
     handleEditMode();
   };
 

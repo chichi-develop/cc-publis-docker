@@ -4,6 +4,8 @@ import { CCLOG_API_HOST, CCLOG_API_PORT, CCLOG_API_TIMEOUT } from '../../config/
 
 const baseUrlCCLog = `http://${CCLOG_API_HOST}:${CCLOG_API_PORT}/cclogs`;
 
+// TODO: getとedit,deleteは分離した方が良い
+
 export async function getCCLogFactory(getQuery: CCLogQuery): Promise<CCLogs | object> {
   let urlParams = Object.entries(getQuery).map(([key, value], index, array) => {
     return `${key}=${value}`
