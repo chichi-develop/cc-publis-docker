@@ -467,15 +467,8 @@ const KiykListTable: React.FC<Props> = ({
               .slice(paginateParam.offset, paginateParam.offset + pageLimit)
               .map((row, index) => {
                 return (
-                  // <tr key={kiyk.KYLIST_NOKIYK}>
-                  // className={[ 'post', isPublished ? 'published' : 'unpublished' ].join(' ')}
                   <tr
                     key={row.KYLIST_NOKIYK}
-                    // style={
-                    //   row.KYLIST_NOKIYK === kiyk.KY_NOKIYK
-                    //     ? { background: "#ffe4e1" }
-                    //     : {}
-                    // }
                     style={(() => {
                       switch (true) {
                         case row.KYLIST_NOKIYK === kiyk.KY_NOKIYK:
@@ -502,7 +495,6 @@ const KiykListTable: React.FC<Props> = ({
                           borderStyle: "none",
                           backgroundColor: "transparent"
                         }}
-                        // className="commonTable-addButton"
                         type="button"
                         onClick={() =>
                           switchKiyk(kiyks, row.KYLIST_NOKIYK.toString())
@@ -521,7 +513,6 @@ const KiykListTable: React.FC<Props> = ({
                           borderStyle: "none",
                           backgroundColor: "transparent"
                         }}
-                        // className="commonTable-addButton"
                         type="button"
                         onClick={() => {
                           switchKiyk(kiyks, row.KYLIST_NOKIYK.toString());
@@ -557,33 +548,9 @@ const KiykListTable: React.FC<Props> = ({
                     <td className="kylist-kylist_ymkiyk">
                       {row.KYLIST_YMKIYK}
                     </td>
-                    {/* <td style={{ textAlign: "center" }}>{row.KYLIST_YMKIYE}</td> */}
-                    {/* <td>
-                  {
-                    gycms.filter(
-                      r =>
-                        r.GY_CDBNRI === "KBJYOT" &&
-                        r.GY_CDBNSY === row.KYLIST_KBJYOT
-                    )[0].GY_NMBNSY
-                  }
-                </td> */}
-                    {/* <td>{row.KYLIST_KBMSKM}</td> */}
                     <td className="kylist-kylist_kbjyot">
                       {gycmConv("KBJYOT", row.KYLIST_KBJYOT)}
                     </td>
-                    {/*
-                <td>{gycmConv("KBMSKM", row.KYLIST_KBMSKM)}</td>
-                <td>{gycmConv("KBKIZK", row.KYLIST_KBKIZK)}</td>
-                <td>{gycmConv("KBKSYB", row.KYLIST_KBKSYB)}</td>
-                <td>{gycmConv("KBTKBT", row.KYLIST_KBTKBT)}</td>
-                <td style={{ textAlign: "right" }}>{row.KSLIST_ZNURKK}</td>
-                */}
-                    {/* <td>{moment(row.KYLIST_DTKIYK).format("YYYY/MM/DD")}</td> */}
-                    {/* <td style={{ textAlign: "right" }}>{row.KYLIST_NOKIYK}</td> */}
-                    {/* TODO: redux */}
-                    {/* <td style={{ textAlign: "right" }}>
-                  {row.CT_NOTEL2.toLocaleString()}
-                </td> */}
                   </tr>
                 );
               })}

@@ -2,6 +2,8 @@ import { Actions } from '../actions'
 import types from './types';
 import { CCLogs } from '../../types/models';
 
+// TODO: show をとる
+
 interface State {
   cstmDetailHistory: CCLogs;
   showCstmDetailHistory: boolean;

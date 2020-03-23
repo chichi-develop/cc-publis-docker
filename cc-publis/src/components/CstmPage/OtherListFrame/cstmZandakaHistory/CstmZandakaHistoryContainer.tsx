@@ -266,26 +266,17 @@ const CstmZandakaHistoryTable: React.FC<Props> = ({ ctzhs }) => {
         >
           {filteredCtzh.map(row => {
             return (
-              // <tr key={ctzh.VUN_NOSYRI}>
-              // className={[ 'post', isPublished ? 'published' : 'unpublished' ].join(' ')}
               <tr key={row.VUN_NOSYRI}>
                 <td>{row.VUN_NOSQSY}</td>
                 <td>{moment(row.VUN_DTSYRI).format("YYYY/MM/DD")}</td>
                 <td>{row.VUN_TMSYRI}</td>
                 <td>{row.VUN_NOSYRI}</td>
-                {/* <td style={{ textAlign: "right" }}>{row.VUN_NOSYRI}</td> */}
-                {/* TODO: redux */}
                 <td>{row.VUN_NMSYRI}</td>
                 <td>{row.VUN_KBSYRI}</td>
                 <td style={{ textAlign: "right" }}>{row.VUN_KGKIYK}</td>
                 <td style={{ textAlign: "right" }}>{row.VUN_KGKIKJ}</td>
                 <td style={{ textAlign: "right" }}>{row.VUN_KGNYKN}</td>
                 <td style={{ textAlign: "right" }}>{row.VUN_KGZNDK}</td>
-                {/* <td>{row.CT_NMCSTM}</td> */}
-                {/* <td style={{ textAlign: "right" }}>{row.CT_NOTEL1}</td> */}
-                {/* <td style={{ textAlign: "right" }}>
-                  {row.CT_NOTEL2.toLocaleString()}
-                </td> */}
               </tr>
             );
           })}

@@ -335,14 +335,9 @@ const MdmmTable: React.FC<Props> = ({
                 <td style={{ textAlign: "right" }}>{mdmm.md_nommrb}</td>
                 <td>{mdmm.md_nmmmbr}</td>
                 <td>{mdmm.md_txmdmm}</td>
-                {/* {
-                      mdmm.md_nmmmbr ?
-                        md_nmmmbrs.find(c => c.id === mdmm.md_nmmmbr).title : ''
-                  } */}
                 <td style={{ padding: "0", textAlign: "center", width: "3em" }}>
                   <Modal
                     title="メモ編集"
-                    // open={handleOpenModal => <EditIcon className={classes.iconHover} style={{fontSize: '1.5em', color: '#668ad8'}} onClick={handleOpenModal} />}
                     open={(handleOpenModal: () => void) => (
                       <EditIcon
                         className={classes.iconHover}

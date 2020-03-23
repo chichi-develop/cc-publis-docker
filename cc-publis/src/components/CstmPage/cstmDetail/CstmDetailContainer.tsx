@@ -291,6 +291,7 @@ const CstmDetail: React.FC<Props> = ({
     const editDetail = Object.entries(cstm).map(
       ([key, value], index, array) => {
         if (
+          // TODO: null だと更新履歴（detail）に反映されない
           _.trim(value) !== _.trim(updateCstm[`${key}`]) &&
           key.slice(0, 5) !== "CT_CC"
         ) {

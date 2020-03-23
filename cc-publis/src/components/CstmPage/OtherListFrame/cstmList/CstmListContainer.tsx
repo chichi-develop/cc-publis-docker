@@ -393,8 +393,6 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
               .slice(paginateParam.offset, paginateParam.offset + pageLimit)
               .map((row, index) => {
                 return (
-                  // <tr key={cstm.CT_CDCSTM}>
-                  // className={[ 'post', isPublished ? 'published' : 'unpublished' ].join(' ')}
                   <tr
                     key={row.CT_CDCSTM}
                     style={
@@ -410,7 +408,6 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
                           borderStyle: "none",
                           backgroundColor: "transparent"
                         }}
-                        // className="commonTable-addButton"
                         type="button"
                         onClick={() => switchCstm(cstms, row.CT_CDCSTM)}
                       >
@@ -419,9 +416,6 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
                           (paginateParam.currentPage - 1) * pageLimit}
                       </button>
                     </td>
-                    {/* <td>{moment(row.CT_CCDATEX).format("YYYY/MM/DD")}</td> */}
-                    {/* <td style={{ textAlign: "right" }}>{row.CT_CDCSTM}</td> */}
-                    {/* TODO: redux */}
                     <td>
                       <div style={{ display: "flex" }}>
                         <button
@@ -431,7 +425,6 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
                             backgroundColor: "transparent",
                             padding: "0"
                           }}
-                          // className="commonTable-addButton"
                           type="button"
                           onClick={() => {
                             switchCstm(cstms, row.CT_CDCSTM);
@@ -442,57 +435,17 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
                         >
                           {row.CT_CDCSTM}
                         </button>
-                        {/* <div className="maru">
-                      <button
-                        style={{
-                          borderStyle: "none",
-                          color: "white",
-                          backgroundColor: "transparent",
-                          padding: "0"
-                        }}
-                        type="button"
-                        onClick={() =>
-                          history.push(
-                            `/kiyk-list?columnName=ky_cdsqsk&key=${row.CT_CDCSTM}`
-                          )
-                        }
-                      >
-                        契
-                      </button>
-                    </div> */}
                       </div>
                     </td>
-                    {/* <td>
-                  {
-                    gycms.filter(
-                      r =>
-                        r.GY_CDBNRI === "KBCSTM" &&
-                        r.GY_CDBNSY === row.CT_KBCSTM
-                    )[0].GY_NMBNSY
-                  }
-                </td> */}
                     <td>{gycmConv("KBCSTM", row.CT_KBCSTM)}</td>
                     <td>{row.CT_NMCSTM}</td>
                     <td>{row.CT_NMSIME}</td>
-                    {/*
-                <td>{row.CT_NKCSTM}</td>
-              */}
                     <td>{row.CT_NKSIME}</td>
                     <td>{row.CT_ADCST1}</td>
                     <td style={{ textAlign: "right" }}>{row.CT_NOTEL1}</td>
                     <td style={{ textAlign: "right" }}>
                       {row.CT_NOTEL2.toLocaleString()}
                     </td>
-                    {/* <td>
-                  {`${row.CT_DTSNGP.slice(0, 4)}/
-                      ${row.CT_DTSNGP.slice(4, 6)}/
-                      ${row.CT_DTSNGP.slice(6, 8)}`}
-                </td> */}
-                    {/*<td>
-                  {row.CT_DTSNGP.trim() !== ""
-                    ? moment(row.CT_DTSNGP).format("YYYY/MM/DD")
-                    : ""}
-                </td>*/}
                   </tr>
                 );
               })}

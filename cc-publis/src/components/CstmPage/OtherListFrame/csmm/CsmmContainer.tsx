@@ -255,11 +255,7 @@ const CsmmTable: React.FC<Props> = ({ csmms }) => {
         >
           {filteredCsmm.map(row => {
             return (
-              // <tr key={csmm.CM_RBCSMM}>
-              // className={[ 'post', isPublished ? 'published' : 'unpublished' ].join(' ')}
               <tr key={row.CM_RBCSMM}>
-                {/* <td style={{ textAlign: "right" }}>{row.CM_RBCSMM}</td> */}
-                {/* TODO: redux */}
                 <td style={{ textAlign: "right" }}>{row.CM_RBCSMM}</td>
                 <td>{row.CM_NMCMBR}</td>
                 <td>{row.CM_TXCSMM}</td>
@@ -269,11 +265,6 @@ const CsmmTable: React.FC<Props> = ({ csmms }) => {
                 <td style={{ textAlign: "center" }}>
                   {moment(row.CM_CCDATEX).format("YYYY/MM/DD")}
                 </td>
-                {/* <td>{row.CT_NMCSTM}</td> */}
-                {/* <td style={{ textAlign: "right" }}>{row.CT_NOTEL1}</td> */}
-                {/* <td style={{ textAlign: "right" }}>
-                  {row.CT_NOTEL2.toLocaleString()}
-                </td> */}
               </tr>
             );
           })}
