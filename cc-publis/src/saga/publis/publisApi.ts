@@ -41,7 +41,7 @@ export async function editCstmFactory(
 
     console.log(ret)
 
-    return (res);
+    return (res.data);
   } catch (res) {
     const error = res.response;
     throw error;

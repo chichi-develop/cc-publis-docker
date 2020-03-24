@@ -5,20 +5,16 @@ import { CCLogs } from '../../types/models';
 // TODO: show をとる
 
 interface State {
-  cstmDetailHistory: CCLogs;
-  showCstmDetailHistory: boolean;
-  editCstmHistory: CCLogs;
-  showEditCstmHistory: boolean;
+  showCstmDetailLogs: CCLogs;
+  editCstmDetailLogs: CCLogs;
   isLoading: boolean;
   isUpdating: boolean;
   error: {};
 }
 
 export const initialState = (injects?: State): State => ({
-  cstmDetailHistory: [],
-  showCstmDetailHistory: false,
-  editCstmHistory: [],
-  showEditCstmHistory: false,
+  showCstmDetailLogs: [],
+  editCstmDetailLogs: [],
   isLoading: false,
   isUpdating: false,
   error: {},
@@ -31,17 +27,17 @@ export const reducer = (state = initialState(), action: Actions): State => {
       return Object.assign({}, state, { isLoading: true, error: {}, });
     case types.getCCLogSucceed:
       return Object.assign({}, state, { isLoading: false, error: {} },
-        // action.payload.logId === 'cstmDetailHistory' && { cstmDetailHistory: action.payload.cclogs.slice(0, 30), showCstmDetailHistory: true },
-        action.payload.logId === 'cstmDetailHistory' && { cstmDetailHistory: action.payload.cclogs, showCstmDetailHistory: true },
-        action.payload.logId === 'editCstmHistory' && { editCstmHistory: action.payload.cclogs, showEditCstmHistory: true },
+        // action.payload.logId === 'showCstmDetailLog' && { showCstmDetailLogs: action.payload.cclogs.slice(0, 30)},
+        action.payload.logId === 'showCstmDetailLog' && { showCstmDetailLogs: action.payload.cclogs },
+        action.payload.logId === 'editCstmDetailLog' && { editCstmDetailLogs: action.payload.cclogs },
       );
     case types.getCCLogFail:
       return Object.assign({}, state, {
         isLoading: false,
         error: action.payload.error,
       },
-        action.payload.logId === 'cstmDetailHistory' && { cstmDetailHistory: [], showCstmDetailHistory: false },
-        action.payload.logId === 'editCstmHistory' && { editCstmHistory: [], showEditCstmHistory: false },
+        action.payload.logId === 'showCstmDetailLog' && { showCstmDetailLogs: [] },
+        action.payload.logId === 'editCstmDetailLog' && { editCstmDetailLogs: [] },
       );
 
     case types.addCCLogStart:
@@ -51,9 +47,9 @@ export const reducer = (state = initialState(), action: Actions): State => {
         isUpdating: false,
         error: {},
       },
-        // action.payload.logId === 'cstmDetailHistory' && { cstmDetailHistory: action.payload.cclogs.slice(0, 30), showCstmDetailHistory: true },
-        action.payload.logId === 'cstmDetailHistory' && { cstmDetailHistory: action.payload.cclogs, showCstmDetailHistory: true },
-        action.payload.logId === 'editCstmHistory' && { editCstmHistory: action.payload.cclogs, showEditCstmHistory: true },
+        // action.payload.logId === 'showCstmDetailLog' && { showCstmDetailLogs: action.payload.cclogs.slice(0, 30)},
+        action.payload.logId === 'showCstmDetailLog' && { showCstmDetailLogs: action.payload.cclogs },
+        action.payload.logId === 'editCstmDetailLog' && { editCstmDetailLogs: action.payload.cclogs },
       );
     case types.addCCLogFail:
       return Object.assign({}, state, {
@@ -68,9 +64,9 @@ export const reducer = (state = initialState(), action: Actions): State => {
         isUpdating: false,
         error: {},
       },
-        // action.payload.logId === 'cstmDetailHistory' && { cstmDetailHistory: action.payload.cclogs.slice(0, 30), showCstmDetailHistory: true },
-        action.payload.logId === 'cstmDetailHistory' && { cstmDetailHistory: action.payload.cclogs, showCstmDetailHistory: true },
-        action.payload.logId === 'editCstmHistory' && { editCstmHistory: action.payload.cclogs, showEditCstmHistory: true },
+        // action.payload.logId === 'showCstmDetailLog' && { showCstmDetailLogs: action.payload.cclogs.slice(0, 30)},
+        action.payload.logId === 'showCstmDetailLog' && { showCstmDetailLogs: action.payload.cclogs },
+        action.payload.logId === 'editCstmDetailLog' && { editCstmDetailLogs: action.payload.cclogs },
       );
     case types.deleteCCLogFail:
       return Object.assign({}, state, {

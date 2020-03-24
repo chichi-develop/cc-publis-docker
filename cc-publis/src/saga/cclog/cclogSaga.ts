@@ -4,7 +4,7 @@ import { Actions } from '../../store/actions';
 import { getCCLogFactory, addCCLogFactory, deleteCCLogFactory } from './cclogApi';
 
 function* runGetCCLog(action: ReturnType<typeof Actions.getCCLogStart>) {
-  const { logId, getQuery } = action.payload;
+  const { getQuery } = action.payload;
   try {
     // TODO: TS データかエラーが返ってくる場合にはどう型を付けるべきか
     const cclogs = yield call(getCCLogFactory, getQuery);
@@ -14,13 +14,13 @@ function* runGetCCLog(action: ReturnType<typeof Actions.getCCLogStart>) {
     yield put({
       type: Types.getCCLogSucceed,
       payload: {
-        logId: logId,
+        logId: getQuery.logId,
         cclogs: cclogs,
       },
     });
   } catch (error) {
     console.log(error)
-    yield put({ type: Types.getCCLogFail, payload: { logId: logId, error: error } });
+    yield put({ type: Types.getCCLogFail, payload: { logId: getQuery.logId, error: error } });
   }
 }
 
@@ -30,14 +30,14 @@ export function* watchGetCCLog() {
 }
 
 function* runAddCCLog(action: ReturnType<typeof Actions.addCCLogStart>) {
-  const { logId, cclog, getQuery } = action.payload;
+  const { cclog, getQuery } = action.payload;
   try {
     // TODO: TS データかエラーが返ってくる場合にはどう型を付けるべきか
     const cclogs = yield call(addCCLogFactory, cclog, getQuery);
     yield put({
       type: Types.addCCLogSucceed,
       payload: {
-        logId: logId,
+        logId: cclog.logId,
         cclogs: cclogs
       }
     });
@@ -45,7 +45,7 @@ function* runAddCCLog(action: ReturnType<typeof Actions.addCCLogStart>) {
     yield put({
       type: Types.addCCLogFail,
       payload: {
-        logId: logId,
+        logId: cclog.logId,
         error: error
       },
     });
@@ -57,14 +57,13 @@ export function* watchAddCCLog() {
 }
 
 function* runDeleteCCLog(action: ReturnType<typeof Actions.deleteCCLogStart>) {
-  const { logId, deleteQuery, getQuery } = action.payload;
+  const { deleteQuery, getQuery } = action.payload;
   try {
-    // TODO: TS データかエラーが返ってくる場合にはどう型を付けるべきか
     const cclogs = yield call(deleteCCLogFactory, deleteQuery, getQuery);
     yield put({
       type: Types.deleteCCLogSucceed,
       payload: {
-        logId: logId,
+        logId: deleteQuery.logId,
         cclogs: cclogs
       }
     });
@@ -72,7 +71,7 @@ function* runDeleteCCLog(action: ReturnType<typeof Actions.deleteCCLogStart>) {
     yield put({
       type: Types.deleteCCLogFail,
       payload: {
-        logId: logId,
+        logId: deleteQuery.logId,
         error: error
       },
     });

@@ -72,17 +72,12 @@ export const reducer = (state = initialState(), action: Actions): State => {
         ...action.payload.cstms,
         cstm: action.payload.cstm,
         showListCstm: true,
-        // searchHistory: [
-        //   action.payload.searchHistory,
-        //   ...state.searchHistory,
-        // ].slice(0, 30),
         searchHistory: action.payload.searchHistory,
         isLoading: false,
         error: {},
       });
     case types.getCstmFail:
       return Object.assign({}, state, {
-        // eslint-disable-next-line @typescript-eslint/camelcase
         cstms: [],
         showListCstm: false,
         isLoading: false,
@@ -91,7 +86,12 @@ export const reducer = (state = initialState(), action: Actions): State => {
 
     case types.switchCstm:
       return Object.assign({}, state, {
-        cstm: action.payload.cstms.filter(row => row.CT_CDCSTM === action.payload.cdcstm)[0]
+        cstm: state.cstms.filter(row => row.CT_CDCSTM === action.payload.cdcstm)[0]
+      });
+
+    case types.replaceCstm:
+      return Object.assign({}, state, {
+        cstms: Object.assign([], state.cstms, state.cstms[state.cstms.findIndex((v) => v.CT_CDCSTM === action.payload.cdcstm)] = action.payload.cstm)
       });
 
     case types.addCstmStart:
@@ -130,7 +130,7 @@ export const reducer = (state = initialState(), action: Actions): State => {
       return Object.assign({}, state, { isUpdating: true, error: {} });
     case types.editCstmSucceed:
       return Object.assign({}, state, {
-        ...action.payload.cstm,
+        cstm: action.payload.cstm,
         isUpdating: false,
         clearSortFilter: false,
         error: {},
@@ -203,7 +203,6 @@ export const reducer = (state = initialState(), action: Actions): State => {
       });
     case types.getKiykFail:
       return Object.assign({}, state, {
-        // eslint-disable-next-line @typescript-eslint/camelcase
         kiyks: [],
         kiyk: {},
         kiykLists: [],
@@ -214,7 +213,7 @@ export const reducer = (state = initialState(), action: Actions): State => {
 
     case types.switchKiyk:
       return Object.assign({}, state, {
-        kiyk: action.payload.kiyks.filter(row => row.KY_NOKIYK.toString() === action.payload.nokiyk)[0]
+        kiyk: state.kiyks.filter(row => row.KY_NOKIYK.toString() === action.payload.nokiyk)[0]
       });
 
     case types.getKiykCstmStart:

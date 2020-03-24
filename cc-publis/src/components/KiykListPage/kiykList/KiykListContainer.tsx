@@ -43,8 +43,7 @@ const KiykListContainer: React.FC = () => {
   );
 
   const switchKiyk = useCallback(
-    (kiyks: Kiyks, cdcstm: string) =>
-      dispatch(Actions.switchKiyk(kiyks, cdcstm)),
+    (cdcstm: string) => dispatch(Actions.switchKiyk(cdcstm)),
     [dispatch]
   );
 
@@ -496,9 +495,7 @@ const KiykListTable: React.FC<Props> = ({
                           backgroundColor: "transparent"
                         }}
                         type="button"
-                        onClick={() =>
-                          switchKiyk(kiyks, row.KYLIST_NOKIYK.toString())
-                        }
+                        onClick={() => switchKiyk(row.KYLIST_NOKIYK.toString())}
                       >
                         {index +
                           1 +
@@ -515,7 +512,7 @@ const KiykListTable: React.FC<Props> = ({
                         }}
                         type="button"
                         onClick={() => {
-                          switchKiyk(kiyks, row.KYLIST_NOKIYK.toString());
+                          switchKiyk(row.KYLIST_NOKIYK.toString());
                           history.push(
                             `/kiyk-detail?&nokiyk=${row.KYLIST_NOKIYK}`
                           );

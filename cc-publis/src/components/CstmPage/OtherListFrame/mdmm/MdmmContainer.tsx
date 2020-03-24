@@ -299,15 +299,12 @@ const MdmmTable: React.FC<Props> = ({
             <th>
               <select
                 name="md_nmmmbr_key"
-                // value={filterQuery.md_nmmmbr_key||""}
                 value={filterQuery.md_nmmmbr_key}
                 onChange={handleFilter}
               >
                 <option value="">選択</option>
-                {/* {md_nmmmbrs.map((item: string, index: any) => { */}
                 {md_nmmmbrs.map((item: string) => {
                   return (
-                    // <option key={index} value={item}>
                     <option key={item} value={item}>
                       {item}
                     </option>

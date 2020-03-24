@@ -13,9 +13,8 @@ import moment from "moment";
 // import { Close as CloseIcon } from "@material-ui/icons";
 // import TextField from "@material-ui/core/TextField";
 import Print from "./print";
-import CstmDetailShowHistory from "./CstmDetailShowHistory";
-import CstmEditHistoryModal from "./CstmEditHistoryModal";
-// import CstmEditHistoryMenu from "./CstmEditHistoryMenu";
+import CstmDetailShowLog from "./CstmDetailShowLog";
+import CstmDetailEditLog from "./CstmDetailEditLog";
 // import Modal from "../../Common/Modal";
 import {
   Cstm,
@@ -71,6 +70,7 @@ type Props = {
   gycms: Gycms;
   editCstmStart: typeof Actions.editCstmStart;
   addCCLogStart: typeof Actions.addCCLogStart;
+  replaceCstm: typeof Actions.replaceCstm;
   isAuth: boolean;
   privilege: Privilege;
   userID: string;
@@ -92,42 +92,19 @@ const CstmDetailContainer: React.FC = () => {
     dispatch
   ]);
 
-  // const getCstmDetailHistory = useCallback(
-  //   (getQuery?: CCLogQuery) =>
-  //     dispatch(
-  //       Actions.getCCLogStart("cstmDetailHistory", {
-  //         userId: authState.userID.replace(/@.*$/, ""),
-  //         logId: "showCstmDetail"
-  //       })
-  //     ),
-  //   [dispatch, authState.userID]
-  // );
-
-  const addCstmDetailHistory = useCallback(
-    (cclog: CCLogQuery) =>
-      dispatch(
-        Actions.addCCLogStart("cstmDetailHistory", cclog, {
-          userId: authState.userID.replace(/@.*$/, ""),
-          logId: "showCstmDetail"
-        })
-      ),
-    [dispatch, authState.userID]
-  );
-
   const addCCLogStart = useCallback(
-    (logId: string, cclog: CCLogQuery, getQuery: CCLogQuery) =>
-      dispatch(Actions.addCCLogStart(logId, cclog, getQuery)),
+    (cclog: CCLogQuery, getQuery: CCLogQuery) =>
+      dispatch(Actions.addCCLogStart(cclog, getQuery)),
     [dispatch]
   );
 
-  const getEditCstmHistoryStart = useCallback(
-    (cdcstm: string) =>
-      dispatch(
-        Actions.getCCLogStart("editCstmHistory", {
-          logId: "editCstmHistory",
-          cdcstm: cdcstm
-        })
-      ),
+  const getCCLogStart = useCallback(
+    (getQuery: CCLogQuery) => dispatch(Actions.getCCLogStart(getQuery)),
+    [dispatch]
+  );
+
+  const replaceCstm = useCallback(
+    (cdcstm: string, cstm: Cstm) => dispatch(Actions.replaceCstm(cdcstm, cstm)),
     [dispatch]
   );
 
@@ -140,9 +117,8 @@ const CstmDetailContainer: React.FC = () => {
   let showListCstm = publisState.showListCstm;
   let gycms = publisState.gycms as Gycms;
   let setGycm = publisState.setGycm;
-  let cstmDetailHistory = cclogState.cstmDetailHistory;
-  let editCstmHistory = cclogState.editCstmHistory;
-  let showEditCstmHistory = cclogState.showEditCstmHistory;
+  let showCstmDetailLogs = cclogState.showCstmDetailLogs;
+  let editCstmDetailLogs = cclogState.editCstmDetailLogs;
 
   // const classes = useStyles();
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -167,18 +143,27 @@ const CstmDetailContainer: React.FC = () => {
 
   useEffect(() => {
     if (cstm.CT_CDCSTM !== undefined) {
-      addCstmDetailHistory({
-        logId: "showCstmDetail",
-        userId: userID.replace(/@.*$/, ""),
-        applicationId: "cc-publis",
-        componentId: "CstmDetailContainer",
-        functionId: "CstmDetailContainer-show",
-        cdcstm: cstm.CT_CDCSTM.trim(),
-        nmcstm: cstm.CT_NMCSTM.trim()
+      addCCLogStart(
+        {
+          logId: "showCstmDetailLog",
+          userId: userID.replace(/@.*$/, ""),
+          applicationId: "cc-publis",
+          componentId: "CstmDetailContainer",
+          functionId: "CstmDetailContainer-show",
+          cdcstm: cstm.CT_CDCSTM.trim(),
+          nmcstm: cstm.CT_NMCSTM.trim()
+        },
+        {
+          userId: userID.replace(/@.*$/, ""),
+          logId: "showCstmDetailLog"
+        }
+      );
+      getCCLogStart({
+        logId: "editCstmDetailLog",
+        cdcstm: cstm.CT_CDCSTM
       });
-      getEditCstmHistoryStart(cstm.CT_CDCSTM);
     }
-  }, [cstm, userID, addCstmDetailHistory, getEditCstmHistoryStart]);
+  }, [cstm, userID, addCCLogStart, getCCLogStart]);
 
   return (
     <div className="cstmDetail-body">
@@ -195,32 +180,34 @@ const CstmDetailContainer: React.FC = () => {
                   </button>
                 )}
                 content={(handleCloseModal: () => void) => (
-                  <CstmEditHistoryModal />
+                  <CstmDetailEditLog />
                 )}
                 outClickClose={false}
               /> */}
 
-              <CstmDetailShowHistory cclogHistory={cstmDetailHistory} />
-              {showEditCstmHistory && editCstmHistory.length > 0 && (
-                <button onClick={openModal}>変更履歴</button>
-                // <CstmEditHistoryMenu cclogHistory={editCstmHistory} />
-              )}
-              <Modal
-                isOpen={modalIsOpen}
-                onRequestClose={closeModal}
-                style={customStyles}
-                contentLabel="Example Modal"
-              >
-                {/* <button onClick={closeModal}>close</button> */}
-                {/* <CloseIcon
+              <CstmDetailShowLog cclogs={showCstmDetailLogs} />
+              {editCstmDetailLogs.length > 0 && (
+                <>
+                  <button onClick={openModal}>変更履歴</button>
+                  <Modal
+                    isOpen={modalIsOpen}
+                    onRequestClose={closeModal}
+                    style={customStyles}
+                    contentLabel="Example Modal"
+                  >
+                    {/* <button onClick={closeModal}>close</button> */}
+                    {/* <CloseIcon
                   className={classes.iconHover}
                   fontSize="large"
                   color="disabled"
                   style={{ fontSize: 20 }}
                   onClick={closeModal}
                 /> */}
-                <CstmEditHistoryModal cclogHistory={editCstmHistory} />
-              </Modal>
+                    <CstmDetailEditLog cclogs={editCstmDetailLogs} />
+                  </Modal>
+                </>
+              )}
+
               <ReactToPrint
                 trigger={() => <button>ラベル印刷</button>}
                 content={() => componentRef.current}
@@ -235,6 +222,7 @@ const CstmDetailContainer: React.FC = () => {
             gycms={gycms}
             editCstmStart={editCstmStart}
             addCCLogStart={addCCLogStart}
+            replaceCstm={replaceCstm}
             isAuth={isAuth}
             privilege={privilege}
             userID={userID}
@@ -250,6 +238,7 @@ const CstmDetail: React.FC<Props> = ({
   gycms,
   editCstmStart,
   addCCLogStart,
+  replaceCstm,
   isAuth,
   privilege,
   userID
@@ -259,12 +248,6 @@ const CstmDetail: React.FC<Props> = ({
     setEditMode(!editMode);
   };
 
-  const editCstmHistory = (cclog: CCLogQuery) =>
-    addCCLogStart("editCstmHistory", cclog, {
-      logId: "editCstmHistory",
-      cdcstm: cstm.CT_CDCSTM
-    });
-
   const { register, handleSubmit, setValue, watch, errors, reset } = useForm();
 
   const kbksyoCode = watch("CT_KBKSYO");
@@ -272,7 +255,7 @@ const CstmDetail: React.FC<Props> = ({
   const kbdmprCode = watch("CT_KBDMPR");
   const cdsyokCode = watch("CT_CDSYOK");
 
-  const onSubmit = (data: Record<string, any>) => {
+  const onSubmit = async (data: Record<string, any>) => {
     // console.log(data);
     // alert(JSON.stringify(data));
     const updateCstm = Object.assign({}, cstm, data, {
@@ -286,12 +269,14 @@ const CstmDetail: React.FC<Props> = ({
       CT_CCFUNCX: "editCstmStart"
     });
 
-    editCstmStart(cstm.CT_CDCSTM, Object.assign({}, cstm, data, updateCstm));
+    await editCstmStart(
+      cstm.CT_CDCSTM,
+      Object.assign({}, cstm, data, updateCstm)
+    );
 
     const editDetail = Object.entries(cstm).map(
       ([key, value], index, array) => {
         if (
-          // TODO: null だと更新履歴（detail）に反映されない
           _.trim(value) !== _.trim(updateCstm[`${key}`]) &&
           key.slice(0, 5) !== "CT_CC"
         ) {
@@ -303,16 +288,22 @@ const CstmDetail: React.FC<Props> = ({
       }
     );
 
-    editCstmHistory({
-      logId: "editCstmHistory",
-      userId: userID.replace(/@.*$/, ""),
-      applicationId: "cc-publis",
-      componentId: "CstmDetailContainer",
-      functionId: "CstmDetailContainer-show",
-      cdcstm: cstm.CT_CDCSTM.trim(),
-      nmcstm: cstm.CT_NMCSTM.trim(),
-      detail: editDetail.filter(n => n).join(",")
-    });
+    addCCLogStart(
+      {
+        logId: "editCstmDetailLog",
+        userId: userID.replace(/@.*$/, ""),
+        applicationId: "cc-publis",
+        componentId: "CstmDetailContainer",
+        functionId: "CstmDetailContainer-show",
+        cdcstm: cstm.CT_CDCSTM.trim(),
+        nmcstm: cstm.CT_NMCSTM.trim(),
+        detail: editDetail.filter(n => n).join(",")
+      },
+      { logId: "editCstmDetailLog", cdcstm: cstm.CT_CDCSTM }
+    );
+
+    replaceCstm(cstm.CT_CDCSTM, updateCstm);
+
     handleEditMode();
   };
 
