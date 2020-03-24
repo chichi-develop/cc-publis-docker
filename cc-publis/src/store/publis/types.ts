@@ -5,6 +5,8 @@ export default {
 
   switchCstm: 'SWITCH_CSTM',
 
+  replaceCstm: 'REPLACE_CSTM',
+
   editCstmStart: 'EDIT_CSTM_START',
   editCstmSucceed: 'EDIT_CSTM_SUCCEED',
   editCstmFail: 'EDIT_CSTM_FAIL',

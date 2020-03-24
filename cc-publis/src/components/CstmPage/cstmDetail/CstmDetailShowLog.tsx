@@ -7,10 +7,10 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { CCLogs } from "../../../types/models";
 
 type Props = {
-  cclogHistory: CCLogs;
+  cclogs: CCLogs;
 };
 
-const CstmDetailShowHistory: React.FC<Props> = ({ cclogHistory }) => {
+const CstmDetailShowLog: React.FC<Props> = ({ cclogs }) => {
   let history = useHistory();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -44,7 +44,7 @@ const CstmDetailShowHistory: React.FC<Props> = ({ cclogHistory }) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        {cclogHistory
+        {cclogs
           .sort(function(a: any, b: any) {
             if (a.created < b.created) {
               return 1;
@@ -70,4 +70,4 @@ const CstmDetailShowHistory: React.FC<Props> = ({ cclogHistory }) => {
   );
 };
 
-export default CstmDetailShowHistory;
+export default CstmDetailShowLog;

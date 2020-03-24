@@ -1,9 +1,9 @@
 import types from './types'
 import { CCLogs, CCLogQuery } from '../../types/models';
 
-export const getCCLogStart = (logId: string, getQuery: CCLogQuery) => ({
+export const getCCLogStart = (getQuery: CCLogQuery) => ({
   type: types.getCCLogStart,
-  payload: { logId, getQuery },
+  payload: { getQuery },
 });
 export const getCCLogSucceed = (logId: string, cclogs: CCLogs) => ({
   type: types.getCCLogSucceed,
@@ -14,9 +14,9 @@ export const getCCLogFail = (logId: string, error: object) => ({
   payload: { logId, error },
 });
 
-export const addCCLogStart = (logId: string, cclog: CCLogQuery, getQuery: CCLogQuery) => ({
+export const addCCLogStart = (cclog: CCLogQuery, getQuery: CCLogQuery) => ({
   type: types.addCCLogStart,
-  payload: { logId, cclog, getQuery },
+  payload: { cclog, getQuery },
 });
 export const addCCLogSucceed = (logId: string, cclogs: CCLogs) => ({
   type: types.addCCLogSucceed,
@@ -27,9 +27,9 @@ export const addCCLogFail = (logId: string, error: object) => ({
   payload: { logId, error },
 });
 
-export const deleteCCLogStart = (logId: string, deleteQuery: CCLogQuery, getQuery: CCLogQuery) => ({
+export const deleteCCLogStart = (deleteQuery: CCLogQuery, getQuery: CCLogQuery) => ({
   type: types.deleteCCLogStart,
-  payload: { logId, deleteQuery, getQuery },
+  payload: { deleteQuery, getQuery },
 });
 export const deleteCCLogSucceed = (logId: string, cclogs: CCLogs) => ({
   type: types.deleteCCLogSucceed,

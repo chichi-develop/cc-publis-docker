@@ -11,7 +11,7 @@ import moment from "moment";
 import { CCLogs } from "../../../types/models";
 
 type Props = {
-  cclogHistory: CCLogs;
+  cclogs: CCLogs;
 };
 
 const useStyles = makeStyles({
@@ -48,7 +48,7 @@ const columns = [
   }
 ] as const;
 
-const CstmEditHistoryMenu: React.FC<Props> = ({ cclogHistory }) => {
+const CstmDetailEditLog: React.FC<Props> = ({ cclogs }) => {
   const classes = useStyles();
 
   return (
@@ -70,7 +70,7 @@ const CstmEditHistoryMenu: React.FC<Props> = ({ cclogHistory }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {/* {cclogHistory.map(row => (
+            {/* {cclogs.map(row => (
               <TableRow key={row._id}>
                 <TableCell align="right">
                   {moment(row.created as string).format("Y年M月D日 k時mm分")}
@@ -79,7 +79,7 @@ const CstmEditHistoryMenu: React.FC<Props> = ({ cclogHistory }) => {
                 <TableCell align="left">{row.detail}</TableCell>
               </TableRow>
             ))} */}
-            {cclogHistory.map(row => {
+            {cclogs.map(row => {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={row._id}>
                   {columns.map(column => {
@@ -102,4 +102,4 @@ const CstmEditHistoryMenu: React.FC<Props> = ({ cclogHistory }) => {
   );
 };
 
-export default CstmEditHistoryMenu;
+export default CstmDetailEditLog;

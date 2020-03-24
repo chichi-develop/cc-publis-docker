@@ -86,7 +86,7 @@ function* runEditCstm(action: ReturnType<typeof Actions.editCstmStart>) {
     console.log(cstms)
     yield put({
       type: Types.editCstmSucceed,
-      payload: { cstms },
+      payload: { cstm: cstms.cstms[0] },
     });
   } catch (error) {
     yield put({

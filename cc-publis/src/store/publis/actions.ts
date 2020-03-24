@@ -14,11 +14,15 @@ export const getCstmFail = (error: object) => ({
   payload: { error },
 });
 
-export const switchCstm = (cstms: Cstms, cdcstm: string) => ({
+export const switchCstm = (cdcstm: string) => ({
   type: types.switchCstm,
-  payload: { cstms, cdcstm }
+  payload: { cdcstm }
 });
 
+export const replaceCstm = (cdcstm: string, cstm: Cstm) => ({
+  type: types.replaceCstm,
+  payload: { cdcstm, cstm }
+});
 
 export const editCstmStart = (cdcstm: string, cstm: Cstm) => ({
   type: types.editCstmStart,
@@ -104,9 +108,9 @@ export const getKiykFail = (error: object) => ({
   payload: { error },
 });
 
-export const switchKiyk = (kiyks: Kiyks, nokiyk: string) => ({
+export const switchKiyk = (nokiyk: string) => ({
   type: types.switchKiyk,
-  payload: { kiyks, nokiyk }
+  payload: { nokiyk }
 });
 
 export const getKiykCstmStart = (cdsqsk: string, cdshsk: string) => ({

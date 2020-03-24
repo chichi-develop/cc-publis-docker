@@ -43,8 +43,7 @@ const CstmListContainer: React.FC = () => {
   );
 
   const switchCstm = useCallback(
-    (cstms: Cstms, cdcstm: string) =>
-      dispatch(Actions.switchCstm(cstms, cdcstm)),
+    (cdcstm: string) => dispatch(Actions.switchCstm(cdcstm)),
     [dispatch]
   );
 
@@ -409,7 +408,7 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
                           backgroundColor: "transparent"
                         }}
                         type="button"
-                        onClick={() => switchCstm(cstms, row.CT_CDCSTM)}
+                        onClick={() => switchCstm(row.CT_CDCSTM)}
                       >
                         {index +
                           1 +
@@ -427,7 +426,7 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
                           }}
                           type="button"
                           onClick={() => {
-                            switchCstm(cstms, row.CT_CDCSTM);
+                            switchCstm(row.CT_CDCSTM);
                             history.push(
                               `/kiyk-list?columnName=ky_cdsqsk_cdshsk&key=${row.CT_CDCSTM}`
                             );
