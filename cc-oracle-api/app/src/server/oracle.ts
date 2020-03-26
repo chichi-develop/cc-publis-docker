@@ -1,5 +1,6 @@
 import oracledb from 'oracledb'
 import { Request, Response, NextFunction } from "express"
+import moment from 'moment'
 import { ORACLE_HOST, ORACLE_PORT, ORACLE_SID, ORACLE_USER, ORACLE_PASSWORD } from '../config/constants'
 
 oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT
@@ -52,8 +53,12 @@ export async function cstmSearch(req: Request, res: Response, next: NextFunction
   console.log(`oracle.ts:cstmSearch: columnName:${columnName}、key:${req.params.key}`)
 
   try {
+    console.log('cstmSearch start')
+    console.log(moment().format("HH:mm:ss"))
     connection = await oracledb.getConnection(connectionProperties)
     const result = await connection.execute(sqlText, [req.params.key])
+    console.log('cstmSearch end')
+    console.log(moment().format("HH:mm:ss"))
     if (result.rows && result.rows.length >= 1) {
       // return res.send(result.rows)
       return res.status(200).json({ cstms: result.rows });
@@ -125,7 +130,7 @@ export async function cstmUpsert(req: Request, res: Response, next: NextFunction
     `SET ` +
     updateQuery.join('\n').slice(0, -1) +
     `\n` +
-    `WHERE CT_CDCSTM = ${cdcstm};\n` +
+    `WHERE CT_CDCSTM = '${cdcstm}';\n` +
     `IF (SQL%NOTFOUND) THEN\n` +
     `INSERT INTO CC_CSTM (` +
     insertKeyQuery.join('\n').slice(0, -1) +
@@ -433,8 +438,12 @@ export async function kiykSearch(req: Request, res: Response, next: NextFunction
 
 
   try {
+    console.log('kiykSearch start')
+    console.log(moment().format("HH:mm:ss"))
     connection = await oracledb.getConnection(connectionProperties)
     const result = await connection.execute(sqlText, [req.params.key])
+    console.log('kiykSearch end')
+    console.log(moment().format("HH:mm:ss"))
     if (result.rows && result.rows.length >= 1) {
       // return res.send(result.rows)
       return res.status(200).json({ kiyks: result.rows });

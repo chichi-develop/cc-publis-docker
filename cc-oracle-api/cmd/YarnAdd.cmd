@@ -5,6 +5,7 @@ yarn add oracledb
 yarn add http-errors
 yarn add debug
 yarn add cors
+yarn add moment
 
 yarn add -D @types/express
 yarn add -D @types/cookie-parser
@@ -16,6 +17,7 @@ yarn add -D ts-loader
 yarn add -D ts-node-dev
 yarn add -D typescript
 yarn add -D prettier
+yarn add -D redux-devtools-extension
 
 yarn add -D @types/webpack-env
 yarn add -D webpack

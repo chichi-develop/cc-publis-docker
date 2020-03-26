@@ -17,8 +17,8 @@ services:
       # - ./cmd:/opt/app/cmd:delegated # テスト用
       # - notused:/opt/app/node_modules
 
-    # command: yarn run build:prod
-    command: yarn run dev
+    command: yarn run build:prod
+    # command: yarn run dev
 
 volumes:
   notused:
