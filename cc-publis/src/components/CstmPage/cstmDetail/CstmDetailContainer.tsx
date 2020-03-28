@@ -309,12 +309,16 @@ const CstmDetail: React.FC<Props> = ({
 
   useEffect(() => {
     console.log("CstmDetail render!");
-    return () => console.log("unmounting...");
-  }, []);
+    return () => {
+      reset();
+      console.log("unmounting...");
+    };
+  }, [reset]);
 
   useEffect(() => {
+    reset();
     setEditMode(false);
-  }, [cstm]);
+  }, [cstm, reset]);
 
   const gycmConv = (cdbnri: string, cdbnsy: string) =>
     gycms.filter(r => r.GY_CDBNRI === cdbnri && r.GY_CDBNSY === cdbnsy)[0]
@@ -330,11 +334,19 @@ const CstmDetail: React.FC<Props> = ({
         </option>
       ));
 
-  let editModeStyle = (flg: boolean = false) => [
+  let editModeInputStyle = (flg: boolean = false) => [
     "cstmDetail-container-common",
     {
-      "cstmDetail-container-editMode": editMode && flg,
-      "cstmDetail-container-readMode": !editMode || !flg
+      "cstmDetail-container-input-editMode": editMode && flg,
+      "cstmDetail-container-input-readMode": !editMode || !flg
+    }
+  ];
+
+  let editModeSelectStyle = (flg: boolean = false) => [
+    "cstmDetail-container-common",
+    {
+      "cstmDetail-container-select-editMode": editMode && flg,
+      "cstmDetail-container-select-readMode": !editMode || !flg
     }
   ];
 
@@ -351,7 +363,7 @@ const CstmDetail: React.FC<Props> = ({
             読者No.
           </div>
           {/* <CustomTextField
-            className={classNames("cstmDetail-ctCdcstmInput", editModeStyle)}
+            className={classNames("cstmDetail-ctCdcstmInput", editModeInputStyle)}
             type="text"
             name="CT_CDCSTM"
             label="読者番号"
@@ -360,21 +372,27 @@ const CstmDetail: React.FC<Props> = ({
             value={cstm.CT_CDCSTM.trim()}
           /> */}
           <input
-            className={classNames("cstmDetail-ctCdcstmInput", editModeStyle())}
+            className={classNames(
+              "cstmDetail-ctCdcstmInput",
+              editModeInputStyle()
+            )}
             type="text"
             name="CT_CDCSTM"
+            readOnly={true}
             defaultValue={cstm.CT_CDCSTM.replace(/\s+$/g, "")}
             // ref={register({ pattern: /^2[0-9]{7}/ })}
             ref={register({ pattern: /^[0-9]{8}/ })}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_CDCSTM && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctKbcstmLabel">
             顧客区分
           </div>
           {/* <input
-            className={classNames("cstmDetail-ctKbcstmInput", editModeStyle())}
+            className={classNames("cstmDetail-ctKbcstmInput", editModeInputStyle())}
             type="text"
             name="CT_KBCSTM"
+            readOnly={true}
             defaultValue={cstm.CT_KBCSTM.replace(/\s+$/g, "")}
             ref={register({ pattern: /^[0-9]{6,20}/ })}
             ref={register}
@@ -387,7 +405,7 @@ const CstmDetail: React.FC<Props> = ({
             className={classNames(
               "cstmDetail-ctKbcstmInput",
               "cstmDetail-container-selectBox",
-              editModeStyle()
+              editModeSelectStyle()
             )}
             name="CT_KBCSTM"
             // ref={register}
@@ -409,19 +427,29 @@ const CstmDetail: React.FC<Props> = ({
             顧客名
           </div>
           <input
-            className={classNames("cstmDetail-ctNmcstmInput", editModeStyle())}
+            className={classNames(
+              "cstmDetail-ctNmcstmInput",
+              editModeInputStyle()
+            )}
             type="text"
             name="CT_NMCSTM"
+            readOnly={true}
             defaultValue={cstm.CT_NMCSTM.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_NMCSTM && <p>エラーメッセージ</p>}
           <input
-            className={classNames("cstmDetail-ctNkcstmInput", editModeStyle())}
+            className={classNames(
+              "cstmDetail-ctNkcstmInput",
+              editModeInputStyle()
+            )}
             type="text"
             name="CT_NKCSTM"
+            readOnly={true}
             defaultValue={cstm.CT_NKCSTM.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_NKCSTM && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctNmtnbuLabel">
@@ -430,42 +458,59 @@ const CstmDetail: React.FC<Props> = ({
           <input
             className={classNames(
               "cstmDetail-ctNmtnbuInput",
-              editModeStyle(true)
+              editModeInputStyle(true)
             )}
             type="text"
             name="CT_NMTNBU"
+            readOnly={!editMode}
             defaultValue={cstm.CT_NMTNBU.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_NMTNBU && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctNmtntoLabel">
             担当者名
           </div>
           <input
-            className={classNames("cstmDetail-ctNmtntoInput", editModeStyle())}
+            className={classNames(
+              "cstmDetail-ctNmtntoInput",
+              editModeInputStyle()
+            )}
             type="text"
             name="CT_NMTNTO"
+            readOnly={true}
             defaultValue={cstm.CT_NMTNTO.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_NMTNTO && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctNmsimeLabel">
             氏名
           </div>
           <input
-            className={classNames("cstmDetail-ctNmsimeInput", editModeStyle())}
+            className={classNames(
+              "cstmDetail-ctNmsimeInput",
+              editModeInputStyle()
+            )}
             type="text"
             name="CT_NMSIME"
+            readOnly={true}
             defaultValue={cstm.CT_NMSIME.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_NMSIME && <p>エラーメッセージ</p>}
           <input
-            className={classNames("cstmDetail-ctNksimeInput", editModeStyle())}
+            className={classNames(
+              "cstmDetail-ctNksimeInput",
+              editModeInputStyle()
+            )}
             type="text"
             name="CT_NKSIME"
+            readOnly={true}
             defaultValue={cstm.CT_NKSIME.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_NKSIME && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctKbksyoLabel">
@@ -473,22 +518,24 @@ const CstmDetail: React.FC<Props> = ({
           </div>
 
           {/* <input
-            className={classNames("cstmDetail-ctKbksyoInput", editModeStyle())}
+            className={classNames("cstmDetail-ctKbksyoInput", editModeInputStyle())}
             type="text"
             name="CT_KBKSYO"
+            readOnly={true}
             defaultValue={cstm.CT_KBKSYO.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           /> */}
 
           <select
             className={classNames(
               "cstmDetail-ctKbksyoInput",
               "cstmDetail-container-selectBox",
-              editModeStyle(true)
+              editModeSelectStyle(true)
             )}
             name="CT_KBKSYO"
-            ref={register()}
             defaultValue={cstm.CT_KBKSYO.replace(/\s+$/g, "")}
+            ref={register()}
             onChange={e => {
               setValue("CT_KBKSYO", e.target.value, true);
             }}
@@ -511,12 +558,14 @@ const CstmDetail: React.FC<Props> = ({
           <input
             className={classNames(
               "cstmDetail-ctNoyubnInput",
-              editModeStyle(true)
+              editModeInputStyle(true)
             )}
             type="text"
             name="CT_NOYUBN"
+            readOnly={!editMode}
             defaultValue={cstm.CT_NOYUBN.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_NOYUBN && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctAdcst1Label">
@@ -525,34 +574,40 @@ const CstmDetail: React.FC<Props> = ({
           <input
             className={classNames(
               "cstmDetail-ctAdcst1Input",
-              editModeStyle(true)
+              editModeInputStyle(true)
             )}
             type="text"
             name="CT_ADCST1"
+            readOnly={!editMode}
             defaultValue={cstm.CT_ADCST1.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_ADCST1 && <p>エラーメッセージ</p>}
           <input
             className={classNames(
               "cstmDetail-ctAdcst2Input",
-              editModeStyle(true)
+              editModeInputStyle(true)
             )}
             type="text"
             name="CT_ADCST2"
+            readOnly={!editMode}
             defaultValue={cstm.CT_ADCST2.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_ADCST2 && <p>エラーメッセージ</p>}
           <input
             className={classNames(
               "cstmDetail-ctAdcst3Input",
-              editModeStyle(true)
+              editModeInputStyle(true)
             )}
             type="text"
             name="CT_ADCST3"
+            readOnly={!editMode}
             defaultValue={cstm.CT_ADCST3.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_ADCST3 && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctNmkuniLabel">
@@ -561,23 +616,30 @@ const CstmDetail: React.FC<Props> = ({
           <input
             className={classNames(
               "cstmDetail-ctNmkuniInput",
-              editModeStyle(true)
+              editModeInputStyle(true)
             )}
             type="text"
             name="CT_NMKUNI"
+            readOnly={!editMode}
             defaultValue={cstm.CT_NMKUNI.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_NMKUNI && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctKbkgtiLabel">
             海外便地帯
           </div>
           <input
-            className={classNames("cstmDetail-ctKbkgtiInput", editModeStyle())}
+            className={classNames(
+              "cstmDetail-ctKbkgtiInput",
+              editModeInputStyle()
+            )}
             type="text"
             name="CT_KBKGTI"
+            readOnly={true}
             defaultValue={cstm.CT_KBKGTI.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_KBKGTI && <p>エラーメッセージ</p>}
           <div className="cstmDetail-ctKbkgtiGycms gycms">
@@ -589,12 +651,14 @@ const CstmDetail: React.FC<Props> = ({
           <input
             className={classNames(
               "cstmDetail-ctCdsqsfInput",
-              editModeStyle(true)
+              editModeInputStyle(true)
             )}
             type="text"
             name="CT_CDSQSF"
+            readOnly={!editMode}
             defaultValue={cstm.CT_CDSQSF.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_CDSQSF && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctCdsqsmLabel">
@@ -603,12 +667,14 @@ const CstmDetail: React.FC<Props> = ({
           <input
             className={classNames(
               "cstmDetail-ctCdsqsmInput",
-              editModeStyle(true)
+              editModeInputStyle(true)
             )}
             type="text"
             name="CT_CDSQSM"
+            readOnly={!editMode}
             defaultValue={cstm.CT_CDSQSM.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_CDSQSM && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctNotel1Label">
@@ -617,12 +683,14 @@ const CstmDetail: React.FC<Props> = ({
           <input
             className={classNames(
               "cstmDetail-ctNotel1Input",
-              editModeStyle(true)
+              editModeInputStyle(true)
             )}
             type="text"
             name="CT_NOTEL1"
+            readOnly={!editMode}
             defaultValue={cstm.CT_NOTEL1.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_NOTEL1 && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctNotel2Label">
@@ -631,12 +699,14 @@ const CstmDetail: React.FC<Props> = ({
           <input
             className={classNames(
               "cstmDetail-ctNotel2Input",
-              editModeStyle(true)
+              editModeInputStyle(true)
             )}
             type="text"
             name="CT_NOTEL2"
+            readOnly={!editMode}
             defaultValue={cstm.CT_NOTEL2.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_NOTEL2 && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctAdmailLabel">
@@ -645,30 +715,34 @@ const CstmDetail: React.FC<Props> = ({
           <input
             className={classNames(
               "cstmDetail-ctAdmailInput",
-              editModeStyle(true)
+              editModeInputStyle(true)
             )}
             type="text"
             name="CT_ADMAIL"
+            readOnly={!editMode}
             defaultValue={cstm.CT_ADMAIL.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_ADMAIL && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctKbdmprLabel">
             DM発行
           </div>
           {/* <input
-            className={classNames("cstmDetail-ctKbdmprInput", editModeStyle(true))}
+            className={classNames("cstmDetail-ctKbdmprInput", editModeInputStyle(true))}
             type="text"
             name="CT_KBDMPR"
+            readOnly={!editMode}
             defaultValue={cstm.CT_KBDMPR.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           /> */}
 
           <select
             className={classNames(
               "cstmDetail-ctKbdmprInput",
               "cstmDetail-container-selectBox",
-              editModeStyle(true)
+              editModeSelectStyle(true)
             )}
             name="CT_KBDMPR"
             ref={register()}
@@ -694,39 +768,51 @@ const CstmDetail: React.FC<Props> = ({
             備考
           </div>
           <input
-            className={classNames("cstmDetail-ctTxbikoInput", editModeStyle())}
+            className={classNames(
+              "cstmDetail-ctTxbikoInput",
+              editModeInputStyle()
+            )}
             type="text"
             name="CT_TXBIKO"
+            readOnly={true}
             defaultValue={cstm.CT_TXBIKO.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_TXBIKO && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctTxsshrLabel">
             送本先変更履歴
           </div>
           <input
-            className={classNames("cstmDetail-ctTxsshrInput", editModeStyle())}
+            className={classNames(
+              "cstmDetail-ctTxsshrInput",
+              editModeInputStyle()
+            )}
             type="text"
             name="CT_TXSSHR"
+            readOnly={true}
             defaultValue={cstm.CT_TXSSHR.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_TXSSHR && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctKbsebtLabel">
             性別
           </div>
           {/* <input
-            className={classNames("cstmDetail-ctKbsebtInput", editModeStyle())}
+            className={classNames("cstmDetail-ctKbsebtInput", editModeInputStyle())}
             type="text"
             name="CT_KBSEBT"
+            readOnly={true}
             defaultValue={cstm.CT_KBSEBT.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           /> */}
           <select
             className={classNames(
               "cstmDetail-ctKbsebtInput",
               "cstmDetail-container-selectBox",
-              editModeStyle(true)
+              editModeSelectStyle(true)
             )}
             name="CT_KBSEBT"
             ref={register()}
@@ -756,16 +842,18 @@ const CstmDetail: React.FC<Props> = ({
           <input
             className={classNames(
               "cstmDetail-ctDtsngpInput",
-              editModeStyle(true)
+              editModeInputStyle(true)
             )}
             type="text"
             name="CT_DTSNGP"
+            readOnly={!editMode}
             defaultValue={
               cstm.CT_DTSNGP.trim() !== ""
                 ? moment(cstm.CT_DTSNGP).format("YYYY/MM/DD")
                 : ""
             }
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_DTSNGP && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctCdsyokLabel">
@@ -774,19 +862,21 @@ const CstmDetail: React.FC<Props> = ({
           {/* <input
             className={classNames(
               "cstmDetail-ctCdsyokInput",
-              editModeStyle(true)
+              editModeInputStyle(true)
             )}
             type="text"
             name="CT_CDSYOK"
+            readOnly={!editMode}
             defaultValue={cstm.CT_CDSYOK.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           /> */}
 
           <select
             className={classNames(
               "cstmDetail-ctCdsyokInput",
               "cstmDetail-container-selectBox",
-              editModeStyle(true)
+              editModeSelectStyle(true)
             )}
             name="CT_CDSYOK"
             ref={register()}
@@ -810,11 +900,16 @@ const CstmDetail: React.FC<Props> = ({
             申込媒体
           </div>
           <input
-            className={classNames("cstmDetail-ctCdbaitInput", editModeStyle())}
+            className={classNames(
+              "cstmDetail-ctCdbaitInput",
+              editModeInputStyle()
+            )}
             type="text"
             name="CT_CDBAIT"
+            readOnly={true}
             defaultValue={cstm.CT_CDBAIT.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_CDBAIT && <p>エラーメッセージ</p>}
           <div className="cstmDetail-ctCdbaitGycms gycms">
@@ -824,11 +919,16 @@ const CstmDetail: React.FC<Props> = ({
             紹介者詳細
           </div>
           <input
-            className={classNames("cstmDetail-ctCdsyksInput", editModeStyle())}
+            className={classNames(
+              "cstmDetail-ctCdsyksInput",
+              editModeInputStyle()
+            )}
             type="text"
             name="CT_CDSYKS"
+            readOnly={true}
             defaultValue={cstm.CT_CDSYKS.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_CDSYKS && <p>エラーメッセージ</p>}
           <div className="cstmDetail-ctCdsyksGycms gycms">
@@ -838,11 +938,16 @@ const CstmDetail: React.FC<Props> = ({
             社内担当者
           </div>
           <input
-            className={classNames("cstmDetail-ctCdsytnInput", editModeStyle())}
+            className={classNames(
+              "cstmDetail-ctCdsytnInput",
+              editModeInputStyle()
+            )}
             type="text"
             name="CT_CDSYTN"
+            readOnly={true}
             defaultValue={cstm.CT_CDSYTN.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_CDSYTN && <p>エラーメッセージ</p>}
           <div className="cstmDetail-ctCdsytnGycms gycms">
@@ -852,11 +957,16 @@ const CstmDetail: React.FC<Props> = ({
             申込動機
           </div>
           <input
-            className={classNames("cstmDetail-ctCddokiInput", editModeStyle())}
+            className={classNames(
+              "cstmDetail-ctCddokiInput",
+              editModeInputStyle()
+            )}
             type="text"
             name="CT_CDDOKI"
+            readOnly={true}
             defaultValue={cstm.CT_CDDOKI.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_CDDOKI && <p>エラーメッセージ</p>}
           <div className="cstmDetail-ctCddokiGycms gycms">
@@ -866,29 +976,36 @@ const CstmDetail: React.FC<Props> = ({
             総契約数
           </div>
           <input
-            className={classNames("cstmDetail-ctCtsoukInput", editModeStyle())}
+            className={classNames(
+              "cstmDetail-ctCtsoukInput",
+              editModeInputStyle()
+            )}
             type="text"
             name="CT_CTSOUK"
+            readOnly={true}
             defaultValue={cstm.CT_CTSOUK.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_CTSOUK && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctKbsekyLabel">
             逝去区分
           </div>
           {/* <input
-            className={classNames("cstmDetail-ctKbsekyInput", editModeStyle())}
+            className={classNames("cstmDetail-ctKbsekyInput", editModeInputStyle())}
             type="text"
             name="CT_KBSEKY"
+            readOnly={true}
             defaultValue={cstm.CT_KBSEKY.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           /> */}
 
           <select
             className={classNames(
               "cstmDetail-ctKbsekyInput",
               "cstmDetail-container-selectBox",
-              editModeStyle(true)
+              editModeSelectStyle(true)
             )}
             name="CT_KBSEKY"
             ref={register()}
@@ -905,55 +1022,80 @@ const CstmDetail: React.FC<Props> = ({
             クレーム
           </div>
           <input
-            className={classNames("cstmDetail-ctKbclamInput", editModeStyle())}
+            className={classNames(
+              "cstmDetail-ctKbclamInput",
+              editModeInputStyle()
+            )}
             type="text"
             name="CT_KBCLAM"
+            readOnly={true}
             defaultValue={cstm.CT_KBCLAM.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_KBCLAM && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctKbjyctLabel">
             重要顧客
           </div>
           <input
-            className={classNames("cstmDetail-ctKbjyctInput", editModeStyle())}
+            className={classNames(
+              "cstmDetail-ctKbjyctInput",
+              editModeInputStyle()
+            )}
             type="text"
             name="CT_KBJYCT"
+            readOnly={true}
             defaultValue={cstm.CT_KBJYCT.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_KBJYCT && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctKbtkskLabel">
             督促注意
           </div>
           <input
-            className={classNames("cstmDetail-ctKbtkskInput", editModeStyle())}
+            className={classNames(
+              "cstmDetail-ctKbtkskInput",
+              editModeInputStyle()
+            )}
             type="text"
             name="CT_KBTKSK"
+            readOnly={true}
             defaultValue={cstm.CT_KBTKSK.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_KBTKSK && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctKbjik1Label">
             事故
           </div>
           <input
-            className={classNames("cstmDetail-ctKbjik1Input", editModeStyle())}
+            className={classNames(
+              "cstmDetail-ctKbjik1Input",
+              editModeInputStyle()
+            )}
             type="text"
             name="CT_KBJIK1"
+            readOnly={true}
             defaultValue={cstm.CT_KBJIK1.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_KBJIK1 && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctKbjik2Label">
             事故(売掛)
           </div>
           <input
-            className={classNames("cstmDetail-ctKbjik2Input", editModeStyle())}
+            className={classNames(
+              "cstmDetail-ctKbjik2Input",
+              editModeInputStyle()
+            )}
             type="text"
             name="CT_KBJIK2"
+            readOnly={true}
             defaultValue={cstm.CT_KBJIK2.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_KBJIK2 && <p>エラーメッセージ</p>}
 
@@ -961,26 +1103,36 @@ const CstmDetail: React.FC<Props> = ({
             申込注意
           </div>
           <input
-            className={classNames("cstmDetail-ctKbmschInput", editModeStyle())}
+            className={classNames(
+              "cstmDetail-ctKbmschInput",
+              editModeInputStyle()
+            )}
             type="text"
             name="CT_KBMSCH"
+            readOnly={true}
             defaultValue={cstm.CT_KBMSCH.replace(/\s+$/g, "")}
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_KBMSCH && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctCcdatecLabel">
             作成日
           </div>
           <input
-            className={classNames("cstmDetail-ctCcdatecInput", editModeStyle())}
+            className={classNames(
+              "cstmDetail-ctCcdatecInput",
+              editModeInputStyle()
+            )}
             type="text"
             name="CT_CCDATEC"
+            readOnly={true}
             defaultValue={
               cstm.CT_CCDATEC.trim() !== ""
                 ? moment(cstm.CT_CCDATEC).format("YYYY/MM/DD")
                 : ""
             }
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_CCDATEC && <p>エラーメッセージ</p>}
 
@@ -988,15 +1140,20 @@ const CstmDetail: React.FC<Props> = ({
             更新日
           </div>
           <input
-            className={classNames("cstmDetail-ctCcdatexInput", editModeStyle())}
+            className={classNames(
+              "cstmDetail-ctCcdatexInput",
+              editModeInputStyle()
+            )}
             type="text"
             name="CT_CCDATEX"
+            readOnly={true}
             defaultValue={
               cstm.CT_CCDATEX.trim() !== ""
                 ? moment(cstm.CT_CCDATEX).format("YYYY/MM/DD")
                 : ""
             }
             ref={register()}
+            onFocus={e => e.currentTarget.select()}
           />
           {errors.CT_CCDATEX && <p>エラーメッセージ</p>}
         </div>

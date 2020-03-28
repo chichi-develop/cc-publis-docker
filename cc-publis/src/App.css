@@ -37,10 +37,6 @@
   border-radius: 4px;
 }
 
-.commonTable-addButton:focus {
-  outline: none;
-}
-
 .commonTable-addButton:hover {
   /* background: #0b7dda; */
   background: #1565c0;
@@ -148,4 +144,8 @@ button {
 
 .pointer {
   cursor: pointer;
+}
+
+:focus {
+  outline: none;
 }

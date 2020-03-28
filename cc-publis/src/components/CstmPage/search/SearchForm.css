@@ -63,10 +63,6 @@
   cursor: pointer;
 }
 
-.searchFormInputBox button:focus {
-  outline: none;
-}
-
 .searchFormInputBox button:hover {
   background: #1565c0;
   /* background: #0b7dda; */

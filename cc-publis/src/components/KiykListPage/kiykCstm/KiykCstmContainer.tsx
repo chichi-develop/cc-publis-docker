@@ -11,6 +11,7 @@ import "./KiykCstmContainer.css";
 type Props = {
   cstm: Cstm;
   gycms: Gycms;
+  prefix: string;
 };
 
 const KiykCstmContainer: React.FC = () => {
@@ -61,8 +62,8 @@ const KiykCstmContainer: React.FC = () => {
         <>
           <p className="frame-title">契約顧客マスタ</p>
           <div className="kiykCstm-frame">
-            <KiykCstmDetail cstm={sqsk} gycms={gycms} />
-            <KiykCstmDetail cstm={shsk} gycms={gycms} />
+            <KiykCstmDetail cstm={sqsk} gycms={gycms} prefix="請求先" />
+            <KiykCstmDetail cstm={shsk} gycms={gycms} prefix="送本先" />
           </div>
         </>
       )}
@@ -70,7 +71,7 @@ const KiykCstmContainer: React.FC = () => {
   );
 };
 
-const KiykCstmDetail: React.FC<Props> = ({ cstm, gycms }) => {
+const KiykCstmDetail: React.FC<Props> = ({ cstm, gycms, prefix }) => {
   useEffect(() => {
     console.log("KiykCstmDetail render!");
     return () => console.log("unmounting...");
@@ -89,11 +90,13 @@ const KiykCstmDetail: React.FC<Props> = ({ cstm, gycms }) => {
       >
         <div className="kiykCstm-rowContainer">
           <div className="kiykCstm-columnContainer">
-            <div className="kiykCstm-label">読者番号</div>
+            <div className="kiykCstm-label">{prefix}番号</div>
             <textarea
               className="kiykCstm-column kiykCstm-textarea"
+              readOnly={true}
               defaultValue={cstm.CT_CDCSTM.replace("/s+$/g", "")}
               style={{ height: "30px", width: "90%" }}
+              onFocus={e => e.currentTarget.select()}
             />
           </div>
 
@@ -101,19 +104,22 @@ const KiykCstmDetail: React.FC<Props> = ({ cstm, gycms }) => {
             <div className="kiykCstm-label">顧客区分</div>
             <textarea
               className="kiykCstm-column kiykCstm-textarea"
+              readOnly={true}
               defaultValue={[
                 cstm.CT_KBCSTM.replace(/\s+$/g, ""),
                 gycmConv("KBCSTM", cstm.CT_KBCSTM.replace(/\s+$/g, ""))
               ].join(": ")}
               style={{ height: "30px", width: "90%" }}
+              onFocus={e => e.currentTarget.select()}
             />
           </div>
         </div>
 
         <div className="kiykCstm-columnContainer">
-          <div className="kiykCstm-label">顧客名</div>
+          <div className="kiykCstm-label">{prefix}顧客名</div>
           <textarea
             className="kiykCstm-column kiykCstm-textarea"
+            readOnly={true}
             defaultValue={[
               cstm.CT_NMCSTM.replace(/\s+$/g, ""),
               cstm.CT_NMTNBU.replace(/\s+$/g, ""),
@@ -121,6 +127,7 @@ const KiykCstmDetail: React.FC<Props> = ({ cstm, gycms }) => {
                 ? cstm.CT_NMSIME.replace(/\s+$/g, "")
                 : ""
             ].join("\n")}
+            onFocus={e => e.currentTarget.select()}
           />
         </div>
 
@@ -128,6 +135,7 @@ const KiykCstmDetail: React.FC<Props> = ({ cstm, gycms }) => {
           <div className="kiykCstm-label">顧客名カナ</div>
           <textarea
             className="kiykCstm-column kiykCstm-textarea"
+            readOnly={true}
             defaultValue={[
               cstm.CT_NKCSTM.replace(/\s+$/g, ""),
               cstm.CT_NKSIME !== cstm.CT_NKCSTM
@@ -135,6 +143,7 @@ const KiykCstmDetail: React.FC<Props> = ({ cstm, gycms }) => {
                 : ""
             ].join("\n")}
             style={{ height: "50px" }}
+            onFocus={e => e.currentTarget.select()}
           />
         </div> */}
 
@@ -142,11 +151,13 @@ const KiykCstmDetail: React.FC<Props> = ({ cstm, gycms }) => {
           <div className="kiykCstm-label">住所</div>
           <textarea
             className="kiykCstm-column kiykCstm-textarea"
+            readOnly={true}
             defaultValue={[
               cstm.CT_ADCST1.replace(/\s+$/g, ""),
               cstm.CT_ADCST2.replace(/\s+$/g, ""),
               cstm.CT_ADCST3.replace(/\s+$/g, "")
             ].join("\n")}
+            onFocus={e => e.currentTarget.select()}
           />
         </div>
 
@@ -155,8 +166,10 @@ const KiykCstmDetail: React.FC<Props> = ({ cstm, gycms }) => {
             <div className="kiykCstm-label">電話番号１</div>
             <textarea
               className="kiykCstm-column kiykCstm-textarea"
+              readOnly={true}
               defaultValue={cstm.CT_NOTEL1.replace(/\s+$/g, "")}
               style={{ height: "30px", width: "90%" }}
+              onFocus={e => e.currentTarget.select()}
             />
           </div>
 
@@ -164,8 +177,10 @@ const KiykCstmDetail: React.FC<Props> = ({ cstm, gycms }) => {
             <div className="kiykCstm-label">電話番号２</div>
             <textarea
               className="kiykCstm-column kiykCstm-textarea"
+              readOnly={true}
               defaultValue={cstm.CT_NOTEL2.replace(/\s+$/g, "")}
               style={{ height: "30px", width: "90%" }}
+              onFocus={e => e.currentTarget.select()}
             />
           </div>
 
@@ -173,23 +188,27 @@ const KiykCstmDetail: React.FC<Props> = ({ cstm, gycms }) => {
             <div className="kiykCstm-label">担当者</div>
             <textarea
               className="kiykCstm-column kiykCstm-textarea"
+            readOnly={true}
               defaultValue={[
                 cstm.CT_CDSYTN.replace(/\s+$/g, ""),
                 gycmConv("CDSYTN", cstm.CT_CDSYTN.replace(/\s+$/g, ""))
               ].join(": ")}
               style={{ height: "30px", width: "90%" }}
+            onFocus={e => e.currentTarget.select()}
             />
           </div> */}
           <div className="kiykCstm-columnContainer">
             <div className="kiykCstm-label">生年月日</div>
             <textarea
               className="kiykCstm-column kiykCstm-textarea"
+              readOnly={true}
               defaultValue={
                 cstm.CT_DTSNGP.trim() !== ""
                   ? moment(cstm.CT_DTSNGP).format("YYYY/MM/DD")
                   : ""
               }
               style={{ height: "30px", width: "90%" }}
+              onFocus={e => e.currentTarget.select()}
             />
           </div>
         </div>
@@ -199,8 +218,10 @@ const KiykCstmDetail: React.FC<Props> = ({ cstm, gycms }) => {
             <div className="kiykCstm-label">備考</div>
             <textarea
               className="kiykCstm-column kiykCstm-textarea"
+              readOnly={true}
               defaultValue={cstm.CT_TXBIKO.replace(/\s+$/g, "")}
               style={{ height: "30px" }}
+              onFocus={e => e.currentTarget.select()}
             />
           </div>
         )}
