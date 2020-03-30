@@ -1,6 +1,17 @@
-import { Actions } from '../actions'
-import types from './types';
-import { Cstms, Cstm, Csmms, Ctzhs, Kiyks, Kiyk, KiykLists, Kyzd, Kyzhs, Gycms } from '../../types/models';
+import { Actions } from "../actions";
+import types from "./types";
+import {
+  Cstms,
+  Cstm,
+  Csmms,
+  Ctzhs,
+  Kiyks,
+  Kiyk,
+  KiykLists,
+  Kyzd,
+  Kyzhs,
+  Gycms
+} from "../../types/models";
 
 interface State {
   cstms: Cstms | [];
@@ -24,6 +35,13 @@ interface State {
   showListKyzh: boolean;
   setGycm: boolean;
   isLoading: boolean;
+  isLoadingCstm: boolean;
+  isLoadingCsmm: boolean;
+  isLoadingCtzh: boolean;
+  isLoadingKiyk: boolean;
+  isLoadingKiykCstm: boolean;
+  isLoadingKyzd: boolean;
+  isLoadingKyzh: boolean;
   isUpdating: boolean;
   clearSortFilter: boolean;
   searchHistory: [];
@@ -52,11 +70,18 @@ export const initialState = (injects?: State): State => ({
   showListKyzh: false,
   setGycm: false,
   isLoading: false,
+  isLoadingCstm: false,
+  isLoadingCsmm: false,
+  isLoadingCtzh: false,
+  isLoadingKiyk: false,
+  isLoadingKiykCstm: false,
+  isLoadingKyzd: false,
+  isLoadingKyzh: false,
   isUpdating: false,
   clearSortFilter: true,
   searchHistory: [],
   error: {},
-  ...injects,
+  ...injects
 });
 
 export const reducer = (state = initialState(), action: Actions): State => {
@@ -65,7 +90,7 @@ export const reducer = (state = initialState(), action: Actions): State => {
       return Object.assign({}, state, {
         // showListCstm: false,
         isLoading: true,
-        error: {},
+        error: {}
       });
     case types.getCstmSucceed:
       return Object.assign({}, state, {
@@ -74,24 +99,32 @@ export const reducer = (state = initialState(), action: Actions): State => {
         showListCstm: true,
         searchHistory: action.payload.searchHistory,
         isLoading: false,
-        error: {},
+        error: {}
       });
     case types.getCstmFail:
       return Object.assign({}, state, {
         cstms: [],
         showListCstm: false,
         isLoading: false,
-        error: action.payload.error,
+        error: action.payload.error
       });
 
     case types.switchCstm:
       return Object.assign({}, state, {
-        cstm: state.cstms.filter(row => row.CT_CDCSTM === action.payload.cdcstm)[0]
+        cstm: state.cstms.filter(
+          row => row.CT_CDCSTM === action.payload.cdcstm
+        )[0]
       });
 
     case types.replaceCstm:
       return Object.assign({}, state, {
-        cstms: Object.assign([], state.cstms, state.cstms[state.cstms.findIndex((v) => v.CT_CDCSTM === action.payload.cdcstm)] = action.payload.cstm)
+        cstms: Object.assign(
+          [],
+          state.cstms,
+          (state.cstms[
+            state.cstms.findIndex(v => v.CT_CDCSTM === action.payload.cdcstm)
+          ] = action.payload.cstm)
+        )
       });
 
     case types.addCstmStart:
@@ -102,12 +135,12 @@ export const reducer = (state = initialState(), action: Actions): State => {
         showListCstm: true,
         isUpdating: false,
         clearSortFilter: true,
-        error: {},
+        error: {}
       });
     case types.addCstmFail:
       return Object.assign({}, state, {
         isUpdating: false,
-        error: action.payload.error,
+        error: action.payload.error
       });
 
     case types.deleteCstmStart:
@@ -118,13 +151,13 @@ export const reducer = (state = initialState(), action: Actions): State => {
         isUpdating: false,
         showListCstm: true,
         clearSortFilter: false,
-        error: {},
+        error: {}
       });
     case types.deleteCstmFail:
       return Object.assign({}, state, {
         isUpdating: false,
         showListCstm: action.payload.showListCstm,
-        error: action.payload.error,
+        error: action.payload.error
       });
     case types.editCstmStart:
       return Object.assign({}, state, { isUpdating: true, error: {} });
@@ -133,56 +166,53 @@ export const reducer = (state = initialState(), action: Actions): State => {
         cstm: action.payload.cstm,
         isUpdating: false,
         clearSortFilter: false,
-        error: {},
+        error: {}
       });
     case types.editCstmFail:
       return Object.assign({}, state, {
         isUpdating: false,
-        error: action.payload.error,
+        error: action.payload.error
       });
-
 
     case types.getCsmmStart:
       return Object.assign({}, state, {
         isLoading: true,
-        error: {},
+        error: {}
       });
     case types.getCsmmSucceed:
       return Object.assign({}, state, {
         csmms: action.payload.csmms,
         showListCsmm: true,
         isLoading: false,
-        error: {},
+        error: {}
       });
     case types.getCsmmFail:
       return Object.assign({}, state, {
         csmms: [],
         showListCsmm: false,
         isLoading: false,
-        error: action.payload.error,
+        error: action.payload.error
       });
-
 
     case types.getCtzhStart:
       return Object.assign({}, state, {
         isLoading: true,
-        error: {},
+        error: {}
       });
     case types.getCtzhSucceed:
       return Object.assign({}, state, {
         ctzhs: action.payload.ctzhs,
         showListCtzh: true,
         isLoading: false,
-        error: {},
+        error: {}
       });
     case types.getCtzhFail:
       return Object.assign({}, state, {
         ctzhs: [],
         showListCtzh: false,
         isLoading: false,
-        error: action.payload.error,
+        error: action.payload.error
       });
-
 
     case types.getKiykStart:
       return Object.assign({}, state, {
@@ -190,7 +220,8 @@ export const reducer = (state = initialState(), action: Actions): State => {
         // kiyks: [],
         // kiyk: {},
         isLoading: true,
-        error: {},
+        isLoadingKiyk: true,
+        error: {}
       });
     case types.getKiykSucceed:
       return Object.assign({}, state, {
@@ -199,7 +230,8 @@ export const reducer = (state = initialState(), action: Actions): State => {
         kiykLists: action.payload.kiykLists,
         showListKiyk: true,
         isLoading: false,
-        error: {},
+        isLoadingKiyk: false,
+        error: {}
       });
     case types.getKiykFail:
       return Object.assign({}, state, {
@@ -208,19 +240,22 @@ export const reducer = (state = initialState(), action: Actions): State => {
         kiykLists: [],
         showListKiyk: false,
         isLoading: false,
-        error: action.payload.error,
+        isLoadingKiyk: false,
+        error: action.payload.error
       });
 
     case types.switchKiyk:
       return Object.assign({}, state, {
-        kiyk: state.kiyks.filter(row => row.KY_NOKIYK.toString() === action.payload.nokiyk)[0]
+        kiyk: state.kiyks.filter(
+          row => row.KY_NOKIYK.toString() === action.payload.nokiyk
+        )[0]
       });
 
     case types.getKiykCstmStart:
       return Object.assign({}, state, {
         // showListKiykCstm: false,
         isLoading: true,
-        error: {},
+        error: {}
       });
     case types.getKiykCstmSucceed:
       return Object.assign({}, state, {
@@ -228,7 +263,7 @@ export const reducer = (state = initialState(), action: Actions): State => {
         shsk: action.payload.shsk || state.shsk,
         showListKiykCstm: true,
         isLoading: false,
-        error: {},
+        error: {}
       });
     case types.getKiykCstmFail:
       return Object.assign({}, state, {
@@ -236,70 +271,70 @@ export const reducer = (state = initialState(), action: Actions): State => {
         shsk: {},
         showListKiykCstm: false,
         isLoading: false,
-        error: action.payload.error,
+        error: action.payload.error
       });
 
     case types.getKyzdStart:
       return Object.assign({}, state, {
         // showListKyzd: false,
         isLoading: true,
-        error: {},
+        error: {}
       });
     case types.getKyzdSucceed:
       return Object.assign({}, state, {
         kyzd: action.payload.kyzd,
         showListKyzd: true,
         isLoading: false,
-        error: {},
+        error: {}
       });
     case types.getKyzdFail:
       return Object.assign({}, state, {
         kyzd: {},
         showListKyzd: false,
         isLoading: false,
-        error: action.payload.error,
+        error: action.payload.error
       });
 
     case types.getKyzhStart:
       return Object.assign({}, state, {
         // showListKyzh: false,
         isLoading: true,
-        error: {},
+        error: {}
       });
     case types.getKyzhSucceed:
       return Object.assign({}, state, {
         kyzhs: action.payload.kyzhs,
         showListKyzh: true,
         isLoading: false,
-        error: {},
+        error: {}
       });
     case types.getKyzhFail:
       return Object.assign({}, state, {
         kyzhs: [],
         showListKyzh: false,
         isLoading: false,
-        error: action.payload.error,
+        error: action.payload.error
       });
 
     case types.getGycmStart:
       return Object.assign({}, state, {
         // showListGycm: false,
         isLoading: true,
-        error: {},
+        error: {}
       });
     case types.getGycmSucceed:
       return Object.assign({}, state, {
         gycms: action.payload.gycms,
         setGycm: true,
         isLoading: false,
-        error: {},
+        error: {}
       });
     case types.getGycmFail:
       return Object.assign({}, state, {
         gycms: [],
         setGycm: false,
         isLoading: false,
-        error: action.payload.error,
+        error: action.payload.error
       });
     default:
       return state;

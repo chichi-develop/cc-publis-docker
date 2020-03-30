@@ -4,6 +4,7 @@ import { Actions } from "../../../store/actions";
 import { StoreState } from "../../../store";
 import { useLocation, useHistory } from "react-router-dom";
 import classNames from "classnames";
+import LoadingSpinner from "../../Common/LoadingSpinner";
 
 // import moment from "moment";
 import _ from "lodash";
@@ -54,9 +55,16 @@ const KiykListContainer: React.FC = () => {
   let kiyk = publisState.kiyk as Kiyk;
   let kiykLists = publisState.kiykLists;
   let kiyks = publisState.kiyks;
+  // let showListCstm = publisState.showListCstm;
   let showListKiyk = publisState.showListKiyk;
   let gycms = publisState.gycms;
   let setGycm = publisState.setGycm;
+  let isLoading = publisState.isLoading;
+  let isLoadingKiyk = publisState.isLoadingKiyk;
+  let isLoadingKiykCstm = publisState.isLoadingKiykCstm;
+  let isLoadingKyzd = publisState.isLoadingKyzd;
+  let showListKiykCstm = publisState.showListKiykCstm;
+  let showListKyzd = publisState.showListKyzd;
 
   useEffect(() => {
     console.log("KiykListContainer render!");
@@ -77,20 +85,35 @@ const KiykListContainer: React.FC = () => {
 
   return (
     <div className="kiykList-body">
-      {showListKiyk && setGycm ? (
+      {isLoading && !showListKiyk && !showListKiykCstm && !showListKyzd && (
         <>
-          <div className="kiykList-menu">
-            <p className="frame-title">契約一覧</p>
+          <div className="common-loadingSpinner">
+            <LoadingSpinner />
           </div>
-          <KiykListTable
-            kiykLists={kiykLists}
-            kiyk={kiyk}
-            kiyks={kiyks}
-            switchKiyk={switchKiyk}
-            gycms={gycms}
-          />
         </>
-      ) : (
+      )}
+      {!isLoading &&
+        showListKiyk &&
+        showListKiykCstm &&
+        showListKyzd &&
+        !isLoadingKiykCstm &&
+        !isLoadingKyzd &&
+        !isLoadingKiyk &&
+        setGycm && (
+          <>
+            <div className="kiykList-menu">
+              <p className="frame-title">契約一覧</p>
+            </div>
+            <KiykListTable
+              kiykLists={kiykLists}
+              kiyk={kiyk}
+              kiyks={kiyks}
+              switchKiyk={switchKiyk}
+              gycms={gycms}
+            />
+          </>
+        )}
+      {!isLoading && !showListKiyk && (
         <div className="kiykList-noData">
           <p>契約はありません。（{key}）</p>
           <p

@@ -24,6 +24,7 @@ const KiykZandakaContainer: React.FC = () => {
   let kyzd = publisState.kyzd as Kyzd;
   let showListKiyk = publisState.showListKiyk;
   let showListKyzd = publisState.showListKyzd;
+  let showListKiykCstm = publisState.showListKiykCstm;
 
   useEffect(() => {
     console.log("KiykZandakaContainer render!");
@@ -35,7 +36,7 @@ const KiykZandakaContainer: React.FC = () => {
 
   return (
     <div className="kiykZandaka-body">
-      {showListKiyk && showListKyzd && (
+      {showListKiykCstm && showListKiyk && showListKyzd && (
         <>
           <div className="kiykZandaka-menu">
             <p className="frame-title">契約残高</p>
@@ -82,13 +83,27 @@ const KiykZandaka: React.FC<Props> = ({ kyzd }) => {
         </thead>
         <tbody className="commonTable-tbody">
           <tr>
-            <td style={{ textAlign: "right" }}>{kyzd.KS_KGKIYK}</td>
-            <td style={{ textAlign: "right" }}>{kyzd.KS_KGKYKJ}</td>
-            <td style={{ textAlign: "right" }}>{kyzd.KS_KGNYKN}</td>
-            <td style={{ textAlign: "right" }}>{kyzd.KS_KGURAG}</td>
-            <td style={{ textAlign: "right" }}>{kyzd.KS_ZNURKK}</td>
-            <td style={{ textAlign: "right" }}>{kyzd.KS_ZKMUKE}</td>
-            <td style={{ textAlign: "right" }}>{kyzd.KS_ZNKIYK}</td>
+            <td style={{ textAlign: "center" }}>
+              {kyzd.KS_KGKIYK.toLocaleString()}
+            </td>
+            <td style={{ textAlign: "center" }}>
+              {kyzd.KS_KGKYKJ.toLocaleString()}
+            </td>
+            <td style={{ textAlign: "center" }}>
+              {kyzd.KS_KGNYKN.toLocaleString()}
+            </td>
+            <td style={{ textAlign: "center" }}>
+              {kyzd.KS_KGURAG.toLocaleString()}
+            </td>
+            <td style={{ textAlign: "center" }}>
+              {kyzd.KS_ZNURKK.toLocaleString()}
+            </td>
+            <td style={{ textAlign: "center" }}>
+              {kyzd.KS_ZKMUKE.toLocaleString()}
+            </td>
+            <td style={{ textAlign: "center" }}>
+              {kyzd.KS_ZNKIYK.toLocaleString()}
+            </td>
           </tr>
         </tbody>
       </table>
