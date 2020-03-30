@@ -128,8 +128,10 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
               <input
                 className="kiykDetail-input"
                 type="text"
+                readOnly={true}
                 defaultValue={kiyk.KY_NOKIYK}
                 style={{ width: "6em" }}
+                onFocus={e => e.currentTarget.select()}
               />
             </div>
             <div className="kiykDetail-frame-column">
@@ -137,11 +139,13 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
               <input
                 className="kiykDetail-input"
                 type="text"
+                readOnly={true}
                 defaultValue={[
                   kiyk.KY_KBJYOT.replace(/\s+$/g, ""),
                   gycmConv("KBJYOT", kiyk.KY_KBJYOT.replace(/\s+$/g, ""))
                 ].join(": ")}
                 style={{ width: "8em" }}
+                onFocus={e => e.currentTarget.select()}
               />
             </div>
           </div>
@@ -152,6 +156,7 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
                 <input
                   className="kiykDetail-input"
                   type="text"
+                  readOnly={true}
                   defaultValue={[
                     kiyk.KY_YMKIYK.trim() !== ""
                       ? moment(kiyk.KY_YMKIYK, "YYYYMM").format("YYYY/MM")
@@ -161,6 +166,7 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
                       : ""
                   ].join(" 〜 ")}
                   style={{ width: "11em" }}
+                  onFocus={e => e.currentTarget.select()}
                 />
               </div>
             </div>
@@ -169,8 +175,10 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
               <input
                 className="kiykDetail-input"
                 type="text"
+                readOnly={true}
                 defaultValue={[kiyk.KY_CTHSSM, kiyk.KY_CTHSOY].join("/")}
                 style={{ width: "4em" }}
+                onFocus={e => e.currentTarget.select()}
               />
             </div>
             <div className="kiykDetail-frame-column">
@@ -178,8 +186,10 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
               <input
                 className="kiykDetail-input"
                 type="text"
+                readOnly={true}
                 defaultValue={kiyk.KY_SUKIYK}
                 style={{ width: "2em" }}
+                onFocus={e => e.currentTarget.select()}
               />
             </div>
           </div>
@@ -189,22 +199,26 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
               <input
                 className="kiykDetail-input"
                 type="text"
+                readOnly={true}
                 defaultValue={[
                   kiyk.KY_CDKYPT.replace(/\s+$/g, ""),
                   gycmConv("CDKYPT", kiyk.KY_CDKYPT.replace(/\s+$/g, ""))
                 ].join(": ")}
                 style={{ width: "12em" }}
+                onFocus={e => e.currentTarget.select()}
               />
             </div>
             <div className="kiykDetail-label">郵便区分</div>
             <input
               className="kiykDetail-input"
               type="text"
+              readOnly={true}
               defaultValue={[
                 kiyk.KY_KBKSYB.replace(/\s+$/g, ""),
                 gycmConv("KBKSYB", kiyk.KY_KBKSYB.replace(/\s+$/g, ""))
               ].join(": ")}
               style={{ width: "6em" }}
+              onFocus={e => e.currentTarget.select()}
             />
           </div>
           <div className="kiykDetail-frame-row">
@@ -212,18 +226,22 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
             <input
               className="kiykDetail-input"
               type="text"
+              readOnly={true}
               defaultValue={[
                 kiyk.KY_KBZOUT.replace(/\s+$/g, ""),
                 gycmConv("KBZOUT", kiyk.KY_KBZOUT.replace(/\s+$/g, ""))
               ].join(": ")}
               style={{ width: "6em" }}
+              onFocus={e => e.currentTarget.select()}
             />
             <div className="kiykDetail-frame-column">
               <input
                 className="kiykDetail-input"
                 type="text"
+                readOnly={true}
                 defaultValue={kiyk.KY_NMZOUT.replace(/\s+$/g, "")}
                 style={{ width: "18em" }}
+                onFocus={e => e.currentTarget.select()}
               />
             </div>
           </div>
@@ -233,19 +251,23 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
               <input
                 className="kiykDetail-input"
                 type="text"
+                readOnly={true}
                 defaultValue={[
                   kiyk.KY_KBTKBT.replace(/\s+$/g, ""),
                   gycmConv("KBTKBT", kiyk.KY_KBTKBT.replace(/\s+$/g, ""))
                 ].join(": ")}
                 style={{ width: "6em" }}
+                onFocus={e => e.currentTarget.select()}
               />
             </div>
             <div className="kiykDetail-frame-column">
               <input
                 className="kiykDetail-input"
                 type="text"
+                readOnly={true}
                 defaultValue={kiyk.KY_TXTKBT.replace(/\s+$/g, "")}
                 style={{ width: "18em" }}
+                onFocus={e => e.currentTarget.select()}
               />
             </div>
           </div>
@@ -257,11 +279,13 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
               <input
                 className="kiykDetail-input"
                 type="text"
+                readOnly={true}
                 defaultValue={[
                   kiyk.KY_KBCSTM.replace(/\s+$/g, ""),
                   gycmConv("KBCSTM", kiyk.KY_KBCSTM.replace(/\s+$/g, ""))
                 ].join(": ")}
                 style={{ width: "6em" }}
+                onFocus={e => e.currentTarget.select()}
               />
             </div>
             <div className="kiykDetail-frame-column">
@@ -269,11 +293,13 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
               <input
                 className="kiykDetail-input"
                 type="text"
+                readOnly={true}
                 defaultValue={[
                   kiyk.KY_KBKODK.replace(/\s+$/g, ""),
                   gycmConv("KBKODK", kiyk.KY_KBKODK.replace(/\s+$/g, ""))
                 ].join(": ")}
                 style={{ width: "6em" }}
+                onFocus={e => e.currentTarget.select()}
               />
             </div>
             <div className="kiykDetail-frame-column">
@@ -281,11 +307,13 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
               <input
                 className="kiykDetail-input"
                 type="text"
+                readOnly={true}
                 defaultValue={[
                   kiyk.KY_KBMSKM.replace(/\s+$/g, ""),
                   gycmConv("KBMSKM", kiyk.KY_KBMSKM.replace(/\s+$/g, ""))
                 ].join(": ")}
                 style={{ width: "6em" }}
+                onFocus={e => e.currentTarget.select()}
               />
             </div>
           </div>
@@ -295,11 +323,13 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
               <input
                 className="kiykDetail-input"
                 type="text"
+                readOnly={true}
                 defaultValue={[
                   kiyk.KY_KBKIYK.replace(/\s+$/g, ""),
                   gycmConv("KBKIYK", kiyk.KY_KBKIYK.replace(/\s+$/g, ""))
                 ].join(": ")}
                 style={{ width: "7em" }}
+                onFocus={e => e.currentTarget.select()}
               />
             </div>
             <div className="kiykDetail-frame-column">
@@ -308,12 +338,14 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
                 <input
                   className="kiykDetail-input"
                   type="text"
+                  readOnly={true}
                   defaultValue={
                     kiyk.KY_DTKIYK.trim() !== ""
                       ? moment(kiyk.KY_DTKIYK, "YYYYMMDD").format("YYYY/MM/DD")
                       : ""
                   }
                   style={{ width: "8em" }}
+                  onFocus={e => e.currentTarget.select()}
                 />
               </div>
             </div>
@@ -322,8 +354,10 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
               <input
                 className="kiykDetail-input"
                 type="text"
+                readOnly={true}
                 defaultValue={kiyk.KY_CTKIYK}
                 style={{ width: "3em" }}
+                onFocus={e => e.currentTarget.select()}
               />
             </div>
           </div>
@@ -333,8 +367,10 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
               <input
                 className="kiykDetail-input"
                 type="text"
+                readOnly={true}
                 defaultValue={kiyk.KY_NOSQSY}
                 style={{ width: "6em" }}
+                onFocus={e => e.currentTarget.select()}
               />
             </div>
 
@@ -344,12 +380,14 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
                 <input
                   className="kiykDetail-input"
                   type="text"
+                  readOnly={true}
                   defaultValue={
                     kiyk.KY_DTSQBI.trim() !== ""
                       ? moment(kiyk.KY_DTSQBI, "YYYYMMDD").format("YYYY/MM/DD")
                       : ""
                   }
                   style={{ width: "8em" }}
+                  onFocus={e => e.currentTarget.select()}
                 />
               </div>
             </div>
@@ -358,11 +396,13 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
               <input
                 className="kiykDetail-input"
                 type="text"
+                readOnly={true}
                 defaultValue={[
                   kiyk.KY_KBATBR.replace(/\s+$/g, ""),
                   gycmConv("KBATBR", kiyk.KY_KBATBR.replace(/\s+$/g, ""))
                 ].join(": ")}
                 style={{ width: "8em" }}
+                onFocus={e => e.currentTarget.select()}
               />
             </div>
           </div>
@@ -372,11 +412,13 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
               <input
                 className="kiykDetail-input"
                 type="text"
+                readOnly={true}
                 defaultValue={[
                   kiyk.KY_KBKIZK.replace(/\s+$/g, ""),
                   gycmConv("KBKIZK", kiyk.KY_KBKIZK.replace(/\s+$/g, ""))
                 ].join(": ")}
                 style={{ width: "8em" }}
+                onFocus={e => e.currentTarget.select()}
               />
             </div>
             <div className="kiykDetail-frame-column">
@@ -384,6 +426,7 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
               <input
                 className="kiykDetail-input"
                 type="text"
+                readOnly={true}
                 defaultValue={[
                   // kiyk.KY_KBCYUS.replace(/\s+$/g, ""),
                   // gycmConv("KBCYUS", kiyk.KY_KBCYUS.replace(/\s+$/g, ""))
@@ -391,6 +434,7 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
                   gycmConv("KBCYUS", kiyk.KY_KBCYUS)
                 ].join(": ")}
                 style={{ width: "8em" }}
+                onFocus={e => e.currentTarget.select()}
               />
             </div>
             <div className="kiykDetail-frame-column">
@@ -399,12 +443,14 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
                 <input
                   className="kiykDetail-input"
                   type="text"
+                  readOnly={true}
                   defaultValue={
                     kiyk.KY_DTSTOP.trim() !== ""
                       ? moment(kiyk.KY_DTSTOP, "YYYYMMDD").format("YYYY/MM/DD")
                       : ""
                   }
                   style={{ width: "8em" }}
+                  onFocus={e => e.currentTarget.select()}
                 />
               </div>
             </div>
@@ -415,8 +461,10 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
               <input
                 className="kiykDetail-input"
                 type="text"
+                readOnly={true}
                 defaultValue={kiyk.KY_TXBIKO.replace(/\s+$/g, "")}
                 style={{ width: "30em" }}
+                onFocus={e => e.currentTarget.select()}
               />
             </div>
           </div>
@@ -426,8 +474,10 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
               <input
                 className="kiykDetail-input"
                 type="text"
+                readOnly={true}
                 defaultValue={kiyk.KY_CDIDVT.replace(/\s+$/g, "")}
                 style={{ width: "6em" }}
+                onFocus={e => e.currentTarget.select()}
               />
             </div>
             <div className="kiykDetail-frame-column">
@@ -435,8 +485,10 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
               <input
                 className="kiykDetail-input"
                 type="text"
+                readOnly={true}
                 defaultValue={kiyk.KY_CDIDTH.replace(/\s+$/g, "")}
                 style={{ width: "15em" }}
+                onFocus={e => e.currentTarget.select()}
               />
             </div>
           </div>
@@ -450,8 +502,10 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
               <input
                 className="kiykDetail-input"
                 type="text"
+                readOnly={true}
                 defaultValue={kiyk.KY_CDSQSK.replace("/s+$/g", "")}
                 style={{ width: "7em" }}
+                onFocus={e => e.currentTarget.select()}
               />
             </div>
           </div>
@@ -462,6 +516,7 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
               </div>
               <textarea
                 className="kiykDetail-column kiykDetail-textarea"
+                readOnly={true}
                 defaultValue={[
                   sqsk.CT_NMCSTM.replace(/\s+$/g, ""),
                   sqsk.CT_NMTNBU.replace(/\s+$/g, ""),
@@ -470,6 +525,7 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
                     : ""
                 ].join("\n")}
                 style={{ height: "4em", width: "25em" }}
+                onFocus={e => e.currentTarget.select()}
               />
             </div>
           </div>
@@ -479,8 +535,10 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
               <input
                 className="kiykDetail-input"
                 type="text"
+                readOnly={true}
                 defaultValue={kiyk.KY_NOJSQS.replace("/s+$/g", "")}
                 style={{ width: "7em" }}
+                onFocus={e => e.currentTarget.select()}
               />
             </div>
           </div>
@@ -494,8 +552,10 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
               <input
                 className="kiykDetail-input"
                 type="text"
+                readOnly={true}
                 defaultValue={kiyk.KY_CDSHSK.replace("/s+$/g", "")}
                 style={{ width: "7em" }}
+                onFocus={e => e.currentTarget.select()}
               />
             </div>
           </div>
@@ -506,6 +566,7 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
               </div>
               <textarea
                 className="kiykDetail-column kiykDetail-textarea"
+                readOnly={true}
                 defaultValue={[
                   shsk.CT_NMCSTM.replace(/\s+$/g, ""),
                   shsk.CT_NMTNBU.replace(/\s+$/g, ""),
@@ -514,6 +575,7 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
                     : ""
                 ].join("\n")}
                 style={{ height: "4em", width: "25em" }}
+                onFocus={e => e.currentTarget.select()}
               />
             </div>
           </div>
@@ -522,8 +584,10 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
               <div className="kiykDetail-label">送本先付替履歴</div>
               <textarea
                 className="kiykDetail-column kiykDetail-textarea"
+                readOnly={true}
                 defaultValue={kiyk.KY_TXSHSK.replace(/\s+$/g, "")}
                 style={{ width: "25em" }}
+                onFocus={e => e.currentTarget.select()}
               />
             </div>
           </div>
@@ -536,12 +600,14 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
                 <input
                   className="kiykDetail-input"
                   type="text"
+                  readOnly={true}
                   defaultValue={
                     kiyk.KY_CCDATEC.trim() !== ""
                       ? moment(kiyk.KY_CCDATEC, "YYYYMMDD").format("YYYY/MM/DD")
                       : ""
                   }
                   style={{ width: "8em" }}
+                  onFocus={e => e.currentTarget.select()}
                 />
               </div>
             </div>
@@ -551,12 +617,14 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
                 <input
                   className="kiykDetail-input"
                   type="text"
+                  readOnly={true}
                   defaultValue={
                     kiyk.KY_CCDATEX.trim() !== ""
                       ? moment(kiyk.KY_CCDATEX, "YYYYMMDD").format("YYYY/MM/DD")
                       : ""
                   }
                   style={{ width: "8em" }}
+                  onFocus={e => e.currentTarget.select()}
                 />
               </div>
             </div>
@@ -569,6 +637,7 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
               <input
                 className="kiykDetail-input"
                 type="text"
+                readOnly={true}
                 defaultValue={[
                   // kiyk.KY_KBCYUS.replace(/\s+$/g, ""),
                   // gycmConv("KBCYUS", kiyk.KY_KBCYUS.replace(/\s+$/g, ""))
@@ -576,6 +645,7 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
                   gycmConv("CDCANP", kiyk.KY_CDCANP)
                 ].join(": ")}
                 style={{ width: "10em" }}
+                onFocus={e => e.currentTarget.select()}
               />
             </div>
             <div className="kiykDetail-frame-column">
@@ -583,6 +653,7 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
               <input
                 className="kiykDetail-input"
                 type="text"
+                readOnly={true}
                 defaultValue={[
                   // kiyk.KY_KBCYUS.replace(/\s+$/g, ""),
                   // gycmConv("KBCYUS", kiyk.KY_KBCYUS.replace(/\s+$/g, ""))
@@ -590,6 +661,7 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
                   gycmConv("CDSYTN", kiyk.KY_CDSYTN)
                 ].join(": ")}
                 style={{ width: "10em" }}
+                onFocus={e => e.currentTarget.select()}
               />
             </div>
           </div>
@@ -599,6 +671,7 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
               <input
                 className="kiykDetail-input"
                 type="text"
+                readOnly={true}
                 defaultValue={[
                   // kiyk.KY_KBCYUS.replace(/\s+$/g, ""),
                   // gycmConv("KBCYUS", kiyk.KY_KBCYUS.replace(/\s+$/g, ""))
@@ -606,6 +679,7 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
                   gycmConv("CDBAIT", kiyk.KY_CDBAIT)
                 ].join(": ")}
                 style={{ width: "8em" }}
+                onFocus={e => e.currentTarget.select()}
               />
             </div>
             <div className="kiykDetail-frame-column">
@@ -613,6 +687,7 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
               <input
                 className="kiykDetail-input"
                 type="text"
+                readOnly={true}
                 defaultValue={
                   kiyk.KY_CDTKSY.trim() !== ""
                     ? [
@@ -624,6 +699,7 @@ const KiykDetail: React.FC<Props> = ({ kiyk, sqsk, shsk, gycms }) => {
                     : ""
                 }
                 style={{ width: "8em" }}
+                onFocus={e => e.currentTarget.select()}
               />
             </div>
           </div>

@@ -70,10 +70,6 @@
   border-radius: 4px;
 }
 
-.cstmDetail-container-button:focus {
-  outline: none;
-}
-
 .cstmDetail-container-button:hover {
   /* background: #0b7dda; */
   background: #1565c0;
@@ -91,14 +87,28 @@
   border-radius: 3px;
 }
 
-.cstmDetail-container-editMode {
+.cstmDetail-container-input-editMode {
   color: black;
   border: 1px solid #c5c5c5;
-  pointer-events: auto;
   background-color: #fbfae5;
+  /* pointer-events: auto; */
 }
 
-.cstmDetail-container-readMode {
+.cstmDetail-container-input-readMode {
+  color: green;
+  /* border: none; */
+  border: 1px solid #c5c5c5;
+  /* pointer-events: none; */
+}
+
+.cstmDetail-container-select-editMode {
+  color: black;
+  border: 1px solid #c5c5c5;
+  background-color: #fbfae5;
+  pointer-events: auto;
+}
+
+.cstmDetail-container-select-readMode {
   color: green;
   /* border: none; */
   border: 1px solid #c5c5c5;

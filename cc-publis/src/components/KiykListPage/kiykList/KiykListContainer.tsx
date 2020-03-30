@@ -320,20 +320,17 @@ const KiykListTable: React.FC<Props> = ({
           )}
         </div>
       )}
-      <div
-        className="kiykList-container"
-        style={kiykLists.length < 12 ? { overflowY: "hidden" } : {}}
-      >
+      <div className="kiykList-container">
         <table className="kiykList-table">
           <thead className="kiykList-table-thead">
             <tr>
-              <th rowSpan={2} className="kylist-kylist_numItem">
+              <th rowSpan={2} className="kylist-kylist_numItem-th">
                 <p>項番</p>
               </th>
               <th
                 rowSpan={2}
                 onClick={() => handleSort("KYLIST_ NOKIYK")}
-                className="kylist-kylist_nokiyk-thead"
+                className="kylist-kylist_nokiyk-th"
               >
                 <p className="pointer">
                   契約№{sort.key === "KYLIST_NOKIYK" ? sort.icon : <span />}
@@ -342,7 +339,7 @@ const KiykListTable: React.FC<Props> = ({
               <th
                 rowSpan={2}
                 onClick={() => handleSort("KYLIST_NOSQSY")}
-                className="kylist-kylist_nosqsy"
+                className="kylist-kylist_nosqsy-th"
               >
                 <p className="pointer">
                   請求書№
@@ -352,7 +349,7 @@ const KiykListTable: React.FC<Props> = ({
               <th
                 rowSpan={2}
                 onClick={() => handleSort("KYLIST_CDSQSK")}
-                className="kylist-kylist_cdsqsk-thead"
+                className="kylist-kylist_cdsqsk-th"
               >
                 <p className="pointer">
                   請求先№
@@ -362,7 +359,7 @@ const KiykListTable: React.FC<Props> = ({
               <th
                 rowSpan={2}
                 onClick={() => handleSort("KYLIST_SQ_NMCSTM")}
-                className="kylist-kylist_sq_nmcstm-thead"
+                className="kylist-kylist_sq_nmcstm-th"
               >
                 <p className="pointer">
                   請求先名
@@ -372,7 +369,7 @@ const KiykListTable: React.FC<Props> = ({
               <th
                 rowSpan={2}
                 onClick={() => handleSort("KYLIST_CDSHSK")}
-                className="kylist-kylist_cdshsk-thead"
+                className="kylist-kylist_cdshsk-th"
               >
                 <p className="pointer">
                   送本先№
@@ -382,20 +379,24 @@ const KiykListTable: React.FC<Props> = ({
               <th
                 rowSpan={1}
                 onClick={() => handleSort("KYLIST_SH_NMCSTM")}
-                className="kylist-kylist_sh_nmcstm"
+                className="kylist-kylist_sh_nmcstm-th"
               >
                 <p className="pointer">
                   送本先名
                   {sort.key === "KYLIST_SH_NMCSTM" ? sort.icon : <span />}
                 </p>
               </th>
-              <th rowSpan={2} className="kylist-kylist_cdkypt">
-                <p>契約PT</p>
+              <th rowSpan={2} className="kylist-kylist_cdkypt-th">
+                <p>
+                  契約
+                  <br />
+                  PT
+                </p>
               </th>
-              <th rowSpan={2} className="kylist-kylist_sukiyk">
+              <th rowSpan={2} className="kylist-kylist_sukiyk-th">
                 <p>部数</p>
               </th>
-              <th rowSpan={2} className="kylist-kylist_ymkiyk">
+              <th rowSpan={2} className="kylist-kylist_ymkiyk-th">
                 <p>開始号</p>
               </th>
               {/* <th rowSpan={2}>
@@ -404,7 +405,7 @@ const KiykListTable: React.FC<Props> = ({
               <th
                 rowSpan={1}
                 onClick={() => handleSort("KYLIST_KBJYOT")}
-                className="kylist-kylist_kbjyot"
+                className="kylist-kylist_kbjyot-th"
               >
                 <p className="pointer">
                   状態{sort.key === "KYLIST_KBJYOT" ? sort.icon : <span />}
@@ -421,10 +422,10 @@ const KiykListTable: React.FC<Props> = ({
               </th>
               <th rowSpan={2}>
                 <p>特別出荷区分</p>
-              </th>
-              <th rowSpan={2}>
-                <p>売掛</p>
               </th> */}
+              <th rowSpan={2} className="kylist-kylist_znurkk-th">
+                <p>売掛</p>
+              </th>
             </tr>
             <tr>
               <th>
@@ -440,16 +441,13 @@ const KiykListTable: React.FC<Props> = ({
               <th>
                 <select
                   name="kylist_kbjyot_key"
-                  // value={filterQuery.md_nmmmbr_key||""}
                   value={filterQuery.kylist_kbjyot_key}
                   onChange={handleFilter}
                 >
                   <option value="">選択</option>
                   {ky_kbjyots.map((item: string) => {
                     return (
-                      // <option key={index} value={item}>
                       <option key={item} value={item}>
-                        {/* {item} */}
                         {gycmConv("KBJYOT", item)}
                       </option>
                     );
@@ -460,7 +458,7 @@ const KiykListTable: React.FC<Props> = ({
           </thead>
           <tbody
             className="kiykList-table-tbody"
-            style={{ scrollBehavior: "smooth", height: "300px" }}
+            style={filteredKiyk.length < 10 ? { overflowY: "hidden" } : {}}
           >
             {filteredKiyk
               .slice(paginateParam.offset, paginateParam.offset + pageLimit)
@@ -484,16 +482,9 @@ const KiykListTable: React.FC<Props> = ({
                       }
                     })()}
                   >
-                    <td
-                      className="kylist-kylist_numItem"
-                      style={{ textAlign: "right" }}
-                    >
+                    <td className="kylist-kylist_numItem-td">
                       <button
-                        style={{
-                          color: "#668ad8",
-                          borderStyle: "none",
-                          backgroundColor: "transparent"
-                        }}
+                        className="kylist-kylist_numItem-td-button"
                         type="button"
                         onClick={() => switchKiyk(row.KYLIST_NOKIYK.toString())}
                       >
@@ -502,14 +493,9 @@ const KiykListTable: React.FC<Props> = ({
                           (paginateParam.currentPage - 1) * pageLimit}
                       </button>
                     </td>
-                    <td className="kylist-kylist_nokiyk">
+                    <td className="kylist-kylist_nokiyk-td">
                       <button
-                        style={{
-                          textAlign: "right",
-                          color: "#FF9265",
-                          borderStyle: "none",
-                          backgroundColor: "transparent"
-                        }}
+                        className="kylist-kylist_nokiyk-td-button"
                         type="button"
                         onClick={() => {
                           switchKiyk(row.KYLIST_NOKIYK.toString());
@@ -521,32 +507,35 @@ const KiykListTable: React.FC<Props> = ({
                         {row.KYLIST_NOKIYK}
                       </button>
                     </td>
-                    <td className="kylist-kylist_nosqsy">
+                    <td className="kylist-kylist_nosqsy-td">
                       {row.KYLIST_NOSQSY}
                     </td>
-                    <td className="kylist-kylist_cdsqsk">
+                    <td className="kylist-kylist_cdsqsk-td">
                       {row.KYLIST_CDSQSK}
                     </td>
-                    <td className="kylist-kylist_sq_nmcstm">
+                    <td className="kylist-kylist_sq_nmcstm-td">
                       {row.KYLIST_SQ_NMCSTM}
                     </td>
-                    <td className="kylist-kylist_cdshsk">
+                    <td className="kylist-kylist_cdshsk-td">
                       {row.KYLIST_CDSHSK}
                     </td>
-                    <td className="kylist-kylist_sh_nmcstm">
+                    <td className="kylist-kylist_sh_nmcstm-td">
                       {row.KYLIST_SH_NMCSTM}
                     </td>
-                    <td className="kylist-kylist_cdkypt">
+                    <td className="kylist-kylist_cdkypt-td">
                       {row.KYLIST_CDKYPT}
                     </td>
-                    <td className="kylist-kylist_sukiyk">
+                    <td className="kylist-kylist_sukiyk-td">
                       {row.KYLIST_SUKIYK}
                     </td>
-                    <td className="kylist-kylist_ymkiyk">
+                    <td className="kylist-kylist_ymkiyk-td">
                       {row.KYLIST_YMKIYK}
                     </td>
-                    <td className="kylist-kylist_kbjyot">
+                    <td className="kylist-kylist_kbjyot-td">
                       {gycmConv("KBJYOT", row.KYLIST_KBJYOT)}
+                    </td>
+                    <td className="kylist-kylist_znurkk-td">
+                      {row.KSLIST_ZNURKK}
                     </td>
                   </tr>
                 );
