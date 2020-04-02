@@ -5,7 +5,6 @@ import { StoreState } from "../../../../store";
 import { useLocation, useHistory } from "react-router-dom";
 import classNames from "classnames";
 
-// import moment from "moment";
 import _ from "lodash";
 
 import {
@@ -305,52 +304,59 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
           )}
         </div>
       )}
-      <div
-        className="cstmList-container"
-        style={cstms.length < 12 ? { overflowY: "hidden" } : {}}
-      >
-        <table className="commonTable-table">
-          <thead className="commonTable-thead">
+      <div className="cstmList-container">
+        <table className="cstmList-table">
+          <thead className="cstmList-table-thead">
             <tr>
-              <th rowSpan={2}>
-                <p></p>
+              <th rowSpan={2} className="ctlist-ct_numItem-th">
+                <p>項番</p>
               </th>
-              <th rowSpan={2} onClick={() => handleSort("CT_CDCSTM")}>
+              <th
+                rowSpan={2}
+                onClick={() => handleSort("CT_CDCSTM")}
+                className="ctlist-ct_cdcstm-th"
+              >
                 <p className="pointer">
                   読者番号{sort.key === "CT_CDCSTM" ? sort.icon : <span />}
                 </p>
               </th>
-              <th onClick={() => handleSort("CT_KBCSTM")}>
+              <th
+                rowSpan={1}
+                onClick={() => handleSort("CT_KBCSTM")}
+                className="ctlist-ct_kbcstm-th"
+              >
                 <p className="pointer">
                   区分{sort.key === "CT_KBCSTM" ? sort.icon : <span />}
                 </p>
               </th>
-              <th rowSpan={2}>
+              <th rowSpan={2} className="ctlist-ct_nmcstm-th">
                 <p>顧客名</p>
               </th>
-              {/*<th rowSpan={2}>
-              <p>カナ</p>
-            </th>*/}
-              <th rowSpan={2}>
+              <th rowSpan={2} className="ctlist-ct_nmsime-th">
                 <p>氏名</p>
               </th>
-              <th rowSpan={2}>
+              <th
+                rowSpan={2}
+                onClick={() => handleSort("CT_NKSIME")}
+                className="ctlist-ct_nksime-th"
+              >
                 <p>氏名カナ</p>
               </th>
-              <th onClick={() => handleSort("CT_ADCST1")}>
+              <th
+                rowSpan={1}
+                onClick={() => handleSort("CT_ADCST1")}
+                className="ctlist-ct_adcst1-th"
+              >
                 <p className="pointer">
                   住所{sort.key === "CT_ADCST1" ? sort.icon : <span />}
                 </p>
               </th>
-              <th rowSpan={2}>
+              <th rowSpan={2} className="ctlist-ct_notel1-th">
                 <p>TEL1</p>
               </th>
-              <th rowSpan={2}>
+              <th rowSpan={2} className="ctlist-ct_notel2-th">
                 <p>TEL2</p>
               </th>
-              {/*<th rowSpan={2}>
-              <p>生年月日</p>
-          // </th>*/}
             </tr>
             <tr>
               <th>
@@ -385,8 +391,8 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
             </tr>
           </thead>
           <tbody
-            className="commonTable-tbody"
-            style={{ scrollBehavior: "smooth", height: "300px" }}
+            className="cstmList-table-tbody"
+            style={filteredCstm.length < 12 ? { overflowY: "hidden" } : {}}
           >
             {filteredCstm
               .slice(paginateParam.offset, paginateParam.offset + pageLimit)
@@ -400,13 +406,9 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
                         : {}
                     }
                   >
-                    <td style={{ textAlign: "right" }}>
+                    <td className="ctlist-ct_numItem-td">
                       <button
-                        style={{
-                          color: "#668ad8",
-                          borderStyle: "none",
-                          backgroundColor: "transparent"
-                        }}
+                        className="ctlist-ct_numItem-td-button"
                         type="button"
                         onClick={() => switchCstm(row.CT_CDCSTM)}
                       >
@@ -415,15 +417,10 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
                           (paginateParam.currentPage - 1) * pageLimit}
                       </button>
                     </td>
-                    <td>
+                    <td className="ctlist-ct_cdcstm-td">
                       <div style={{ display: "flex" }}>
                         <button
-                          style={{
-                            color: "#FF9265",
-                            borderStyle: "none",
-                            backgroundColor: "transparent",
-                            padding: "0"
-                          }}
+                          className="ctlist-ct_cdcstm-td-button"
                           type="button"
                           onClick={() => {
                             switchCstm(row.CT_CDCSTM);
@@ -436,15 +433,15 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
                         </button>
                       </div>
                     </td>
-                    <td>{gycmConv("KBCSTM", row.CT_KBCSTM)}</td>
-                    <td>{row.CT_NMCSTM}</td>
-                    <td>{row.CT_NMSIME}</td>
-                    <td>{row.CT_NKSIME}</td>
-                    <td>{row.CT_ADCST1}</td>
-                    <td style={{ textAlign: "right" }}>{row.CT_NOTEL1}</td>
-                    <td style={{ textAlign: "right" }}>
-                      {row.CT_NOTEL2.toLocaleString()}
+                    <td className="ctlist-ct_kbcstm-td">
+                      {gycmConv("KBCSTM", row.CT_KBCSTM)}
                     </td>
+                    <td className="ctlist-ct_nmcstm-td">{row.CT_NMCSTM}</td>
+                    <td className="ctlist-ct_nmsime-td">{row.CT_NMSIME}</td>
+                    <td className="ctlist-ct_nksime-td">{row.CT_NKSIME}</td>
+                    <td className="ctlist-ct_adcst1-td">{row.CT_ADCST1}</td>
+                    <td className="ctlist-ct_notel1-td">{row.CT_NOTEL1}</td>
+                    <td className="ctlist-ct_notel2-td">{row.CT_NOTEL2}</td>
                   </tr>
                 );
               })}

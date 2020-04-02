@@ -173,14 +173,14 @@ const CstmDetailContainer: React.FC = () => {
             <p className="frame-title">顧客情報詳細</p>
             <div className="cstmDetail-menu-container">
               {/* <Modal
-                title="編集履歴（モーダル）"
-                open={(handleOpenModal: () => void) => (
-                  <button onClick={handleOpenModal}>
-                    編集履歴（モーダル）
-                  </button>
-                )}
-                content={(handleCloseModal: () => void) => (
-                  <CstmDetailEditLog />
+                  title="編集履歴（モーダル）"
+                  open={(handleOpenModal: () => void) => (
+                    <button onClick={handleOpenModal}>
+                      編集履歴（モーダル）
+                    </button>
+                  )}
+                  content={(handleCloseModal: () => void) => (
+                    <CstmDetailEditLog />
                 )}
                 outClickClose={false}
               /> */}
@@ -1158,10 +1158,11 @@ const CstmDetail: React.FC<Props> = ({
           {errors.CT_CCDATEX && <p>エラーメッセージ</p>}
         </div>
         <div className="cstmDetail-buttonContainer">
-          {/* {isAuth && privilege.editPublisCstm && ( */}
+          {/*
           {true && (
+             */}
+          {isAuth && privilege.editPublisCstm && (
             <div className="cstmDetail-buttonList">
-              {/* <div> */}
               {!editMode ? (
                 <button
                   className="cstmDetail-container-button"
@@ -1187,7 +1188,6 @@ const CstmDetail: React.FC<Props> = ({
                   </button>
                 </>
               )}
-              {/* </div> */}
             </div>
           )}
         </div>
