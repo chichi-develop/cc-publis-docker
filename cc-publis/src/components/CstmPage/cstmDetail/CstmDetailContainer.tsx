@@ -21,7 +21,7 @@ import {
   Gycms,
   Gycm,
   Privilege,
-  CCLogQuery
+  CCLogQuery,
 } from "../../../types/models";
 import "./CstmDetailContainer.css";
 
@@ -32,8 +32,8 @@ const customStyles = {
     right: "auto",
     bottom: "auto",
     marginRight: "-50%",
-    transform: "translate(-50%, -50%)"
-  }
+    transform: "translate(-50%, -50%)",
+  },
 };
 
 // const useStyles = makeStyles(theme => ({
@@ -89,7 +89,7 @@ const CstmDetailContainer: React.FC = () => {
   );
 
   const getGycmStart = useCallback(() => dispatch(Actions.getGycmStart()), [
-    dispatch
+    dispatch,
   ]);
 
   const addCCLogStart = useCallback(
@@ -151,16 +151,16 @@ const CstmDetailContainer: React.FC = () => {
           componentId: "CstmDetailContainer",
           functionId: "CstmDetailContainer-show",
           cdcstm: cstm.CT_CDCSTM.trim(),
-          nmcstm: cstm.CT_NMCSTM.trim()
+          nmcstm: cstm.CT_NMCSTM.trim(),
         },
         {
           userId: userID.replace(/@.*$/, ""),
-          logId: "showCstmDetailLog"
+          logId: "showCstmDetailLog",
         }
       );
       getCCLogStart({
         logId: "editCstmDetailLog",
-        cdcstm: cstm.CT_CDCSTM
+        cdcstm: cstm.CT_CDCSTM,
       });
     }
   }, [cstm, userID, addCCLogStart, getCCLogStart]);
@@ -241,7 +241,7 @@ const CstmDetail: React.FC<Props> = ({
   replaceCstm,
   isAuth,
   privilege,
-  userID
+  userID,
 }) => {
   const [editMode, setEditMode] = useState(false);
   const handleEditMode = () => {
@@ -266,43 +266,49 @@ const CstmDetail: React.FC<Props> = ({
       CT_CCTERMX: "Web",
       CT_CCOUSRX: userID.replace(/@.*$/, ""),
       CT_CCUSERX: userID.replace(/@.*$/, ""),
-      CT_CCFUNCX: "editCstmStart"
+      CT_CCFUNCX: "editCstmStart",
     });
 
-    await editCstmStart(
+    let ret = await editCstmStart(
       cstm.CT_CDCSTM,
       Object.assign({}, cstm, data, updateCstm)
     );
 
-    const editDetail = Object.entries(cstm).map(
-      ([key, value], index, array) => {
-        if (
-          _.trim(value) !== _.trim(updateCstm[`${key}`]) &&
-          key.slice(0, 5) !== "CT_CC"
-        ) {
-          return `【${key}】: [${_.trim(value)}] => [${_.trim(
-            updateCstm[`${key}`]
-          )}]`;
+    console.log(`ret=${JSON.stringify(ret)}`);
+
+    if (ret !== undefined) {
+      const editDetail = Object.entries(cstm).map(
+        ([key, value], index, array) => {
+          if (
+            _.trim(value) !== _.trim(updateCstm[`${key}`]) &&
+            key.slice(0, 5) !== "CT_CC"
+          ) {
+            return `【${key}】: [${_.trim(value)}] => [${_.trim(
+              updateCstm[`${key}`]
+            )}]`;
+          }
+          return null;
         }
-        return null;
-      }
-    );
+      );
 
-    addCCLogStart(
-      {
-        logId: "editCstmDetailLog",
-        userId: userID.replace(/@.*$/, ""),
-        applicationId: "cc-publis",
-        componentId: "CstmDetailContainer",
-        functionId: "CstmDetailContainer-show",
-        cdcstm: cstm.CT_CDCSTM.trim(),
-        nmcstm: cstm.CT_NMCSTM.trim(),
-        detail: editDetail.filter(n => n).join(",")
-      },
-      { logId: "editCstmDetailLog", cdcstm: cstm.CT_CDCSTM }
-    );
+      addCCLogStart(
+        {
+          logId: "editCstmDetailLog",
+          userId: userID.replace(/@.*$/, ""),
+          applicationId: "cc-publis",
+          componentId: "CstmDetailContainer",
+          functionId: "CstmDetailContainer-show",
+          cdcstm: cstm.CT_CDCSTM.trim(),
+          nmcstm: cstm.CT_NMCSTM.trim(),
+          detail: editDetail.filter((n) => n).join(","),
+        },
+        { logId: "editCstmDetailLog", cdcstm: cstm.CT_CDCSTM }
+      );
 
-    replaceCstm(cstm.CT_CDCSTM, updateCstm);
+      replaceCstm(cstm.CT_CDCSTM, updateCstm);
+    } else {
+      reset();
+    }
 
     handleEditMode();
   };
@@ -321,12 +327,12 @@ const CstmDetail: React.FC<Props> = ({
   }, [cstm, reset]);
 
   const gycmConv = (cdbnri: string, cdbnsy: string) =>
-    gycms.filter(r => r.GY_CDBNRI === cdbnri && r.GY_CDBNSY === cdbnsy)[0]
+    gycms.filter((r) => r.GY_CDBNRI === cdbnri && r.GY_CDBNSY === cdbnsy)[0]
       .GY_NMBNSY;
 
   const gycmOption = (cdbnri: string) =>
     gycms
-      .filter(r => r.GY_CDBNRI === cdbnri)
+      .filter((r) => r.GY_CDBNRI === cdbnri)
       .sort((a, b) => Number(a.GY_CDBNSY) - Number(b.GY_CDBNSY))
       .map((item: Gycm) => (
         <option key={item.GY_CDBNSY} value={item.GY_CDBNSY}>
@@ -338,16 +344,16 @@ const CstmDetail: React.FC<Props> = ({
     "cstmDetail-container-common",
     {
       "cstmDetail-container-input-editMode": editMode && flg,
-      "cstmDetail-container-input-readMode": !editMode || !flg
-    }
+      "cstmDetail-container-input-readMode": !editMode || !flg,
+    },
   ];
 
   let editModeSelectStyle = (flg: boolean = false) => [
     "cstmDetail-container-common",
     {
       "cstmDetail-container-select-editMode": editMode && flg,
-      "cstmDetail-container-select-readMode": !editMode || !flg
-    }
+      "cstmDetail-container-select-readMode": !editMode || !flg,
+    },
   ];
 
   return (
@@ -382,7 +388,7 @@ const CstmDetail: React.FC<Props> = ({
             defaultValue={cstm.CT_CDCSTM.replace(/\s+$/g, "")}
             // ref={register({ pattern: /^2[0-9]{7}/ })}
             ref={register({ pattern: /^[0-9]{8}/ })}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_CDCSTM && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctKbcstmLabel">
@@ -411,7 +417,7 @@ const CstmDetail: React.FC<Props> = ({
             // ref={register}
             ref={register({ pattern: /[0-9]/ })}
             defaultValue={cstm.CT_KBCSTM.replace(/\s+$/g, "")}
-            onChange={e => {
+            onChange={(e) => {
               setValue("CT_KBCSTM", e.target.value, true);
             }}
           >
@@ -436,7 +442,7 @@ const CstmDetail: React.FC<Props> = ({
             readOnly={true}
             defaultValue={cstm.CT_NMCSTM.replace(/\s+$/g, "")}
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_NMCSTM && <p>エラーメッセージ</p>}
           <input
@@ -449,7 +455,7 @@ const CstmDetail: React.FC<Props> = ({
             readOnly={true}
             defaultValue={cstm.CT_NKCSTM.replace(/\s+$/g, "")}
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_NKCSTM && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctNmtnbuLabel">
@@ -465,7 +471,7 @@ const CstmDetail: React.FC<Props> = ({
             readOnly={!editMode}
             defaultValue={cstm.CT_NMTNBU.replace(/\s+$/g, "")}
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_NMTNBU && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctNmtntoLabel">
@@ -481,7 +487,7 @@ const CstmDetail: React.FC<Props> = ({
             readOnly={true}
             defaultValue={cstm.CT_NMTNTO.replace(/\s+$/g, "")}
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_NMTNTO && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctNmsimeLabel">
@@ -497,7 +503,7 @@ const CstmDetail: React.FC<Props> = ({
             readOnly={true}
             defaultValue={cstm.CT_NMSIME.replace(/\s+$/g, "")}
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_NMSIME && <p>エラーメッセージ</p>}
           <input
@@ -510,7 +516,7 @@ const CstmDetail: React.FC<Props> = ({
             readOnly={true}
             defaultValue={cstm.CT_NKSIME.replace(/\s+$/g, "")}
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_NKSIME && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctKbksyoLabel">
@@ -536,7 +542,7 @@ const CstmDetail: React.FC<Props> = ({
             name="CT_KBKSYO"
             defaultValue={cstm.CT_KBKSYO.replace(/\s+$/g, "")}
             ref={register()}
-            onChange={e => {
+            onChange={(e) => {
               setValue("CT_KBKSYO", e.target.value, true);
             }}
           >
@@ -565,7 +571,7 @@ const CstmDetail: React.FC<Props> = ({
             readOnly={!editMode}
             defaultValue={cstm.CT_NOYUBN.replace(/\s+$/g, "")}
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_NOYUBN && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctAdcst1Label">
@@ -581,7 +587,7 @@ const CstmDetail: React.FC<Props> = ({
             readOnly={!editMode}
             defaultValue={cstm.CT_ADCST1.replace(/\s+$/g, "")}
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_ADCST1 && <p>エラーメッセージ</p>}
           <input
@@ -594,7 +600,7 @@ const CstmDetail: React.FC<Props> = ({
             readOnly={!editMode}
             defaultValue={cstm.CT_ADCST2.replace(/\s+$/g, "")}
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_ADCST2 && <p>エラーメッセージ</p>}
           <input
@@ -607,7 +613,7 @@ const CstmDetail: React.FC<Props> = ({
             readOnly={!editMode}
             defaultValue={cstm.CT_ADCST3.replace(/\s+$/g, "")}
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_ADCST3 && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctNmkuniLabel">
@@ -623,7 +629,7 @@ const CstmDetail: React.FC<Props> = ({
             readOnly={!editMode}
             defaultValue={cstm.CT_NMKUNI.replace(/\s+$/g, "")}
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_NMKUNI && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctKbkgtiLabel">
@@ -639,7 +645,7 @@ const CstmDetail: React.FC<Props> = ({
             readOnly={true}
             defaultValue={cstm.CT_KBKGTI.replace(/\s+$/g, "")}
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_KBKGTI && <p>エラーメッセージ</p>}
           <div className="cstmDetail-ctKbkgtiGycms gycms">
@@ -658,7 +664,7 @@ const CstmDetail: React.FC<Props> = ({
             readOnly={!editMode}
             defaultValue={cstm.CT_CDSQSF.replace(/\s+$/g, "")}
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_CDSQSF && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctCdsqsmLabel">
@@ -674,7 +680,7 @@ const CstmDetail: React.FC<Props> = ({
             readOnly={!editMode}
             defaultValue={cstm.CT_CDSQSM.replace(/\s+$/g, "")}
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_CDSQSM && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctNotel1Label">
@@ -690,7 +696,7 @@ const CstmDetail: React.FC<Props> = ({
             readOnly={!editMode}
             defaultValue={cstm.CT_NOTEL1.replace(/\s+$/g, "")}
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_NOTEL1 && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctNotel2Label">
@@ -706,7 +712,7 @@ const CstmDetail: React.FC<Props> = ({
             readOnly={!editMode}
             defaultValue={cstm.CT_NOTEL2.replace(/\s+$/g, "")}
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_NOTEL2 && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctAdmailLabel">
@@ -722,7 +728,7 @@ const CstmDetail: React.FC<Props> = ({
             readOnly={!editMode}
             defaultValue={cstm.CT_ADMAIL.replace(/\s+$/g, "")}
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_ADMAIL && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctKbdmprLabel">
@@ -747,7 +753,7 @@ const CstmDetail: React.FC<Props> = ({
             name="CT_KBDMPR"
             ref={register()}
             defaultValue={cstm.CT_KBDMPR.replace(/\s+$/g, "")}
-            onChange={e => {
+            onChange={(e) => {
               setValue("CT_KBDMPR", e.target.value, true);
             }}
           >
@@ -777,7 +783,7 @@ const CstmDetail: React.FC<Props> = ({
             readOnly={true}
             defaultValue={cstm.CT_TXBIKO.replace(/\s+$/g, "")}
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_TXBIKO && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctTxsshrLabel">
@@ -793,7 +799,7 @@ const CstmDetail: React.FC<Props> = ({
             readOnly={true}
             defaultValue={cstm.CT_TXSSHR.replace(/\s+$/g, "")}
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_TXSSHR && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctKbsebtLabel">
@@ -817,7 +823,7 @@ const CstmDetail: React.FC<Props> = ({
             name="CT_KBSEBT"
             ref={register()}
             defaultValue={cstm.CT_KBSEBT.replace(/\s+$/g, "")}
-            onChange={e => {
+            onChange={(e) => {
               setValue("CT_KBSEBT", e.target.value, true);
             }}
           >
@@ -853,7 +859,7 @@ const CstmDetail: React.FC<Props> = ({
                 : ""
             }
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_DTSNGP && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctCdsyokLabel">
@@ -881,7 +887,7 @@ const CstmDetail: React.FC<Props> = ({
             name="CT_CDSYOK"
             ref={register()}
             defaultValue={cstm.CT_CDSYOK.replace(/\s+$/g, "")}
-            onChange={e => {
+            onChange={(e) => {
               setValue("CT_CDSYOK", e.target.value, true);
             }}
           >
@@ -909,7 +915,7 @@ const CstmDetail: React.FC<Props> = ({
             readOnly={true}
             defaultValue={cstm.CT_CDBAIT.replace(/\s+$/g, "")}
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_CDBAIT && <p>エラーメッセージ</p>}
           <div className="cstmDetail-ctCdbaitGycms gycms">
@@ -928,7 +934,7 @@ const CstmDetail: React.FC<Props> = ({
             readOnly={true}
             defaultValue={cstm.CT_CDSYKS.replace(/\s+$/g, "")}
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_CDSYKS && <p>エラーメッセージ</p>}
           <div className="cstmDetail-ctCdsyksGycms gycms">
@@ -947,7 +953,7 @@ const CstmDetail: React.FC<Props> = ({
             readOnly={true}
             defaultValue={cstm.CT_CDSYTN.replace(/\s+$/g, "")}
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_CDSYTN && <p>エラーメッセージ</p>}
           <div className="cstmDetail-ctCdsytnGycms gycms">
@@ -966,7 +972,7 @@ const CstmDetail: React.FC<Props> = ({
             readOnly={true}
             defaultValue={cstm.CT_CDDOKI.replace(/\s+$/g, "")}
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_CDDOKI && <p>エラーメッセージ</p>}
           <div className="cstmDetail-ctCddokiGycms gycms">
@@ -985,7 +991,7 @@ const CstmDetail: React.FC<Props> = ({
             readOnly={true}
             defaultValue={cstm.CT_CTSOUK.replace(/\s+$/g, "")}
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_CTSOUK && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctKbsekyLabel">
@@ -1010,7 +1016,7 @@ const CstmDetail: React.FC<Props> = ({
             name="CT_KBSEKY"
             ref={register()}
             defaultValue={cstm.CT_KBSEKY.replace(/\s+$/g, "")}
-            onChange={e => {
+            onChange={(e) => {
               setValue("CT_KBSEKY", e.target.value, true);
             }}
           >
@@ -1031,7 +1037,7 @@ const CstmDetail: React.FC<Props> = ({
             readOnly={true}
             defaultValue={cstm.CT_KBCLAM.replace(/\s+$/g, "")}
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_KBCLAM && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctKbjyctLabel">
@@ -1047,7 +1053,7 @@ const CstmDetail: React.FC<Props> = ({
             readOnly={true}
             defaultValue={cstm.CT_KBJYCT.replace(/\s+$/g, "")}
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_KBJYCT && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctKbtkskLabel">
@@ -1063,7 +1069,7 @@ const CstmDetail: React.FC<Props> = ({
             readOnly={true}
             defaultValue={cstm.CT_KBTKSK.replace(/\s+$/g, "")}
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_KBTKSK && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctKbjik1Label">
@@ -1079,7 +1085,7 @@ const CstmDetail: React.FC<Props> = ({
             readOnly={true}
             defaultValue={cstm.CT_KBJIK1.replace(/\s+$/g, "")}
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_KBJIK1 && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctKbjik2Label">
@@ -1095,7 +1101,7 @@ const CstmDetail: React.FC<Props> = ({
             readOnly={true}
             defaultValue={cstm.CT_KBJIK2.replace(/\s+$/g, "")}
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_KBJIK2 && <p>エラーメッセージ</p>}
 
@@ -1112,7 +1118,7 @@ const CstmDetail: React.FC<Props> = ({
             readOnly={true}
             defaultValue={cstm.CT_KBMSCH.replace(/\s+$/g, "")}
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_KBMSCH && <p>エラーメッセージ</p>}
           <div className="cstmDetail-container-label cstmDetail-ctCcdatecLabel">
@@ -1132,7 +1138,7 @@ const CstmDetail: React.FC<Props> = ({
                 : ""
             }
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_CCDATEC && <p>エラーメッセージ</p>}
 
@@ -1153,7 +1159,7 @@ const CstmDetail: React.FC<Props> = ({
                 : ""
             }
             ref={register()}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
           {errors.CT_CCDATEX && <p>エラーメッセージ</p>}
         </div>

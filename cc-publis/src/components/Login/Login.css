@@ -40,6 +40,13 @@
   margin: 0.5em;
 }
 
+.login-form input:focus {
+  outline: -webkit-focus-ring-color auto 5px;
+  outline-color: -webkit-focus-ring-color;
+  outline-style: auto;
+  outline-width: 5px;
+}
+
 .login-form-error {
   display: flex;
   justify-content: center;

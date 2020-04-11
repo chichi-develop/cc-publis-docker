@@ -1,9 +1,11 @@
 import oracledb from 'oracledb'
 import { Request, Response, NextFunction } from "express"
-import moment from 'moment'
+import moment from 'moment-timezone'
 import { ORACLE_HOST, ORACLE_PORT, ORACLE_SID, ORACLE_USER, ORACLE_PASSWORD } from '../config/constants'
 
 oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT
+
+//TODO: cstmSearchと同様、全てのAPIデータオブジェクト、エラーオブジェクトの見直し
 
 // oracledb.autoCommit = true; // autoCommit = trueにすると、connection.commit()を使わずにデータが commitされます。
 
@@ -32,11 +34,6 @@ export async function cstmSearch(req: Request, res: Response, next: NextFunction
   let connection: oracledb.Connection | undefined | null
   let columnName: string = req.params.columnName
   let sqlText: string
-  // if (columnName.slice(0, 8).toUpperCase() === 'CT_NOTEL') {
-  //   sqlText = `SELECT * FROM cc_cstm WHERE ct_notel1 like '${req.params.key}' or ct_notel2 LIKE :key`
-  // } else {
-  //   sqlText = `SELECT * FROM cc_cstm WHERE TRIM(${columnName}) LIKE :key`
-  // }
 
   switch (columnName.toUpperCase()) {
     case 'CT_NOTEL1' || 'CT_NOTEL2':
@@ -49,28 +46,22 @@ export async function cstmSearch(req: Request, res: Response, next: NextFunction
       sqlText = `SELECT * FROM cc_cstm WHERE ${columnName} LIKE :key ORDER BY ${columnName}`
   }
 
-  console.log(sqlText)
   console.log(`oracle.ts:cstmSearch: columnName:${columnName}、key:${req.params.key}`)
+  console.log(sqlText)
 
   try {
-    console.log('cstmSearch start')
-    console.log(moment().format("HH:mm:ss"))
+    console.log(`cstmSearch start: ${moment().tz('Asia/Tokyo').format("HH:mm:ss")}`)
     connection = await oracledb.getConnection(connectionProperties)
     const result = await connection.execute(sqlText, [req.params.key])
-    console.log('cstmSearch end')
-    console.log(moment().format("HH:mm:ss"))
-    if (result.rows && result.rows.length >= 1) {
-      // return res.send(result.rows)
-      return res.status(200).json({ cstms: result.rows });
-
-    } else if (result.rows && result.rows.length === 0) {
-      return res.status(500).json({ error: 'no data found' });
-    }
-    return res.status(500).json({ error: 'unknown error' })
+    console.log(`cstmSearch end: ${moment().tz('Asia/Tokyo').format("HH:mm:ss")}`)
+    return res.status(200).json(result.rows);
   } catch (err) {
-    console.error(err.message)
     console.error(sqlText)
-    return res.status(500).json({ error: err.message });
+    console.error(err)
+    // console.error(err.errorNum)
+    // console.error(err.message)
+    let code = err.errorNum === 12154 ? 'oracleNetError' : err.errorNum
+    return res.status(500).json({ ...err, code: code, message: err.message });
   } finally {
     if (connection) {
       try {
@@ -175,9 +166,9 @@ export async function csmmSearch(req: Request, res: Response, next: NextFunction
     if (result.rows && result.rows.length >= 1) {
       return res.send(result.rows)
     } else if (result.rows && result.rows.length === 0) {
-      return res.status(500).json({ error: 'no data found' });
+      return res.status(500).json({ error: { message: 'no data found', code: 'noDataFound' } });
     }
-    return res.status(500).json({ error: 'unknown error' })
+    return res.status(500).json({ error: { message: 'unknown error', code: 'unknownError' } })
   } catch (err) {
     console.error(err.message)
     console.error(sqlText)
@@ -272,9 +263,9 @@ export async function kiykSearch2(req: Request, res: Response, next: NextFunctio
     if (result.rows && result.rows.length >= 1) {
       return res.send(result.rows)
     } else if (result.rows && result.rows.length === 0) {
-      return res.status(500).json({ error: 'no data found' });
+      return res.status(500).json({ error: { message: 'no data found', code: 'noDataFound' } });
     }
-    return res.status(500).json({ error: 'unknown error' })
+    return res.status(500).json({ error: { message: 'unknown error', code: 'unknownError' } })
   } catch (err) {
     console.error(err.message)
     console.error(sqlText)
@@ -315,9 +306,9 @@ export async function kiykSearch2(req: Request, res: Response, next: NextFunctio
 //       // return res.send(result.rows)
 //       return res.status(200).json({ kiyks: result.rows });
 //     } else if (result.rows && result.rows.length === 0) {
-//       return res.status(500).json({ error: 'no data found' });
+//       return res.status(500).json({ error: {message:'no data found',code: 'noDataFound'}});
 //     }
-//     return res.status(500).json({ error: 'unknown error' })
+//     return res.status(500).json({ error: { message: 'unknown error', code: 'unknownError' } })
 //   } catch (err) {
 //     console.error(err.message)
 //     console.error(sqlText)
@@ -438,19 +429,17 @@ export async function kiykSearch(req: Request, res: Response, next: NextFunction
 
 
   try {
-    console.log('kiykSearch start')
-    console.log(moment().format("HH:mm:ss"))
+    console.log(`kiykSearch start: ${moment().tz('Asia/Tokyo').format("HH:mm:ss")}`)
     connection = await oracledb.getConnection(connectionProperties)
     const result = await connection.execute(sqlText, [req.params.key])
-    console.log('kiykSearch end')
-    console.log(moment().format("HH:mm:ss"))
+    console.log(`kiykSearch end: ${moment().tz('Asia/Tokyo').format("HH:mm:ss")}`)
     if (result.rows && result.rows.length >= 1) {
       // return res.send(result.rows)
       return res.status(200).json({ kiyks: result.rows });
     } else if (result.rows && result.rows.length === 0) {
-      return res.status(500).json({ error: 'no data found' });
+      return res.status(500).json({ error: { message: 'no data found', code: 'noDataFound' } });
     }
-    return res.status(500).json({ error: 'unknown error' })
+    return res.status(500).json({ error: { message: 'unknown error', code: 'unknownError' } })
   } catch (err) {
     console.error(err.message)
     console.error(sqlText)
@@ -476,9 +465,9 @@ export async function kyzdSearch(req: Request, res: Response, next: NextFunction
     if (result.rows && result.rows.length >= 1) {
       return res.send(result.rows)
     } else if (result.rows && result.rows.length === 0) {
-      return res.status(500).json({ error: 'no data found' });
+      return res.status(500).json({ error: { message: 'no data found', code: 'noDataFound' } });
     }
-    return res.status(500).json({ error: 'unknown error' })
+    return res.status(500).json({ error: { message: 'unknown error', code: 'unknownError' } })
   } catch (err) {
     console.error(err.message)
     console.error(sqlText)
@@ -555,9 +544,9 @@ export async function ctzhSearch(req: Request, res: Response, next: NextFunction
     if (result.rows && result.rows.length >= 1) {
       return res.send(result.rows)
     } else if (result.rows && result.rows.length === 0) {
-      return res.status(500).json({ error: 'no data found' });
+      return res.status(500).json({ error: { message: 'no data found', code: 'noDataFound' } });
     }
-    return res.status(500).json({ error: 'unknown error' })
+    return res.status(500).json({ error: { message: 'unknown error', code: 'unknownError' } })
   } catch (err) {
     console.error(err.message)
     console.error(sqlText)
@@ -641,9 +630,9 @@ export async function kyzhSearch(req: Request, res: Response, next: NextFunction
     if (result.rows && result.rows.length >= 1) {
       return res.send(result.rows)
     } else if (result.rows && result.rows.length === 0) {
-      return res.status(500).json({ error: 'no data found' });
+      return res.status(500).json({ error: { message: 'no data found', code: 'noDataFound' } });
     }
-    return res.status(500).json({ error: 'unknown error' })
+    return res.status(500).json({ error: { message: 'unknown error', code: 'unknownError' } })
   } catch (err) {
     console.error(err.message)
     console.error(sqlText)
@@ -674,9 +663,9 @@ export async function kyzhSearch(req: Request, res: Response, next: NextFunction
 //       // return res.send(result.rows)
 //       return res.status(200).json({ kiyks: result.rows });
 //     } else if (result.rows && result.rows.length === 0) {
-//       return res.status(500).json({ error: 'no data found' });
+//       return res.status(500).json({ error: {message:'no data found',code: 'noDataFound'}});
 //     }
-//     return res.status(500).json({ error: 'unknown error' })
+//     return res.status(500).json({ error: { message: 'unknown error', code: 'unknownError' } })
 //   } catch (err) {
 //     console.error(err.message)
 //     console.error(sqlText)
@@ -705,9 +694,9 @@ export async function gycmSearch(req: Request, res: Response, next: NextFunction
       // return res.send(result.rows)
       return res.status(200).json({ gycms: result.rows });
     } else if (result.rows && result.rows.length === 0) {
-      return res.status(500).json({ error: 'no data found' });
+      return res.status(500).json({ error: { message: 'no data found', code: 'noDataFound' } });
     }
-    return res.status(500).json({ error: 'unknown error' })
+    return res.status(500).json({ error: { message: 'unknown error', code: 'unknownError' } })
   } catch (err) {
     console.error(err.message)
     console.error(sqlText)

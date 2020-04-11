@@ -13,6 +13,8 @@ import {
   Gycms
 } from "../../types/models";
 
+// TODO: serchHistory、persist をとる
+// TODO: cstmLists を追加する
 interface State {
   cstms: Cstms | [];
   cstm: Cstm | {};
@@ -45,7 +47,7 @@ interface State {
   isUpdating: boolean;
   clearSortFilter: boolean;
   searchHistory: [];
-  error: { code?: string };
+  error: { message?: string, code?: string };
 }
 
 export const initialState = (injects?: State): State => ({
@@ -94,7 +96,7 @@ export const reducer = (state = initialState(), action: Actions): State => {
       });
     case types.getCstmSucceed:
       return Object.assign({}, state, {
-        ...action.payload.cstms,
+        cstms: action.payload.cstms,
         cstm: action.payload.cstm,
         showListCstm: true,
         searchHistory: action.payload.searchHistory,

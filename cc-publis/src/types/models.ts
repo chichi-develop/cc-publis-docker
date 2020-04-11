@@ -44,7 +44,7 @@ export type Auth = {
   id: string;
   email: string;
   privilege: string[];
-  error: {};
+  error: { message?: string };
 };
 
 export type Cstm = {
