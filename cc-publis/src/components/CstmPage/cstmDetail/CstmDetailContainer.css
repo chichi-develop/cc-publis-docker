@@ -94,6 +94,14 @@
   /* pointer-events: auto; */
 }
 
+/* input:focus { */
+.cstmDetail-container-input-editMode:focus {
+  outline: -webkit-focus-ring-color auto 3px;
+  outline-color: -webkit-focus-ring-color;
+  outline-style: auto;
+  outline-width: 3px;
+}
+
 .cstmDetail-container-input-readMode {
   color: green;
   /* border: none; */

@@ -28,7 +28,7 @@ const Login: React.FC<Props> = ({ loginAuth, authState }) => {
           className="login-input-loginID"
           type="email"
           placeholder="Login ID.."
-          onChange={e => {
+          onChange={(e) => {
             setLoginID(e.target.value);
           }}
         ></input>
@@ -36,18 +36,19 @@ const Login: React.FC<Props> = ({ loginAuth, authState }) => {
           className="login-input-password"
           type="password"
           placeholder="Password.."
-          onChange={e => {
+          onChange={(e) => {
             setPassword(e.target.value);
           }}
         ></input>
-        {errorMessage === "Invalid credentials.\n" && (
+        {(errorMessage === "invalid credentials" ||
+          errorMessage === "Missing credentials") && (
           <div className="login-form-error">IDまたはPasswordが違います</div>
         )}
         <div className="login-form-submit">
           <button
             className="login-form-submitButton"
             type="submit"
-            onClick={e => {
+            onClick={(e) => {
               e.preventDefault();
               loginAuth(loginID, password);
             }}

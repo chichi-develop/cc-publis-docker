@@ -19,10 +19,7 @@ import { Kiyk, KiykList } from "../../types/models";
 function* runGetCstm(action: ReturnType<typeof Actions.getCstmStart>) {
   const { columnName, key } = action.payload;
   try {
-    // TODO: TS データかエラーが返ってくる場合にはどう型を付けるべきか
-    const cstms = yield call(getCstmFactory, columnName, key);
-    console.log('getCstm OK!!!');
-    console.log(cstms);
+    const result = yield call(getCstmFactory, columnName, key);
 
     const persistPublis = localStorage.getItem("persist:publis");
     if (persistPublis) {
@@ -39,8 +36,8 @@ function* runGetCstm(action: ReturnType<typeof Actions.getCstmStart>) {
       type: Types.getCstmSucceed,
       payload: {
         searchHistory: searchHistory.filter(Boolean),
-        cstms,
-        cstm: cstms.cstms[0],
+        cstms: result,
+        cstm: result[0],
       },
     });
   } catch (error) {

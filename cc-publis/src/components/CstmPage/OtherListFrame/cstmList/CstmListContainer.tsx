@@ -9,7 +9,7 @@ import _ from "lodash";
 
 import {
   ArrowDropUp as ArrowDropUpIcon,
-  ArrowDropDown as ArrowDropDownIcon
+  ArrowDropDown as ArrowDropDownIcon,
 } from "@material-ui/icons";
 
 import LinkList from "../common/LinkList";
@@ -47,7 +47,7 @@ const CstmListContainer: React.FC = () => {
   );
 
   const getGycmStart = useCallback(() => dispatch(Actions.getGycmStart()), [
-    dispatch
+    dispatch,
   ]);
 
   let cstm = publisState.cstm as Cstm;
@@ -55,7 +55,7 @@ const CstmListContainer: React.FC = () => {
   let showListCstm = publisState.showListCstm;
   let gycms = publisState.gycms;
   let setGycm = publisState.setGycm;
-  let errorCode = publisState.error.code || "0";
+  let errorCode = publisState.error.code;
 
   useEffect(() => {
     console.log("CstmListContainer render!");
@@ -78,6 +78,9 @@ const CstmListContainer: React.FC = () => {
     <div className="cstmList-body">
       {errorCode === "ECONNABORTED" && (
         <ErrorMessageFrame message="APIサーバへのリクエストで、タイムアウトしました。" />
+      )}
+      {errorCode === "noDataFound" && (
+        <ErrorMessageFrame message="検索結果： 該当するデータはありませんでした。" />
       )}
       {showListCstm && setGycm && (
         <>
@@ -119,18 +122,18 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
     sort: {
       key: "CT_CDCSTM",
       order: 0,
-      icon: <span />
+      icon: <span />,
     },
     filterQuery: {
-      ct_kbcstm_key: ""
+      ct_kbcstm_key: "",
     },
     paginateParam: {
       offset: 0,
       currentPage: 1,
       totalRecords: cstms.length,
       totalPage: Math.ceil(cstms.length / pageLimit),
-      showPageStart: 0
-    }
+      showPageStart: 0,
+    },
   };
 
   const [ct_kbcstms, setKbcstms] = useState<string[]>(initialState.ct_kbcstm);
@@ -164,7 +167,7 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
     let tmpCstms = cstms;
     // 入力した文字は小文字にする
     const filterTxactv: string | undefined = filterQuery.CT_ADCST1;
-    tmpCstms = tmpCstms.filter(row => {
+    tmpCstms = tmpCstms.filter((row) => {
       // フィルタ
       if (
         filterQuery.CT_ADCST1 &&
@@ -202,7 +205,7 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
       currentPage: 1,
       totalRecords: tmpCstms.length,
       totalPage: Math.ceil(tmpCstms.length / pageLimit),
-      showPageStart: 0
+      showPageStart: 0,
     });
 
     return tmpCstms;
@@ -222,13 +225,13 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
       setSort({
         ...sort,
         order: -sort.order,
-        icon: -sort.order === 1 ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />
+        icon: -sort.order === 1 ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />,
       });
     } else {
       setSort({
         key: column,
         order: 1,
-        icon: <ArrowDropUpIcon />
+        icon: <ArrowDropUpIcon />,
       });
     }
   };
@@ -247,12 +250,12 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
       ...paginateParam,
       offset: (page - 1) * pageLimit,
       currentPage: page,
-      showPageStart: start
+      showPageStart: start,
     });
   };
 
   const gycmConv = (cdbnri: string, cdbnsy: string) =>
-    gycms.filter(r => r.GY_CDBNRI === cdbnri && r.GY_CDBNSY === cdbnsy)[0]
+    gycms.filter((r) => r.GY_CDBNRI === cdbnri && r.GY_CDBNSY === cdbnsy)[0]
       .GY_NMBNSY;
 
   return (
@@ -281,7 +284,7 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
                   <li
                     className={classNames("cstmList-pagination-list", {
                       "cstmList-pagination-active":
-                        page === paginateParam.currentPage
+                        page === paginateParam.currentPage,
                     })}
                     key={page}
                     onClick={() => handlePage(page)}

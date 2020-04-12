@@ -20,10 +20,10 @@ export async function loginAuthApi(loginID: string, password: string) {
     let error;
     if (res.response) {
       error = res.response;
-    } else if (res.message === "Invalid credentials.\n") {
-      error = { message: res.message };
+      // } else if (res.message === "Invalid credentials.\n") {
+      //   error = { message: res.message };
     } else {
-      error = res;
+      error = res.error;
     }
     return error;
   }

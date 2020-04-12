@@ -4,16 +4,24 @@ import { PUBLIS_API_HOST, PUBLIS_API_PORT, PUBLIS_API_TIMEOUT } from '../../conf
 
 const baseUrlPublis = `http://${PUBLIS_API_HOST}:${PUBLIS_API_PORT}/ccdb`;
 
-export async function getCstmFactory(columnName: string, key: string): Promise<Cstms | object> {
+export const getCstmFactory = async (columnName: string, key: string) => {
   try {
-    const res = await axios.get<Cstms>(`${baseUrlPublis}/cstm/${columnName}/${encodeURIComponent(key)}`, { timeout: PUBLIS_API_TIMEOUT });
-    return res.data;
-  } catch (res) {
-    let error
-    if (res.response) { error = res.response }
-    else if (res.code === 'ECONNABORTED') { error = { code: res.code } } else {
-      error = res
-    };
+    const response = await axios.get<Cstms>(`${baseUrlPublis}/cstm/${columnName}/${encodeURIComponent(key)}`, { timeout: PUBLIS_API_TIMEOUT });
+    if (response.data.length < 1) {
+      let err = { message: 'no data found', code: 'noDataFound' }
+      throw err
+    }
+    return response.data;
+  } catch (error) {
+    if (error && error.response) {
+      console.log('error1')
+      console.log(error.code)
+      console.log(error.response.data)
+      throw error.response.data;
+    }
+    console.log('error2')
+    console.log(error.code)
+    console.log(error)
     throw error;
   }
 }
