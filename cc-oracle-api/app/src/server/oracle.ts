@@ -404,16 +404,23 @@ export async function kiykSearch(req: Request, res: Response, next: NextFunction
     `   KY_SUKIYK KYLIST_SUKIYK,` +
     `   KY_YMKIYK KYLIST_YMKIYK,` +
     `   KY_YMKIYE KYLIST_YMKIYE,` +
+    `   CASE WHEN KY_KBJYOT='4' AND KY_KBCYUS='04' THEN '継続待ち'` +
+    `        WHEN KY_KBJYOT='4' AND KY_KBCYUS<>'04' THEN '継続なし'` +
+    `        WHEN KY_KBJYOT='5' AND KY_KBCYUS IN ('00','01') THEN '自動待ち'` +
+    `        WHEN KY_KBJYOT='5' AND KY_KBCYUS NOT IN ('00','01') THEN '自動なし'` +
+    `        ELSE TRIM(J.GY_NMBNSY) END KYLIST_TXJYOT,` +
     `   KY_KBJYOT KYLIST_KBJYOT,` +
+    `   KY_KBCYUS KYLIST_KBCYUS,` +
     `   KY_KBMSKM KYLIST_KBMSKM,` +
     `   KY_KBKIZK KYLIST_KBKIZK,` +
     `   KY_KBKSYB KYLIST_KBKSYB,` +
     `   KY_KBTKBT KYLIST_KBTKBT,` +
     `   KS_ZNURKK KSLIST_ZNURKK` +
-    ` FROM CC_CSTM SQ,CC_CSTM SH,CC_KIYK,CC_KYSM` +
+    ` FROM CC_CSTM SQ,CC_CSTM SH,CC_KIYK,CC_KYSM,(SELECT * FROM CC_GYCM WHERE GY_CDBNRI='KBJYOT') J` +
     ` WHERE KY_CDSQSK=SQ.CT_CDCSTM` +
-    `  AND KY_CDSHSK=SH.CT_CDCSTM` +
-    `  AND KY_NOKIYK=KS_NOKIYK`
+    `   AND KY_CDSHSK=SH.CT_CDCSTM` +
+    `   AND KY_NOKIYK=KS_NOKIYK` +
+    `   AND KY_KBJYOT=GY_CDBNSY(+)`
 
   switch (req.params.columnName.toUpperCase()) {
     case 'KY_CDSQSK_CDSHSK':

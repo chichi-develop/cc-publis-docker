@@ -164,10 +164,10 @@ const CstmList: React.FC<Props> = ({ cstms, cstm, switchCstm, gycms }) => {
 
   const filteredCstm = useMemo(() => {
     // cnst filteredMdmm = (() => {
-    let tmpCstms = cstms;
+    // let tmpCstms = cstms;
     // 入力した文字は小文字にする
     const filterTxactv: string | undefined = filterQuery.CT_ADCST1;
-    tmpCstms = tmpCstms.filter((row) => {
+    let tmpCstms = cstms.filter((row) => {
       // フィルタ
       if (
         filterQuery.CT_ADCST1 &&

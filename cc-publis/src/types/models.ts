@@ -223,7 +223,9 @@ export type KiykList = {
   KYLIST_SUKIYK: number;
   KYLIST_YMKIYK: string;
   KYLIST_YMKIYE: string;
+  KYLIST_TXJYOT: string;
   KYLIST_KBJYOT: string;
+  KYLIST_KBCYUS: string;
   KYLIST_KBMSKM: string;
   KYLIST_KBKIZK: string;
   KYLIST_KBKSYB: string;

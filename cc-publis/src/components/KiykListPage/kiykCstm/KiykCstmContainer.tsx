@@ -25,7 +25,7 @@ const KiykCstmContainer: React.FC = () => {
   );
 
   const getGycmStart = useCallback(() => dispatch(Actions.getGycmStart()), [
-    dispatch
+    dispatch,
   ]);
 
   let kiyk = publisState.kiyk as Kiyk;
@@ -58,15 +58,24 @@ const KiykCstmContainer: React.FC = () => {
 
   return (
     <div className="kiykCstm-body">
-      {showListKiyk && showListKiykCstm && setGycm && (
-        <>
-          <p className="frame-title">契約顧客マスタ</p>
-          <div className="kiykCstm-frame">
-            <KiykCstmDetail cstm={sqsk} gycms={gycms} prefix="請求先" />
-            <KiykCstmDetail cstm={shsk} gycms={gycms} prefix="送本先" />
-          </div>
-        </>
-      )}
+      {showListKiyk &&
+        showListKiykCstm &&
+        setGycm &&
+        kiyk.KY_CDSQSK &&
+        sqsk.CT_CDCSTM &&
+        shsk.CT_CDCSTM &&
+        (kiyk.KY_CDSQSK === sqsk.CT_CDCSTM ||
+          kiyk.KY_CDSHSK === shsk.CT_CDCSTM ||
+          kiyk.KY_CDSHSK === sqsk.CT_CDCSTM ||
+          kiyk.KY_CDSQSK === shsk.CT_CDCSTM) && (
+          <>
+            <p className="frame-title">契約顧客マスタ</p>
+            <div className="kiykCstm-frame">
+              <KiykCstmDetail cstm={sqsk} gycms={gycms} prefix="請求先" />
+              <KiykCstmDetail cstm={shsk} gycms={gycms} prefix="送本先" />
+            </div>
+          </>
+        )}
     </div>
   );
 };
@@ -78,7 +87,7 @@ const KiykCstmDetail: React.FC<Props> = ({ cstm, gycms, prefix }) => {
   }, []);
 
   const gycmConv = (cdbnri: string, cdbnsy: string) =>
-    gycms.filter(r => r.GY_CDBNRI === cdbnri && r.GY_CDBNSY === cdbnsy)[0]
+    gycms.filter((r) => r.GY_CDBNRI === cdbnri && r.GY_CDBNSY === cdbnsy)[0]
       .GY_NMBNSY;
 
   return (
@@ -96,7 +105,7 @@ const KiykCstmDetail: React.FC<Props> = ({ cstm, gycms, prefix }) => {
               readOnly={true}
               defaultValue={cstm.CT_CDCSTM.replace("/s+$/g", "")}
               style={{ height: "30px", width: "90%" }}
-              onFocus={e => e.currentTarget.select()}
+              onFocus={(e) => e.currentTarget.select()}
             />
           </div>
 
@@ -107,10 +116,10 @@ const KiykCstmDetail: React.FC<Props> = ({ cstm, gycms, prefix }) => {
               readOnly={true}
               defaultValue={[
                 cstm.CT_KBCSTM.replace(/\s+$/g, ""),
-                gycmConv("KBCSTM", cstm.CT_KBCSTM.replace(/\s+$/g, ""))
+                gycmConv("KBCSTM", cstm.CT_KBCSTM.replace(/\s+$/g, "")),
               ].join(": ")}
               style={{ height: "30px", width: "90%" }}
-              onFocus={e => e.currentTarget.select()}
+              onFocus={(e) => e.currentTarget.select()}
             />
           </div>
         </div>
@@ -125,9 +134,9 @@ const KiykCstmDetail: React.FC<Props> = ({ cstm, gycms, prefix }) => {
               cstm.CT_NMTNBU.replace(/\s+$/g, ""),
               cstm.CT_NMSIME !== cstm.CT_NMCSTM
                 ? cstm.CT_NMSIME.replace(/\s+$/g, "")
-                : ""
+                : "",
             ].join("\n")}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
         </div>
 
@@ -155,9 +164,9 @@ const KiykCstmDetail: React.FC<Props> = ({ cstm, gycms, prefix }) => {
             defaultValue={[
               cstm.CT_ADCST1.replace(/\s+$/g, ""),
               cstm.CT_ADCST2.replace(/\s+$/g, ""),
-              cstm.CT_ADCST3.replace(/\s+$/g, "")
+              cstm.CT_ADCST3.replace(/\s+$/g, ""),
             ].join("\n")}
-            onFocus={e => e.currentTarget.select()}
+            onFocus={(e) => e.currentTarget.select()}
           />
         </div>
 
@@ -169,7 +178,7 @@ const KiykCstmDetail: React.FC<Props> = ({ cstm, gycms, prefix }) => {
               readOnly={true}
               defaultValue={cstm.CT_NOTEL1.replace(/\s+$/g, "")}
               style={{ height: "30px", width: "90%" }}
-              onFocus={e => e.currentTarget.select()}
+              onFocus={(e) => e.currentTarget.select()}
             />
           </div>
 
@@ -180,7 +189,7 @@ const KiykCstmDetail: React.FC<Props> = ({ cstm, gycms, prefix }) => {
               readOnly={true}
               defaultValue={cstm.CT_NOTEL2.replace(/\s+$/g, "")}
               style={{ height: "30px", width: "90%" }}
-              onFocus={e => e.currentTarget.select()}
+              onFocus={(e) => e.currentTarget.select()}
             />
           </div>
 
@@ -208,7 +217,7 @@ const KiykCstmDetail: React.FC<Props> = ({ cstm, gycms, prefix }) => {
                   : ""
               }
               style={{ height: "30px", width: "90%" }}
-              onFocus={e => e.currentTarget.select()}
+              onFocus={(e) => e.currentTarget.select()}
             />
           </div>
         </div>
@@ -221,7 +230,7 @@ const KiykCstmDetail: React.FC<Props> = ({ cstm, gycms, prefix }) => {
               readOnly={true}
               defaultValue={cstm.CT_TXBIKO.replace(/\s+$/g, "")}
               style={{ height: "30px" }}
-              onFocus={e => e.currentTarget.select()}
+              onFocus={(e) => e.currentTarget.select()}
             />
           </div>
         )}

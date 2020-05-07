@@ -1,4 +1,10 @@
-import React, { useEffect, useState, useMemo, useCallback } from "react";
+import React, {
+  useEffect,
+  useState,
+  useMemo,
+  useCallback,
+  useReducer,
+} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Actions } from "../../../store/actions";
 import { StoreState } from "../../../store";
@@ -11,19 +17,20 @@ import _ from "lodash";
 
 import {
   ArrowDropUp as ArrowDropUpIcon,
-  ArrowDropDown as ArrowDropDownIcon
+  ArrowDropDown as ArrowDropDownIcon,
 } from "@material-ui/icons";
 
-import { KiykLists, KiykList, Kiyk, Kiyks, Gycms } from "../../../types/models";
+import { KiykLists, KiykList, Kiyk } from "../../../types/models";
+// import { KiykLists, KiykList, Kiyk, Kiyks, Gycms } from "../../../types/models";
 
 import "./KiykListContainer.css";
 
 type Props = {
   kiykLists: KiykLists;
   kiyk: Kiyk;
-  kiyks: Kiyks;
+  // kiyks: Kiyks;
   switchKiyk: typeof Actions.switchKiyk;
-  gycms: Gycms;
+  // gycms: Gycms;
 };
 
 const KiykListContainer: React.FC = () => {
@@ -48,23 +55,23 @@ const KiykListContainer: React.FC = () => {
     [dispatch]
   );
 
-  const getGycmStart = useCallback(() => dispatch(Actions.getGycmStart()), [
-    dispatch
-  ]);
+  // const getGycmStart = useCallback(() => dispatch(Actions.getGycmStart()), [
+  //   dispatch,
+  // ]);
 
   let kiyk = publisState.kiyk as Kiyk;
   let kiykLists = publisState.kiykLists;
-  let kiyks = publisState.kiyks;
+  // let kiyks = publisState.kiyks;
   // let showListCstm = publisState.showListCstm;
   let showListKiyk = publisState.showListKiyk;
-  let gycms = publisState.gycms;
-  let setGycm = publisState.setGycm;
+  // let gycms = publisState.gycms;
+  // let setGycm = publisState.setGycm;
   let isLoading = publisState.isLoading;
-  let isLoadingKiyk = publisState.isLoadingKiyk;
-  let isLoadingKiykCstm = publisState.isLoadingKiykCstm;
-  let isLoadingKyzd = publisState.isLoadingKyzd;
-  let showListKiykCstm = publisState.showListKiykCstm;
-  let showListKyzd = publisState.showListKyzd;
+  // let isLoadingKiyk = publisState.isLoadingKiyk;
+  // let isLoadingKiykCstm = publisState.isLoadingKiykCstm;
+  // let isLoadingKyzd = publisState.isLoadingKyzd;
+  // let showListKiykCstm = publisState.showListKiykCstm;
+  // let showListKyzd = publisState.showListKyzd;
 
   useEffect(() => {
     console.log("KiykListContainer render!");
@@ -77,42 +84,41 @@ const KiykListContainer: React.FC = () => {
     }
   }, [columnName, key, kiykSearch]);
 
-  useEffect(() => {
-    if (!setGycm && showListKiyk) {
-      getGycmStart();
-    }
-  }, [showListKiyk, setGycm, getGycmStart]);
+  // useEffect(() => {
+  //   if (!setGycm && showListKiyk) {
+  //     getGycmStart();
+  //   }
+  // }, [showListKiyk, setGycm, getGycmStart]);
 
   return (
     <div className="kiykList-body">
-      {isLoading && !showListKiyk && !showListKiykCstm && !showListKyzd && (
+      {/* {isLoading && !showListKiyk && !showListKiykCstm && !showListKyzd && ( */}
+      {!showListKiyk && (
         <>
           <div className="common-loadingSpinner">
             <LoadingSpinner />
           </div>
         </>
       )}
-      {!isLoading &&
-        showListKiyk &&
-        showListKiykCstm &&
-        showListKyzd &&
-        !isLoadingKiykCstm &&
-        !isLoadingKyzd &&
-        !isLoadingKiyk &&
-        setGycm && (
-          <>
-            <div className="kiykList-menu">
-              <p className="frame-title">契約一覧</p>
-            </div>
-            <KiykListTable
-              kiykLists={kiykLists}
-              kiyk={kiyk}
-              kiyks={kiyks}
-              switchKiyk={switchKiyk}
-              gycms={gycms}
-            />
-          </>
-        )}
+      {showListKiyk && (
+        // {!isLoading && showListKiyk && showListKiykCstm && showListKyzd && (
+        // !isLoadingKiykCstm && (
+        // !isLoadingKyzd &&
+        // !isLoadingKiyk && (
+        // setGycm && (
+        <>
+          <div className="kiykList-menu">
+            <p className="frame-title">契約一覧</p>
+          </div>
+          <KiykListTable
+            kiykLists={kiykLists}
+            kiyk={kiyk}
+            // kiyks={kiyks}
+            switchKiyk={switchKiyk}
+            // gycms={gycms}
+          />
+        </>
+      )}
       {!isLoading && !showListKiyk && (
         <div className="kiykList-noData">
           <p>契約はありません。（{key}）</p>
@@ -131,14 +137,14 @@ const KiykListContainer: React.FC = () => {
 const KiykListTable: React.FC<Props> = ({
   kiykLists,
   kiyk,
-  kiyks,
+  // kiyks,
   switchKiyk,
-  gycms
+  // gycms,
 }) => {
   let history = useHistory();
 
   type Key = {
-    kylist_kbjyot_key: string;
+    kylist_txjyot_key: string;
   };
 
   type FilterQuery = Key & Partial<KiykList>;
@@ -152,27 +158,27 @@ const KiykListTable: React.FC<Props> = ({
   const pageLimit = 100;
 
   const initialState = {
-    kylist_kbjyot: [],
-    kylist_kbjyot_key: "",
+    kylist_txjyot: [],
+    kylist_txjyot_key: "",
     sort: {
       key: "KYLIST_NOKIYK",
       order: 0,
-      icon: <span />
+      icon: <span />,
     },
     filterQuery: {
-      kylist_kbjyot_key: ""
+      kylist_txjyot_key: "",
     },
     paginateParam: {
       offset: 0,
       currentPage: 1,
       totalRecords: kiykLists.length,
       totalPage: Math.ceil(kiykLists.length / pageLimit),
-      showPageStart: 0
-    }
+      showPageStart: 0,
+    },
   };
 
-  const [ky_kbjyots, setKbkiyks] = useState<string[]>(
-    initialState.kylist_kbjyot
+  const [ky_txjyots, setTxjyots] = useState<string[]>(
+    initialState.kylist_txjyot
   );
 
   // フィルタ
@@ -188,22 +194,136 @@ const KiykListTable: React.FC<Props> = ({
     initialState.paginateParam
   );
 
+  // reducer
+  type State = {
+    sortParam: {
+      key: string;
+      order: number;
+      icon?: JSX.Element;
+    };
+    textFilterParam: {
+      key: string;
+      textKey: string;
+    }[];
+    selectFilterParam: {
+      key: string;
+      selectList: string[];
+      selectKey: string;
+    }[];
+    paginateParam: {
+      offset: number;
+      currentPage: number;
+      totalRecords: number;
+      totalPage: number;
+      showPageStart: number;
+    };
+  };
+
+  type Action =
+    | {
+        type: "handleSort";
+        key: string;
+        order: number;
+      }
+    | {
+        type: "handleTextFilter";
+        key: string;
+        textKey: string;
+      }
+    | {
+        type: "initSelectFilter";
+        key: string;
+        selectList: string[];
+      }
+    | {
+        type: "handleSelectFilter";
+        key: string;
+        textKey: string;
+      }
+    | {
+        type: "handlePaginate";
+        page: number;
+      };
+
+  const reducer = (state: State, action: Action) => {
+    switch (action.type) {
+      case "handleSort":
+        return {
+          ...state,
+          sortParam: {
+            key: action.key,
+            order: -state.sortParam.order,
+            icon:
+              -state.sortParam.order === 1 ? (
+                <ArrowDropUpIcon />
+              ) : (
+                <ArrowDropDownIcon />
+              ),
+          },
+        };
+      case "handleTextFilter": {
+        const current =
+          state.textFilterParam.findIndex((obj) => {
+            return obj.key === action.key;
+          }) || state.textFilterParam.length;
+        return {
+          ...state,
+          textFilterParam: {
+            ...state.textFilterParam,
+            [state.textFilterParam.findIndex((obj) => {
+              return obj.key === action.key;
+            })]: {
+              key: action.key,
+              textKey: action.textKey,
+            },
+          },
+        };
+      }
+      case "initSelectFilter": {
+        const current =
+          state.selectFilterParam.findIndex((obj) => {
+            return obj.key === action.key;
+          }) || state.selectFilterParam.length;
+        return {
+          ...state,
+          selectFilterParam: {
+            selectList: action.selectList,
+          },
+        };
+      }
+      default: {
+        throw new Error();
+      }
+    }
+  };
+
+  // const [state, dispatch] = useReducer(reducer, { flag: false });
+
+  // 初期処理フラグ(契約詳細から戻った際に元のページに戻すために使用)
+  const [initialFlag, setInitialFlag] = useState(true);
+
   useEffect(() => {
+    // ここで初期処理フラグを立てて、filteredKiykの中で 初期処理でfindIndex(nokiykが0でない場合のみ、ページ設定を制御し、終わったら初期処理フラグをfalseにしたらできないか
+    setInitialFlag(true);
     console.log("KiykListTable render!");
+    // console.log(`initialFlag:${initialFlag}`);
     return () => console.log("unmounting...");
   }, []);
 
   useEffect(() => {
-    setKbkiyks(_.uniq(_.map(kiykLists, "KYLIST_KBJYOT"))); // TODO: 要検討、select絞り込み
-    setFilterQuery({ kylist_kbjyot_key: "" });
+    setTxjyots(_.uniq(_.map(kiykLists, "KYLIST_TXJYOT"))); // TODO: 要検討、select絞り込み
+    setFilterQuery({ kylist_txjyot_key: "" });
     setSort({ key: "KYLIST_NOKIyk", order: -1, icon: <span /> });
   }, [kiykLists]);
 
   const filteredKiyk = useMemo(() => {
+    console.log("filteredKiyk set!");
+    console.log(`filteredKiyk: initialFlag:${initialFlag}`);
+
     let tmpKiyks = kiykLists;
     // 入力した文字は小文字にする
     const filterTxactv: string | undefined = filterQuery.KYLIST_SH_NMCSTM;
-    tmpKiyks = tmpKiyks.filter(row => {
+    tmpKiyks = tmpKiyks.filter((row) => {
       // フィルタ
       if (
         filterQuery.KYLIST_SH_NMCSTM &&
@@ -216,10 +336,8 @@ const KiykListTable: React.FC<Props> = ({
 
       // フィルタ
       if (
-        filterQuery.kylist_kbjyot_key &&
-        // row.md_nmmmbr !== parseInt(filterQuery.md_nmmmbr_key)
-        // row.md_nmmmbr !== md_nmmmbrs[parseInt(filterQuery.md_nmmmbr_key)].title
-        row.KYLIST_KBJYOT !== filterQuery.kylist_kbjyot_key
+        filterQuery.kylist_txjyot_key &&
+        row.KYLIST_TXJYOT !== filterQuery.kylist_txjyot_key
       ) {
         return false;
       }
@@ -236,16 +354,46 @@ const KiykListTable: React.FC<Props> = ({
       });
     }
 
-    setPaginateParam({
-      offset: 0,
-      currentPage: 1,
-      totalRecords: tmpKiyks.length,
-      totalPage: Math.ceil(tmpKiyks.length / pageLimit),
-      showPageStart: 0
-    });
+    if (
+      initialFlag &&
+      tmpKiyks.findIndex((obj) => {
+        return obj.KYLIST_NOKIYK === kiyk.KY_NOKIYK;
+      }) !== 0
+    ) {
+      console.log("filteredKiyk: true & nokiyk index is not 0");
+      setPaginateParam({
+        offset:
+          (Math.ceil(
+            tmpKiyks.findIndex((obj) => {
+              return obj.KYLIST_NOKIYK === kiyk.KY_NOKIYK;
+            }) / pageLimit
+          ) -
+            1) *
+          pageLimit,
+        currentPage: Math.ceil(
+          tmpKiyks.findIndex((obj) => {
+            return obj.KYLIST_NOKIYK === kiyk.KY_NOKIYK;
+          }) / pageLimit
+        ),
+        totalRecords: tmpKiyks.length,
+        totalPage: Math.ceil(tmpKiyks.length / pageLimit),
+        showPageStart: 0,
+      });
+    } else {
+      console.log("filteredKiyk: false or nokiyk index is 0");
+      setPaginateParam({
+        offset: 0,
+        currentPage: 1,
+        totalRecords: tmpKiyks.length,
+        totalPage: Math.ceil(tmpKiyks.length / pageLimit),
+        showPageStart: 0,
+      });
+    }
 
+    setInitialFlag(false);
     return tmpKiyks;
   }, [filterQuery, sort, kiykLists]);
+  // }, [filterQuery, sort, kiykLists]);
 
   // フィルタ
   const handleFilter = (
@@ -261,13 +409,13 @@ const KiykListTable: React.FC<Props> = ({
       setSort({
         ...sort,
         order: -sort.order,
-        icon: -sort.order === 1 ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />
+        icon: -sort.order === 1 ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />,
       });
     } else {
       setSort({
         key: column,
         order: 1,
-        icon: <ArrowDropUpIcon />
+        icon: <ArrowDropUpIcon />,
       });
     }
   };
@@ -286,16 +434,74 @@ const KiykListTable: React.FC<Props> = ({
       ...paginateParam,
       offset: (page - 1) * pageLimit,
       currentPage: page,
-      showPageStart: start
+      showPageStart: start,
     });
   };
 
-  const gycmConv = (cdbnri: string, cdbnsy: string) =>
-    gycms.filter(r => r.GY_CDBNRI === cdbnri && r.GY_CDBNSY === cdbnsy)[0]
-      .GY_NMBNSY;
+  // const gycmConv = (cdbnri: string, cdbnsy: string) =>
+  //   gycms.filter((r) => r.GY_CDBNRI === cdbnri && r.GY_CDBNSY === cdbnsy)[0]
+  //     .GY_NMBNSY;
+
+  // const Paginate = () => {
+  // const Paginate = useMemo(() => {
+  // return (
+  //   <>
+  //     {paginateParam.totalPage !== 1 && (
+  //       <div className="kiykList-pagination">
+  //         {paginateParam.currentPage !== 1 && (
+  //           <span onClick={() => handlePage(1)}>先頭へ</span>
+  //         )}
+  //         {paginateParam.currentPage !== 1 &&
+  //           paginateParam.currentPage !== 2 && (
+  //             <span onClick={() => handlePage(paginateParam.currentPage - 1)}>
+  //               ＜
+  //             </span>
+  //           )}
+  //         <ul className="kiykList-pagination-ul">
+  //           {[...Array(paginateParam.totalPage)]
+  //             .slice(
+  //               paginateParam.showPageStart,
+  //               paginateParam.showPageStart + 10
+  //             )
+  //             .map((_, i) => {
+  //               i++;
+  //               let page = i + paginateParam.showPageStart;
+  //               return (
+  //                 <li
+  //                   className={classNames("kiykList-pagination-list", {
+  //                     "kiykList-pagination-active":
+  //                       page === paginateParam.currentPage,
+  //                   })}
+  //                   key={page}
+  //                   onClick={() => handlePage(page)}
+  //                 >
+  //                   {page}
+  //                 </li>
+  //               );
+  //             })}
+  //         </ul>
+  //         {paginateParam.currentPage !== paginateParam.totalPage &&
+  //           paginateParam.currentPage !== paginateParam.totalPage - 1 && (
+  //             <span onClick={() => handlePage(paginateParam.currentPage + 1)}>
+  //               ＞
+  //             </span>
+  //           )}
+  //         {paginateParam.currentPage !== paginateParam.totalPage && (
+  //           <span onClick={() => handlePage(paginateParam.totalPage)}>
+  //             最後へ
+  //           </span>
+  //         )}
+  //       </div>
+  //     )}
+  //   </>
+  // );
+  // }, [paginateParam]);
+  // };
 
   return (
     <>
+      {/* {Paginate()} */}
+      {/* {Paginate} */}
       {paginateParam.totalPage !== 1 && (
         <div className="kiykList-pagination">
           {paginateParam.currentPage !== 1 && (
@@ -320,7 +526,7 @@ const KiykListTable: React.FC<Props> = ({
                   <li
                     className={classNames("kiykList-pagination-list", {
                       "kiykList-pagination-active":
-                        page === paginateParam.currentPage
+                        page === paginateParam.currentPage,
                     })}
                     key={page}
                     onClick={() => handlePage(page)}
@@ -427,11 +633,11 @@ const KiykListTable: React.FC<Props> = ({
               </th> */}
               <th
                 rowSpan={1}
-                onClick={() => handleSort("KYLIST_KBJYOT")}
-                className="kylist-kylist_kbjyot-th"
+                onClick={() => handleSort("KYLIST_TXJYOT")}
+                className="kylist-kylist_txjyot-th"
               >
                 <p className="pointer">
-                  状態{sort.key === "KYLIST_KBJYOT" ? sort.icon : <span />}
+                  状態{sort.key === "KYLIST_TXJYOT" ? sort.icon : <span />}
                 </p>
               </th>
               {/* <th rowSpan={2}>
@@ -454,6 +660,7 @@ const KiykListTable: React.FC<Props> = ({
               <th>
                 <input
                   type="text"
+                  className="kylist-kylist_sh_nmcstm-th-input"
                   name="KYLIST_SH_NMCSTM"
                   placeholder="絞り込み検索"
                   value={filterQuery.KYLIST_SH_NMCSTM || ""}
@@ -463,15 +670,17 @@ const KiykListTable: React.FC<Props> = ({
               </th>
               <th>
                 <select
-                  name="kylist_kbjyot_key"
-                  value={filterQuery.kylist_kbjyot_key}
+                  className="kylist-kylist_txjyot-th-select"
+                  name="kylist_txjyot_key"
+                  value={filterQuery.kylist_txjyot_key}
                   onChange={handleFilter}
                 >
                   <option value="">選択</option>
-                  {ky_kbjyots.map((item: string) => {
+                  {ky_txjyots.map((item: string) => {
                     return (
                       <option key={item} value={item}>
-                        {gycmConv("KBJYOT", item)}
+                        {/* {gycmConv("KBJYOT", item)} */}
+                        {item}
                       </option>
                     );
                   })}
@@ -493,13 +702,24 @@ const KiykListTable: React.FC<Props> = ({
                       switch (true) {
                         case row.KYLIST_NOKIYK === kiyk.KY_NOKIYK:
                           return { background: "#d9efff" };
+                        case row.KYLIST_KBJYOT === "1":
+                          return { background: "#FFFFE3" };
                         case row.KYLIST_KBJYOT === "3":
-                          return { background: "#ededed" };
+                          return { background: "#c5c5c5" };
+                        case row.KYLIST_KBJYOT === "4" &&
+                          row.KYLIST_KBCYUS === "04":
+                          return { background: "#e3fce3" };
                         case row.KYLIST_KBJYOT === "4":
-                          return { background: "#ededed" };
+                          return { background: "#c5c5c5" };
+                        case row.KYLIST_KBJYOT === "5" &&
+                          (row.KYLIST_KBCYUS === "00" ||
+                            row.KYLIST_KBCYUS === "01"):
+                          return { background: "#e3fce3" };
                         case row.KYLIST_KBJYOT === "5":
-                          return { background: "#ededed" };
+                          return { background: "#c5c5c5" };
                         case row.KYLIST_KBJYOT === "8":
+                          return { background: "#ffe4e1" };
+                        case row.KYLIST_KBJYOT === "9":
                           return { background: "#ffe4e1" };
                         default:
                       }
@@ -522,6 +742,7 @@ const KiykListTable: React.FC<Props> = ({
                         type="button"
                         onClick={() => {
                           switchKiyk(row.KYLIST_NOKIYK.toString());
+                          history.push("/kiyk-list");
                           history.push(
                             `/kiyk-detail?&nokiyk=${row.KYLIST_NOKIYK}`
                           );
@@ -554,8 +775,9 @@ const KiykListTable: React.FC<Props> = ({
                     <td className="kylist-kylist_ymkiyk-td">
                       {row.KYLIST_YMKIYK}
                     </td>
-                    <td className="kylist-kylist_kbjyot-td">
-                      {gycmConv("KBJYOT", row.KYLIST_KBJYOT)}
+                    <td className="kylist-kylist_txjyot-td">
+                      {/* {gycmConv("KBJYOT", row.KYLIST_KBJYOT)} */}
+                      {row.KYLIST_TXJYOT}
                     </td>
                     <td className="kylist-kylist_znurkk-td">
                       {row.KSLIST_ZNURKK}

@@ -1,6 +1,6 @@
-import { call, put, takeLatest, takeEvery } from 'redux-saga/effects';
-import Types from '../../store/publis/types'
-import { Actions } from '../../store/actions';
+import { call, put, takeLatest, takeEvery } from "redux-saga/effects";
+import Types from "../../store/publis/types";
+import { Actions } from "../../store/actions";
 import {
   getCstmFactory,
   deleteCstmFactory,
@@ -12,7 +12,7 @@ import {
   getKyzdFactory,
   getKyzhFactory,
   getGycmFactory,
-} from './publisApi';
+} from "./publisApi";
 
 import { Kiyk, KiykList } from "../../types/models";
 
@@ -24,12 +24,16 @@ function* runGetCstm(action: ReturnType<typeof Actions.getCstmStart>) {
     const persistPublis = localStorage.getItem("persist:publis");
     if (persistPublis) {
       var { searchHistory } = JSON.parse(persistPublis);
-      searchHistory = searchHistory.replace('[', '').replace(']', '').replace(/"/g, '').split(',')
+      searchHistory = searchHistory
+        .replace("[", "")
+        .replace("]", "")
+        .replace(/"/g, "")
+        .split(",");
     }
     if (searchHistory) {
-      searchHistory = [key].concat(searchHistory).slice(0, 30)
+      searchHistory = [key].concat(searchHistory).slice(0, 30);
     } else {
-      searchHistory = [key]
+      searchHistory = [key];
     }
 
     yield put({
@@ -41,7 +45,7 @@ function* runGetCstm(action: ReturnType<typeof Actions.getCstmStart>) {
       },
     });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     yield put({ type: Types.getCstmFail, payload: { error } });
   }
 }
@@ -80,10 +84,10 @@ function* runEditCstm(action: ReturnType<typeof Actions.editCstmStart>) {
   try {
     // TODO: TS データかエラーが返ってくる場合にはどう型を付けるべきか
     const cstms = yield call(editCstmFactory, cdcstm, cstm);
-    console.log(cstms)
+    console.log(cstms);
     yield put({
       type: Types.editCstmSucceed,
-      payload: { cstm: cstms.cstms[0] },
+      payload: { cstm: cstms[0] },
     });
   } catch (error) {
     yield put({
@@ -123,7 +127,7 @@ function* runGetCsmm(action: ReturnType<typeof Actions.getCsmmStart>) {
   try {
     // TODO: TS データかエラーが返ってくる場合にはどう型を付けるべきか
     const csmms = yield call(getCsmmFactory, cdcstm);
-    console.log('getCsmm OK!!!');
+    console.log("getCsmm OK!!!");
     console.log(csmms);
 
     yield put({
@@ -141,14 +145,12 @@ export function* watchGetCsmm() {
   yield takeLatest(Types.getCsmmStart, runGetCsmm);
 }
 
-
-
 function* runGetCtzh(action: ReturnType<typeof Actions.getCtzhStart>) {
   const { cdcstm } = action.payload;
   try {
     // TODO: TS データかエラーが返ってくる場合にはどう型を付けるべきか
     const ctzhs = yield call(getCtzhFactory, cdcstm);
-    console.log('getCtzh OK!!!');
+    console.log("getCtzh OK!!!");
     console.log(ctzhs);
 
     yield put({
@@ -171,7 +173,7 @@ function* runGetKiyk(action: ReturnType<typeof Actions.getKiykStart>) {
   try {
     // TODO: TS データかエラーが返ってくる場合にはどう型を付けるべきか
     const ret = yield call(getKiykFactory, columnName, key);
-    console.log('getKiyk OK!!!');
+    console.log("getKiyk OK!!!");
     console.log(`columnName:${columnName}`);
     console.log(`key:${key}`);
     console.log(ret);
@@ -181,9 +183,9 @@ function* runGetKiyk(action: ReturnType<typeof Actions.getKiykStart>) {
     kiyks.map((obj: Kiyk & KiykList, index: number) =>
       Object.keys(obj).map((k) => {
         if (k.slice(2, 7) === "LIST_") {
-          delete kiyks[index][k]
+          delete kiyks[index][k];
         }
-        return true
+        return true;
       })
     );
 
@@ -192,9 +194,9 @@ function* runGetKiyk(action: ReturnType<typeof Actions.getKiykStart>) {
     kiykLists.map((obj: Kiyk & KiykList, index: number) =>
       Object.keys(obj).map((k) => {
         if (k.slice(2, 7) !== "LIST_") {
-          delete kiykLists[index][k]
+          delete kiykLists[index][k];
         }
-        return true
+        return true;
       })
     );
 
@@ -215,25 +217,24 @@ export function* watchGetKiyk() {
   yield takeLatest(Types.getKiykStart, runGetKiyk);
 }
 
-
 function* runGetKiykCstm(action: ReturnType<typeof Actions.getKiykCstmStart>) {
   const { cdsqsk, cdshsk } = action.payload;
   try {
     // TODO: TS データかエラーが返ってくる場合にはどう型を付けるべきか
     // const sqsks = yield call(getCstmFactory, 'ct_cdcstm', cdsqsk);
     // const shsks = yield call(getCstmFactory, 'ct_cdcstm', cdshsk);
-    var sqsks, shsks
+    var sqsks, shsks;
     Promise.all([
-      sqsks = yield call(getCstmFactory, 'ct_cdcstm', cdsqsk),
-      shsks = yield call(getCstmFactory, 'ct_cdcstm', cdshsk)
-    ]).then()
-    console.log('getKiykCstm OK!!!');
+      (sqsks = yield call(getCstmFactory, "ct_cdcstm", cdsqsk)),
+      (shsks = yield call(getCstmFactory, "ct_cdcstm", cdshsk)),
+    ]).then();
+    console.log("getKiykCstm OK!!!");
 
     yield put({
       type: Types.getKiykCstmSucceed,
       payload: {
-        sqsk: sqsks.cstms[0],
-        shsk: shsks.cstms[0],
+        sqsk: sqsks[0],
+        shsk: shsks[0],
       },
     });
   } catch (error) {
@@ -250,7 +251,7 @@ function* runGetKyzd(action: ReturnType<typeof Actions.getKyzdStart>) {
   try {
     // TODO: TS データかエラーが返ってくる場合にはどう型を付けるべきか
     const kyzd = yield call(getKyzdFactory, nokiyk);
-    console.log('getKyzd OK!!!');
+    console.log("getKyzd OK!!!");
     console.log(kyzd);
 
     yield put({
@@ -268,19 +269,18 @@ export function* watchGetKyzd() {
   yield takeLatest(Types.getKyzdStart, runGetKyzd);
 }
 
-
 function* runGetKyzh(action: ReturnType<typeof Actions.getKyzhStart>) {
   const { nokiyk } = action.payload;
   try {
     // TODO: TS データかエラーが返ってくる場合にはどう型を付けるべきか
     const kyzhs = yield call(getKyzhFactory, nokiyk);
-    console.log('getKyzh OK!!!');
+    console.log("getKyzh OK!!!");
     console.log(kyzhs);
 
     yield put({
       type: Types.getKyzhSucceed,
       payload: {
-        kyzhs
+        kyzhs,
       },
     });
   } catch (error) {
@@ -296,13 +296,13 @@ function* runGetGycm(action: ReturnType<typeof Actions.getGycmStart>) {
   try {
     // TODO: TS データかエラーが返ってくる場合にはどう型を付けるべきか
     const gycms = yield call(getGycmFactory);
-    console.log('getGycm OK!!!');
+    console.log("getGycm OK!!!");
     console.log(gycms);
 
     yield put({
       type: Types.getGycmSucceed,
       payload: {
-        ...gycms
+        ...gycms,
       },
     });
   } catch (error) {
