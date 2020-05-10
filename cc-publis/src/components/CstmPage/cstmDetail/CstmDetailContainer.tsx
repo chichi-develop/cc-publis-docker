@@ -326,9 +326,15 @@ const CstmDetail: React.FC<Props> = ({
     setEditMode(false);
   }, [cstm, reset]);
 
-  const gycmConv = (cdbnri: string, cdbnsy: string) =>
-    gycms.filter((r) => r.GY_CDBNRI === cdbnri && r.GY_CDBNSY === cdbnsy)[0]
-      .GY_NMBNSY;
+  const gycmConv = (cdbnri: string, cdbnsy: string) => {
+    if (cdbnsy.trim() === "") {
+      return " ";
+    } else {
+      return gycms.filter(
+        (r) => r.GY_CDBNRI === cdbnri && r.GY_CDBNSY === cdbnsy
+      )[0].GY_NMBNSY;
+    }
+  };
 
   const gycmOption = (cdbnri: string) =>
     gycms
@@ -411,7 +417,7 @@ const CstmDetail: React.FC<Props> = ({
             className={classNames(
               "cstmDetail-ctKbcstmInput",
               "cstmDetail-container-selectBox",
-              editModeSelectStyle()
+              editModeInputStyle(privilege.editPublisCstmFull)
             )}
             name="CT_KBCSTM"
             // ref={register}
@@ -435,11 +441,11 @@ const CstmDetail: React.FC<Props> = ({
           <input
             className={classNames(
               "cstmDetail-ctNmcstmInput",
-              editModeInputStyle()
+              editModeInputStyle(privilege.editPublisCstmFull)
             )}
             type="text"
             name="CT_NMCSTM"
-            readOnly={true}
+            readOnly={!editMode || !privilege.editPublisCstmFull}
             defaultValue={cstm.CT_NMCSTM.replace(/\s+$/g, "")}
             ref={register()}
             onFocus={(e) => e.currentTarget.select()}
@@ -448,7 +454,7 @@ const CstmDetail: React.FC<Props> = ({
           <input
             className={classNames(
               "cstmDetail-ctNkcstmInput",
-              editModeInputStyle()
+              editModeInputStyle(true)
             )}
             type="text"
             name="CT_NKCSTM"
@@ -480,11 +486,11 @@ const CstmDetail: React.FC<Props> = ({
           <input
             className={classNames(
               "cstmDetail-ctNmtntoInput",
-              editModeInputStyle()
+              editModeInputStyle(privilege.editPublisCstmFull)
             )}
             type="text"
             name="CT_NMTNTO"
-            readOnly={true}
+            readOnly={!editMode || !privilege.editPublisCstmFull}
             defaultValue={cstm.CT_NMTNTO.replace(/\s+$/g, "")}
             ref={register()}
             onFocus={(e) => e.currentTarget.select()}
@@ -496,11 +502,11 @@ const CstmDetail: React.FC<Props> = ({
           <input
             className={classNames(
               "cstmDetail-ctNmsimeInput",
-              editModeInputStyle()
+              editModeInputStyle(privilege.editPublisCstmFull)
             )}
             type="text"
             name="CT_NMSIME"
-            readOnly={true}
+            readOnly={!editMode || !privilege.editPublisCstmFull}
             defaultValue={cstm.CT_NMSIME.replace(/\s+$/g, "")}
             ref={register()}
             onFocus={(e) => e.currentTarget.select()}
@@ -509,7 +515,7 @@ const CstmDetail: React.FC<Props> = ({
           <input
             className={classNames(
               "cstmDetail-ctNksimeInput",
-              editModeInputStyle()
+              editModeInputStyle(true)
             )}
             type="text"
             name="CT_NKSIME"
@@ -638,11 +644,11 @@ const CstmDetail: React.FC<Props> = ({
           <input
             className={classNames(
               "cstmDetail-ctKbkgtiInput",
-              editModeInputStyle()
+              editModeInputStyle(privilege.editPublisCstmFull)
             )}
             type="text"
             name="CT_KBKGTI"
-            readOnly={true}
+            readOnly={!editMode || !privilege.editPublisCstmFull}
             defaultValue={cstm.CT_KBKGTI.replace(/\s+$/g, "")}
             ref={register()}
             onFocus={(e) => e.currentTarget.select()}
@@ -776,11 +782,11 @@ const CstmDetail: React.FC<Props> = ({
           <input
             className={classNames(
               "cstmDetail-ctTxbikoInput",
-              editModeInputStyle()
+              editModeInputStyle(privilege.editPublisCstmFull)
             )}
             type="text"
             name="CT_TXBIKO"
-            readOnly={true}
+            readOnly={!editMode || !privilege.editPublisCstmFull}
             defaultValue={cstm.CT_TXBIKO.replace(/\s+$/g, "")}
             ref={register()}
             onFocus={(e) => e.currentTarget.select()}
@@ -792,11 +798,11 @@ const CstmDetail: React.FC<Props> = ({
           <input
             className={classNames(
               "cstmDetail-ctTxsshrInput",
-              editModeInputStyle()
+              editModeInputStyle(privilege.editPublisCstmFull)
             )}
             type="text"
             name="CT_TXSSHR"
-            readOnly={true}
+            readOnly={!editMode || !privilege.editPublisCstmFull}
             defaultValue={cstm.CT_TXSSHR.replace(/\s+$/g, "")}
             ref={register()}
             onFocus={(e) => e.currentTarget.select()}
@@ -908,11 +914,11 @@ const CstmDetail: React.FC<Props> = ({
           <input
             className={classNames(
               "cstmDetail-ctCdbaitInput",
-              editModeInputStyle()
+              editModeInputStyle(privilege.editPublisCstmFull)
             )}
             type="text"
             name="CT_CDBAIT"
-            readOnly={true}
+            readOnly={!editMode || !privilege.editPublisCstmFull}
             defaultValue={cstm.CT_CDBAIT.replace(/\s+$/g, "")}
             ref={register()}
             onFocus={(e) => e.currentTarget.select()}
@@ -927,11 +933,11 @@ const CstmDetail: React.FC<Props> = ({
           <input
             className={classNames(
               "cstmDetail-ctCdsyksInput",
-              editModeInputStyle()
+              editModeInputStyle(privilege.editPublisCstmFull)
             )}
             type="text"
             name="CT_CDSYKS"
-            readOnly={true}
+            readOnly={!editMode || !privilege.editPublisCstmFull}
             defaultValue={cstm.CT_CDSYKS.replace(/\s+$/g, "")}
             ref={register()}
             onFocus={(e) => e.currentTarget.select()}
@@ -946,11 +952,11 @@ const CstmDetail: React.FC<Props> = ({
           <input
             className={classNames(
               "cstmDetail-ctCdsytnInput",
-              editModeInputStyle()
+              editModeInputStyle(privilege.editPublisCstmFull)
             )}
             type="text"
             name="CT_CDSYTN"
-            readOnly={true}
+            readOnly={!editMode || !privilege.editPublisCstmFull}
             defaultValue={cstm.CT_CDSYTN.replace(/\s+$/g, "")}
             ref={register()}
             onFocus={(e) => e.currentTarget.select()}
@@ -965,11 +971,11 @@ const CstmDetail: React.FC<Props> = ({
           <input
             className={classNames(
               "cstmDetail-ctCddokiInput",
-              editModeInputStyle()
+              editModeInputStyle(privilege.editPublisCstmFull)
             )}
             type="text"
             name="CT_CDDOKI"
-            readOnly={true}
+            readOnly={!editMode || !privilege.editPublisCstmFull}
             defaultValue={cstm.CT_CDDOKI.replace(/\s+$/g, "")}
             ref={register()}
             onFocus={(e) => e.currentTarget.select()}
@@ -984,11 +990,11 @@ const CstmDetail: React.FC<Props> = ({
           <input
             className={classNames(
               "cstmDetail-ctCtsoukInput",
-              editModeInputStyle()
+              editModeInputStyle(privilege.editPublisCstmFull)
             )}
             type="text"
             name="CT_CTSOUK"
-            readOnly={true}
+            readOnly={!editMode || !privilege.editPublisCstmFull}
             defaultValue={cstm.CT_CTSOUK.replace(/\s+$/g, "")}
             ref={register()}
             onFocus={(e) => e.currentTarget.select()}
@@ -1167,35 +1173,39 @@ const CstmDetail: React.FC<Props> = ({
           {/*
           {true && (
              */}
-          {isAuth && privilege.editPublisCstm && (
-            <div className="cstmDetail-buttonList">
-              {!editMode ? (
-                <button
-                  className="cstmDetail-container-button"
-                  type="button"
-                  onClick={handleEditMode}
-                >
-                  編集する
-                </button>
-              ) : (
-                <>
+          {isAuth &&
+            (privilege.editPublisCstm || privilege.editPublisCstmFull) && (
+              <div className="cstmDetail-buttonList">
+                {!editMode ? (
                   <button
                     className="cstmDetail-container-button"
                     type="button"
-                    onClick={() => {
-                      handleEditMode();
-                      reset();
-                    }}
+                    onClick={handleEditMode}
                   >
-                    キャンセル
+                    編集する
                   </button>
-                  <button className="cstmDetail-container-button" type="submit">
-                    更新
-                  </button>
-                </>
-              )}
-            </div>
-          )}
+                ) : (
+                  <>
+                    <button
+                      className="cstmDetail-container-button"
+                      type="button"
+                      onClick={() => {
+                        handleEditMode();
+                        reset();
+                      }}
+                    >
+                      キャンセル
+                    </button>
+                    <button
+                      className="cstmDetail-container-button"
+                      type="submit"
+                    >
+                      更新
+                    </button>
+                  </>
+                )}
+              </div>
+            )}
         </div>
       </form>
     </div>

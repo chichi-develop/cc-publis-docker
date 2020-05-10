@@ -120,25 +120,25 @@ export const reducer = (state = initialState(), action: Actions): State => {
       });
 
     case types.replaceCstm:
-      return {
-        ...state,
-        cstms: {
-          ...state.cstms,
-          [state.cstms.findIndex(
-            (v) => v.CT_CDCSTM === action.payload.cdcstm
-          )]: action.payload.cstm,
-        },
-      };
+      // return {
+      //   ...state,
+      //   cstms: {
+      //     ...state.cstms,
+      //     [state.cstms.findIndex(
+      //       (v) => v.CT_CDCSTM === action.payload.cdcstm
+      //     )]: action.payload.cstm,
+      //   },
+      // };
 
-    // return Object.assign({}, state, {
-    //   cstms: Object.assign(
-    //     [],
-    //     state.cstms,
-    //     (state.cstms[
-    //       state.cstms.findIndex((v) => v.CT_CDCSTM === action.payload.cdcstm)
-    //     ] = action.payload.cstm) // stateを変えてしまってる。改修対象。
-    //   ),
-    // });
+      return Object.assign({}, state, {
+        cstms: Object.assign(
+          [],
+          state.cstms,
+          (state.cstms[
+            state.cstms.findIndex((v) => v.CT_CDCSTM === action.payload.cdcstm)
+          ] = action.payload.cstm) // stateを変えてしまってる。改修対象。
+        ),
+      });
 
     case types.addCstmStart:
       return Object.assign({}, state, { isUpdating: true, error: {} });

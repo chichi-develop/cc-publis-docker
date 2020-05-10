@@ -311,9 +311,10 @@ export type Gycm = {
 export type Gycms = Gycm[];
 
 export type Privilege = {
-  viewPublis?: string;
-  editPublisCstm?: string;
-  editMdmm?: string;
+  viewPublis?: boolean;
+  editPublisCstm?: boolean;
+  editPublisCstmFull?: boolean;
+  editMdmm?: boolean;
 };
 
 export type CCLog = {
