@@ -713,7 +713,8 @@ const KiykListTable: React.FC<Props> = ({
                           return { background: "#c5c5c5" };
                         case row.KYLIST_KBJYOT === "5" &&
                           (row.KYLIST_KBCYUS === "00" ||
-                            row.KYLIST_KBCYUS === "01"):
+                            row.KYLIST_KBCYUS === "01" ||
+                            row.KYLIST_KBCYUS.slice(0, 1) === "C"):
                           return { background: "#e3fce3" };
                         case row.KYLIST_KBJYOT === "5":
                           return { background: "#c5c5c5" };

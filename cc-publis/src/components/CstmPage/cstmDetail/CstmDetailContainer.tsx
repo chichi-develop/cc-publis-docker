@@ -271,7 +271,8 @@ const CstmDetail: React.FC<Props> = ({
 
     let ret = await editCstmStart(
       cstm.CT_CDCSTM,
-      Object.assign({}, cstm, data, updateCstm)
+      // Object.assign({}, cstm, data, updateCstm)
+      updateCstm
     );
 
     console.log(`ret=${JSON.stringify(ret)}`);
@@ -291,7 +292,7 @@ const CstmDetail: React.FC<Props> = ({
         }
       );
 
-      addCCLogStart(
+      await addCCLogStart(
         {
           logId: "editCstmDetailLog",
           userId: userID.replace(/@.*$/, ""),
@@ -305,12 +306,12 @@ const CstmDetail: React.FC<Props> = ({
         { logId: "editCstmDetailLog", cdcstm: cstm.CT_CDCSTM }
       );
 
-      replaceCstm(cstm.CT_CDCSTM, updateCstm);
+      await replaceCstm(cstm.CT_CDCSTM, updateCstm);
     } else {
       reset();
     }
 
-    handleEditMode();
+    await handleEditMode();
   };
 
   useEffect(() => {
@@ -458,7 +459,7 @@ const CstmDetail: React.FC<Props> = ({
             )}
             type="text"
             name="CT_NKCSTM"
-            readOnly={true}
+            readOnly={!editMode}
             defaultValue={cstm.CT_NKCSTM.replace(/\s+$/g, "")}
             ref={register()}
             onFocus={(e) => e.currentTarget.select()}
@@ -519,7 +520,7 @@ const CstmDetail: React.FC<Props> = ({
             )}
             type="text"
             name="CT_NKSIME"
-            readOnly={true}
+            readOnly={!editMode}
             defaultValue={cstm.CT_NKSIME.replace(/\s+$/g, "")}
             ref={register()}
             onFocus={(e) => e.currentTarget.select()}

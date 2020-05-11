@@ -122,6 +122,14 @@ export const reducer = (state = initialState(), action: Actions): State => {
     case types.replaceCstm:
       // return {
       //   ...state,
+      //   ...state.cstms,
+      //   [state.cstms.findIndex(
+      //     (v) => v.CT_CDCSTM === action.payload.cdcstm
+      //   )]: action.payload.cstm,
+      // };
+
+      // return {
+      //   ...state,
       //   cstms: {
       //     ...state.cstms,
       //     [state.cstms.findIndex(

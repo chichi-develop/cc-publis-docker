@@ -407,7 +407,8 @@ export async function kiykSearch(req: Request, res: Response, next: NextFunction
     `   CASE WHEN KY_KBJYOT='4' AND KY_KBCYUS='04' THEN '継続待ち'` +
     `        WHEN KY_KBJYOT='4' AND KY_KBCYUS<>'04' THEN '継続なし'` +
     `        WHEN KY_KBJYOT='5' AND KY_KBCYUS IN ('00','01') THEN '自動待ち'` +
-    `        WHEN KY_KBJYOT='5' AND KY_KBCYUS NOT IN ('00','01') THEN '自動なし'` +
+    `        WHEN KY_KBJYOT='5' AND SUBSTR(KY_KBCYUS,1,1) = 'C' THEN '自動ERR'` +
+    `        WHEN KY_KBJYOT='5' AND KY_KBCYUS NOT IN ('00','01') AND SUBSTR(KY_KBCYUS,1,1) <> 'C' THEN '自動なし'` +
     `        ELSE TRIM(J.GY_NMBNSY) END KYLIST_TXJYOT,` +
     `   KY_KBJYOT KYLIST_KBJYOT,` +
     `   KY_KBCYUS KYLIST_KBCYUS,` +
