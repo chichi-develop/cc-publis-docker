@@ -79,6 +79,14 @@ export const SearchForm: React.FC = () => {
     }
   };
 
+  const onSubmitCdsytn = (data: Record<string, any>) => {
+    if (data.cdsytn !== "") {
+      let cdsytn = zen2han(data.cdsytn);
+      setValue("cdsytn", cdsytn);
+      history.push(`/cstm?columnName=ct_cdsytn&key=${cdsytn}`);
+    }
+  };
+
   useEffect(() => {
     console.log("SearchForm render!");
     return () => console.log("unmounting...");
@@ -316,6 +324,28 @@ export const SearchForm: React.FC = () => {
               </button>
             </div>
             {errors.nosqsy && <p>nosqsy is Strings from 6 to 10 characters</p>}
+          </form>
+
+          <form
+            className="searchForm"
+            autoComplete="off"
+            onSubmit={handleSubmit(onSubmitCdsytn)}
+          >
+            <p>担当社員コード</p>
+            <div className="searchFormInputBox">
+              <input
+                type="text"
+                name="cdsytn"
+                placeholder="Search.."
+                ref={register({ minLength: 2, maxLength: 2 })}
+                onFocus={e => e.currentTarget.select()}
+              />
+              <button type="submit">
+                <i className="material-icons">search</i>
+              </button>
+            </div>
+            {errors.cdsytn && <p>社員コードを入力ください</p>}
+
           </form>
         </div>
       </div>

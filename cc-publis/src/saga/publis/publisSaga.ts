@@ -232,8 +232,10 @@ function* runGetKiykCstm(action: ReturnType<typeof Actions.getKiykCstmStart>) {
     yield put({
       type: Types.getKiykCstmSucceed,
       payload: {
-        sqsk: sqsks.cstms[0],
-        shsk: shsks.cstms[0],
+        //sqsk: sqsks.cstms[0],
+        //shsk: shsks.cstms[0],
+        sqsk: sqsks[0],
+        shsk: shsks[0],
       },
     });
   } catch (error) {
