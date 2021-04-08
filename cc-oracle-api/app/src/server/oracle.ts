@@ -1,7 +1,13 @@
 import oracledb from 'oracledb'
-import { Request, Response, NextFunction } from "express"
+import { Request, Response, NextFunction } from 'express'
 import moment from 'moment-timezone'
-import { ORACLE_HOST, ORACLE_PORT, ORACLE_SID, ORACLE_USER, ORACLE_PASSWORD } from '../config/constants'
+import {
+  ORACLE_HOST,
+  ORACLE_PORT,
+  ORACLE_SID,
+  ORACLE_USER,
+  ORACLE_PASSWORD,
+} from '../config/constants'
 
 oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT
 
@@ -27,41 +33,52 @@ let connectionProperties = {
   connectString: `${ORACLE_HOST}:${ORACLE_PORT}/${ORACLE_SID}`,
   stmtCacheSize: (process.env.DBAAS_STATEMENT_CACHE_SIZE || 4) as number,
   poolMin: 1 as const,
-  poolMax: 5 as const
+  poolMax: 5 as const,
 }
 
-export async function cstmSearch(req: Request, res: Response, next: NextFunction) {
+export async function cstmSearch(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   let connection: oracledb.Connection | undefined | null
   let columnName: string = req.params.columnName
   let sqlText: string
 
   switch (columnName.toUpperCase()) {
     case 'CT_NOTEL1' || 'CT_NOTEL2':
-      sqlText = `SELECT * FROM cc_cstm WHERE ct_notel1 like '${req.params.key}' or ct_notel2 LIKE :key ORDER BY ${columnName}`
-      break;
+      // sqlText = `SELECT * FROM cc_cstm WHERE ct_notel1 like '${req.params.key}' or ct_notel2 LIKE :key ORDER BY ${columnName}`
+      sqlText = `SELECT * FROM cc_cstm WHERE INSTR(ct_notel1 , :key) > 0 or INSTR(ct_notel2, '${req.params.key}') > 0 or INSTR(ct_txbiko , '${req.params.key}') > 0 ORDER BY ${columnName}`
+      break
     case 'CT_ADMAIL':
       sqlText = `SELECT * FROM cc_cstm WHERE ${columnName} LIKE UPPER(:key) ORDER BY ${columnName}`
-      break;
+      break
     default:
       sqlText = `SELECT * FROM cc_cstm WHERE ${columnName} LIKE :key ORDER BY ${columnName}`
   }
 
-  console.log(`oracle.ts:cstmSearch: columnName:${columnName}、key:${req.params.key}`)
+  console.log(
+    `oracle.ts:cstmSearch: columnName:${columnName}、key:${req.params.key}`
+  )
   console.log(sqlText)
 
   try {
-    console.log(`cstmSearch start: ${moment().tz('Asia/Tokyo').format("HH:mm:ss")}`)
+    console.log(
+      `cstmSearch start: ${moment().tz('Asia/Tokyo').format('HH:mm:ss')}`
+    )
     connection = await oracledb.getConnection(connectionProperties)
     const result = await connection.execute(sqlText, [req.params.key])
-    console.log(`cstmSearch end: ${moment().tz('Asia/Tokyo').format("HH:mm:ss")}`)
-    return res.status(200).json(result.rows);
+    console.log(
+      `cstmSearch end: ${moment().tz('Asia/Tokyo').format('HH:mm:ss')}`
+    )
+    return res.status(200).json(result.rows)
   } catch (err) {
     console.error(sqlText)
     console.error(err)
     // console.error(err.errorNum)
     // console.error(err.message)
     let code = err.errorNum === 12154 ? 'oracleNetError' : err.errorNum
-    return res.status(500).json({ ...err, code: code, message: err.message });
+    return res.status(500).json({ ...err, code: code, message: err.message })
   } finally {
     if (connection) {
       try {
@@ -73,7 +90,11 @@ export async function cstmSearch(req: Request, res: Response, next: NextFunction
   }
 }
 
-export async function cstmInsert(req: Request, res: Response, next: NextFunction) {
+export async function cstmInsert(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   let connection: oracledb.Connection | undefined | null
   const queryString1 = Object.keys(req.body).map(function (data) {
     return `:${data}`
@@ -89,7 +110,7 @@ export async function cstmInsert(req: Request, res: Response, next: NextFunction
   } catch (err) {
     console.error(err.message)
     console.error(sqlText)
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message })
   } finally {
     if (connection) {
       try {
@@ -101,9 +122,13 @@ export async function cstmInsert(req: Request, res: Response, next: NextFunction
   }
 }
 
-export async function cstmUpsert(req: Request, res: Response, next: NextFunction) {
-  const cdcstm = req.body.cdcstm;
-  const cstm = req.body.cstm;
+export async function cstmUpsert(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const cdcstm = req.body.cdcstm
+  const cstm = req.body.cstm
   let connection: oracledb.Connection | undefined | null
   // Object.entries(obj).map(([key, value]) => ({key, value}))
   const updateQuery = Object.entries(cstm).map(([key, value], index, array) => {
@@ -144,7 +169,7 @@ export async function cstmUpsert(req: Request, res: Response, next: NextFunction
   } catch (err) {
     console.error(err.message)
     console.error(sqlText)
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message })
   } finally {
     if (connection) {
       try {
@@ -156,7 +181,11 @@ export async function cstmUpsert(req: Request, res: Response, next: NextFunction
   }
 }
 
-export async function csmmSearch(req: Request, res: Response, next: NextFunction) {
+export async function csmmSearch(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   let connection: oracledb.Connection | undefined | null
   let sqlText = `SELECT * FROM cc_csmm WHERE cm_cdcstm = :key ORDER BY CM_RBCSMM`
 
@@ -166,13 +195,17 @@ export async function csmmSearch(req: Request, res: Response, next: NextFunction
     if (result.rows && result.rows.length >= 1) {
       return res.send(result.rows)
     } else if (result.rows && result.rows.length === 0) {
-      return res.status(500).json({ error: { message: 'no data found', code: 'noDataFound' } });
+      return res
+        .status(500)
+        .json({ error: { message: 'no data found', code: 'noDataFound' } })
     }
-    return res.status(500).json({ error: { message: 'unknown error', code: 'unknownError' } })
+    return res
+      .status(500)
+      .json({ error: { message: 'unknown error', code: 'unknownError' } })
   } catch (err) {
     console.error(err.message)
     console.error(sqlText)
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message })
   } finally {
     if (connection) {
       try {
@@ -184,7 +217,11 @@ export async function csmmSearch(req: Request, res: Response, next: NextFunction
   }
 }
 
-export async function csmmUpsert(req: Request, res: Response, next: NextFunction) {
+export async function csmmUpsert(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   let connection: oracledb.Connection | undefined | null
   const queryString1 = Object.keys(req.body).map(function (data) {
     return `${data} =:${data}`
@@ -215,7 +252,7 @@ export async function csmmUpsert(req: Request, res: Response, next: NextFunction
   } catch (err) {
     console.error(err.message)
     console.error(sqlText)
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message })
   } finally {
     if (connection) {
       try {
@@ -227,20 +264,27 @@ export async function csmmUpsert(req: Request, res: Response, next: NextFunction
   }
 }
 
-export async function csmmDelete(req: Request, res: Response, next: NextFunction) {
+export async function csmmDelete(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   let connection: oracledb.Connection | undefined | null
   let sqlText = `DELETE CC_CSMM WHERE CM_CDCSTM = :key1 AND CM_RBCSMM= :key2`
 
   try {
     connection = await oracledb.getConnection(connectionProperties)
-    const result = await connection.execute(sqlText, [req.params.key1, req.params.key2])
+    const result = await connection.execute(sqlText, [
+      req.params.key1,
+      req.params.key2,
+    ])
     console.log(result.rows)
     await connection.commit()
     return res.send(200)
   } catch (err) {
     console.error(err.message)
     console.error(sqlText)
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message })
   } finally {
     if (connection) {
       try {
@@ -252,7 +296,11 @@ export async function csmmDelete(req: Request, res: Response, next: NextFunction
   }
 }
 
-export async function kiykSearch2(req: Request, res: Response, next: NextFunction) {
+export async function kiykSearch2(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   let connection: oracledb.Connection | undefined | null
 
   let sqlText = `SELECT * FROM cc_kiyk WHERE TRIM(${req.body.columnName}) = :key`
@@ -263,13 +311,17 @@ export async function kiykSearch2(req: Request, res: Response, next: NextFunctio
     if (result.rows && result.rows.length >= 1) {
       return res.send(result.rows)
     } else if (result.rows && result.rows.length === 0) {
-      return res.status(500).json({ error: { message: 'no data found', code: 'noDataFound' } });
+      return res
+        .status(500)
+        .json({ error: { message: 'no data found', code: 'noDataFound' } })
     }
-    return res.status(500).json({ error: { message: 'unknown error', code: 'unknownError' } })
+    return res
+      .status(500)
+      .json({ error: { message: 'unknown error', code: 'unknownError' } })
   } catch (err) {
     console.error(err.message)
     console.error(sqlText)
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message })
   } finally {
     if (connection) {
       try {
@@ -284,7 +336,6 @@ export async function kiykSearch2(req: Request, res: Response, next: NextFunctio
 // export async function kiykSearch(req: Request, res: Response, next: NextFunction) {
 //   let connection: oracledb.Connection | undefined | null
 
-
 //   switch (req.params.columnName.toUpperCase()) {
 //     case 'KY_CDSQSK_CDSHSK':
 //       var sqlText = `SELECT * FROM cc_kiyk WHERE :key in (KY_CDSQSK, KY_CDSHSK) ORDER BY KY_NOKIYK DESC`
@@ -293,11 +344,9 @@ export async function kiykSearch2(req: Request, res: Response, next: NextFunctio
 //       var sqlText = `SELECT * FROM cc_kiyk WHERE ${req.params.columnName} = :key ORDER BY KY_NOKIYK DESC`
 //   }
 
-
 //   console.log(sqlText)
 //   console.log(`columnName:${req.params.columnName}`);
 //   console.log(`key:${req.params.key}`);
-
 
 //   try {
 //     connection = await oracledb.getConnection(connectionProperties)
@@ -324,7 +373,11 @@ export async function kiykSearch2(req: Request, res: Response, next: NextFunctio
 //   }
 // }
 
-export async function kiykSearch(req: Request, res: Response, next: NextFunction) {
+export async function kiykSearch(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   let connection: oracledb.Connection | undefined | null
 
   let sqlText =
@@ -417,33 +470,43 @@ export async function kiykSearch(req: Request, res: Response, next: NextFunction
 
   switch (req.params.columnName.toUpperCase()) {
     case 'KY_CDSQSK_CDSHSK':
-      sqlText = sqlText + `  AND :key in (KY_CDSQSK, KY_CDSHSK) ORDER BY KY_NOKIYK DESC`
-      break;
+      sqlText =
+        sqlText + `  AND :key in (KY_CDSQSK, KY_CDSHSK) ORDER BY KY_NOKIYK DESC`
+      break
     default:
-      sqlText = sqlText + `  AND ${req.params.columnName} = :key ORDER BY KY_NOKIYK DESC`
+      sqlText =
+        sqlText +
+        `  AND ${req.params.columnName} = :key ORDER BY KY_NOKIYK DESC`
   }
 
   console.log(sqlText)
-  console.log(`columnName:${req.params.columnName}`);
-  console.log(`key:${req.params.key}`);
-
+  console.log(`columnName:${req.params.columnName}`)
+  console.log(`key:${req.params.key}`)
 
   try {
-    console.log(`kiykSearch start: ${moment().tz('Asia/Tokyo').format("HH:mm:ss")}`)
+    console.log(
+      `kiykSearch start: ${moment().tz('Asia/Tokyo').format('HH:mm:ss')}`
+    )
     connection = await oracledb.getConnection(connectionProperties)
     const result = await connection.execute(sqlText, [req.params.key])
-    console.log(`kiykSearch end: ${moment().tz('Asia/Tokyo').format("HH:mm:ss")}`)
+    console.log(
+      `kiykSearch end: ${moment().tz('Asia/Tokyo').format('HH:mm:ss')}`
+    )
     if (result.rows && result.rows.length >= 1) {
       // return res.send(result.rows)
-      return res.status(200).json({ kiyks: result.rows });
+      return res.status(200).json({ kiyks: result.rows })
     } else if (result.rows && result.rows.length === 0) {
-      return res.status(500).json({ error: { message: 'no data found', code: 'noDataFound' } });
+      return res
+        .status(500)
+        .json({ error: { message: 'no data found', code: 'noDataFound' } })
     }
-    return res.status(500).json({ error: { message: 'unknown error', code: 'unknownError' } })
+    return res
+      .status(500)
+      .json({ error: { message: 'unknown error', code: 'unknownError' } })
   } catch (err) {
     console.error(err.message)
     console.error(sqlText)
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message })
   } finally {
     if (connection) {
       try {
@@ -455,7 +518,11 @@ export async function kiykSearch(req: Request, res: Response, next: NextFunction
   }
 }
 
-export async function kyzdSearch(req: Request, res: Response, next: NextFunction) {
+export async function kyzdSearch(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   let connection: oracledb.Connection | undefined | null
   let sqlText = `SELECT * FROM cc_kysm WHERE ks_nokiyk = :key`
 
@@ -465,13 +532,17 @@ export async function kyzdSearch(req: Request, res: Response, next: NextFunction
     if (result.rows && result.rows.length >= 1) {
       return res.send(result.rows)
     } else if (result.rows && result.rows.length === 0) {
-      return res.status(500).json({ error: { message: 'no data found', code: 'noDataFound' } });
+      return res
+        .status(500)
+        .json({ error: { message: 'no data found', code: 'noDataFound' } })
     }
-    return res.status(500).json({ error: { message: 'unknown error', code: 'unknownError' } })
+    return res
+      .status(500)
+      .json({ error: { message: 'unknown error', code: 'unknownError' } })
   } catch (err) {
     console.error(err.message)
     console.error(sqlText)
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message })
   } finally {
     if (connection) {
       try {
@@ -483,8 +554,11 @@ export async function kyzdSearch(req: Request, res: Response, next: NextFunction
   }
 }
 
-
-export async function ctzhSearch(req: Request, res: Response, next: NextFunction) {
+export async function ctzhSearch(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   let connection: oracledb.Connection | undefined | null
   let sqlText =
     `select /*+ ALL_ROWS LEADING(kj nk ky) USE_NL(kj nk ky)  */ ` +
@@ -544,13 +618,17 @@ export async function ctzhSearch(req: Request, res: Response, next: NextFunction
     if (result.rows && result.rows.length >= 1) {
       return res.send(result.rows)
     } else if (result.rows && result.rows.length === 0) {
-      return res.status(500).json({ error: { message: 'no data found', code: 'noDataFound' } });
+      return res
+        .status(500)
+        .json({ error: { message: 'no data found', code: 'noDataFound' } })
     }
-    return res.status(500).json({ error: { message: 'unknown error', code: 'unknownError' } })
+    return res
+      .status(500)
+      .json({ error: { message: 'unknown error', code: 'unknownError' } })
   } catch (err) {
     console.error(err.message)
     console.error(sqlText)
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message })
   } finally {
     if (connection) {
       try {
@@ -562,7 +640,11 @@ export async function ctzhSearch(req: Request, res: Response, next: NextFunction
   }
 }
 
-export async function kyzhSearch(req: Request, res: Response, next: NextFunction) {
+export async function kyzhSearch(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   let connection: oracledb.Connection | undefined | null
   let sqlText =
     `	select /*+ 	ALL_ROWS */` +
@@ -626,17 +708,26 @@ export async function kyzhSearch(req: Request, res: Response, next: NextFunction
 
   try {
     connection = await oracledb.getConnection(connectionProperties)
-    const result = await connection.execute(sqlText, [req.params.key, req.params.key, req.params.key, req.params.key])
+    const result = await connection.execute(sqlText, [
+      req.params.key,
+      req.params.key,
+      req.params.key,
+      req.params.key,
+    ])
     if (result.rows && result.rows.length >= 1) {
       return res.send(result.rows)
     } else if (result.rows && result.rows.length === 0) {
-      return res.status(500).json({ error: { message: 'no data found', code: 'noDataFound' } });
+      return res
+        .status(500)
+        .json({ error: { message: 'no data found', code: 'noDataFound' } })
     }
-    return res.status(500).json({ error: { message: 'unknown error', code: 'unknownError' } })
+    return res
+      .status(500)
+      .json({ error: { message: 'unknown error', code: 'unknownError' } })
   } catch (err) {
     console.error(err.message)
     console.error(sqlText)
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message })
   } finally {
     if (connection) {
       try {
@@ -654,7 +745,6 @@ export async function kyzhSearch(req: Request, res: Response, next: NextFunction
 //   console.log(sqlText)
 //   console.log(`key1:${req.params.key1}`);
 //   console.log(`key2:${req.params.key2}`);
-
 
 //   try {
 //     connection = await oracledb.getConnection(connectionProperties)
@@ -681,8 +771,11 @@ export async function kyzhSearch(req: Request, res: Response, next: NextFunction
 //   }
 // }
 
-
-export async function gycmSearch(req: Request, res: Response, next: NextFunction) {
+export async function gycmSearch(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   let connection: oracledb.Connection | undefined | null
   let sqlText = `SELECT * FROM cc_gycm`
   console.log(sqlText)
@@ -692,15 +785,19 @@ export async function gycmSearch(req: Request, res: Response, next: NextFunction
     const result = await connection.execute(sqlText)
     if (result.rows && result.rows.length >= 1) {
       // return res.send(result.rows)
-      return res.status(200).json({ gycms: result.rows });
+      return res.status(200).json({ gycms: result.rows })
     } else if (result.rows && result.rows.length === 0) {
-      return res.status(500).json({ error: { message: 'no data found', code: 'noDataFound' } });
+      return res
+        .status(500)
+        .json({ error: { message: 'no data found', code: 'noDataFound' } })
     }
-    return res.status(500).json({ error: { message: 'unknown error', code: 'unknownError' } })
+    return res
+      .status(500)
+      .json({ error: { message: 'unknown error', code: 'unknownError' } })
   } catch (err) {
     console.error(err.message)
     console.error(sqlText)
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message })
   } finally {
     if (connection) {
       try {
