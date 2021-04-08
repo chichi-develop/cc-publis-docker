@@ -53,7 +53,7 @@ export const SearchForm: React.FC = () => {
   };
   const onSubmitTel = (data: Record<string, any>) => {
     if (data.tel !== "") {
-      history.push(`/cstm?columnName=ct_notel1&key=${data.tel}%`);
+      history.push(`/cstm?columnName=ct_notel1&key=${data.tel}`);
     }
   };
   const onSubmitNmcstm = (data: Record<string, any>) => {
@@ -111,14 +111,14 @@ export const SearchForm: React.FC = () => {
                 placeholder="Search.."
                 // ref={register({ pattern: /^2[0-9]{7}/ })}
                 ref={register({ minLength: 6, maxLength: 8 })}
-                onFocus={e => e.currentTarget.select()}
+                onFocus={(e) => e.currentTarget.select()}
               />
               <button type="submit">
                 <i className="material-icons">search</i>
               </button>
               <button
                 type="submit"
-                onClick={e => {
+                onClick={(e) => {
                   setSwitchSearch("kiyk");
                 }}
                 style={{ backgroundColor: "#FF9265" }}
@@ -141,7 +141,7 @@ export const SearchForm: React.FC = () => {
                 name="nkcstm"
                 placeholder="Search.."
                 ref={register({ minLength: 2, maxLength: 50 })}
-                onFocus={e => e.currentTarget.select()}
+                onFocus={(e) => e.currentTarget.select()}
                 // onChange={e => {
                 //   console.log("顧客名カナ：onchange");
                 //   setValue("nkcstm", zen2han(e.target.value));
@@ -168,7 +168,7 @@ export const SearchForm: React.FC = () => {
                 name="nksime"
                 placeholder="Search.."
                 ref={register({ minLength: 2, maxLength: 50 })}
-                onFocus={e => e.currentTarget.select()}
+                onFocus={(e) => e.currentTarget.select()}
               />
               <button type="submit">
                 <i className="material-icons">search</i>
@@ -189,7 +189,7 @@ export const SearchForm: React.FC = () => {
                 name="address"
                 placeholder="Search.."
                 ref={register({ minLength: 2, maxLength: 50 })}
-                onFocus={e => e.currentTarget.select()}
+                onFocus={(e) => e.currentTarget.select()}
               />
               <button type="submit">
                 <i className="material-icons">search</i>
@@ -212,7 +212,7 @@ export const SearchForm: React.FC = () => {
                 name="nokiyk"
                 placeholder="Search.."
                 ref={register({ minLength: 6, maxLength: 10 })}
-                onFocus={e => e.currentTarget.select()}
+                onFocus={(e) => e.currentTarget.select()}
               />
               <button type="submit" style={{ backgroundColor: "#FF9265" }}>
                 <i className="material-icons">search</i>
@@ -233,7 +233,7 @@ export const SearchForm: React.FC = () => {
                 name="tel"
                 placeholder="Search.."
                 ref={register({ pattern: /^[0-9]{6,20}/ })}
-                onFocus={e => e.currentTarget.select()}
+                onFocus={(e) => e.currentTarget.select()}
               />
               <button type="submit">
                 <i className="material-icons">search</i>
@@ -254,7 +254,7 @@ export const SearchForm: React.FC = () => {
                 name="nmcstm"
                 placeholder="Search.."
                 ref={register({ minLength: 2, maxLength: 50 })}
-                onFocus={e => e.currentTarget.select()}
+                onFocus={(e) => e.currentTarget.select()}
               />
               <button type="submit">
                 <i className="material-icons">search</i>
@@ -275,7 +275,7 @@ export const SearchForm: React.FC = () => {
                 name="nmsime"
                 placeholder="Search.."
                 ref={register({ minLength: 2, maxLength: 50 })}
-                onFocus={e => e.currentTarget.select()}
+                onFocus={(e) => e.currentTarget.select()}
               />
               <button type="submit">
                 <i className="material-icons">search</i>
@@ -296,7 +296,7 @@ export const SearchForm: React.FC = () => {
                 name="mail"
                 placeholder="Search.."
                 ref={register({ minLength: 2, maxLength: 50 })}
-                onFocus={e => e.currentTarget.select()}
+                onFocus={(e) => e.currentTarget.select()}
               />
               <button type="submit">
                 <i className="material-icons">search</i>
@@ -317,7 +317,7 @@ export const SearchForm: React.FC = () => {
                 name="nosqsy"
                 placeholder="Search.."
                 ref={register({ minLength: 6, maxLength: 10 })}
-                onFocus={e => e.currentTarget.select()}
+                onFocus={(e) => e.currentTarget.select()}
               />
               <button type="submit" style={{ backgroundColor: "#FF9265" }}>
                 <i className="material-icons">search</i>
@@ -338,14 +338,13 @@ export const SearchForm: React.FC = () => {
                 name="cdsytn"
                 placeholder="Search.."
                 ref={register({ minLength: 2, maxLength: 2 })}
-                onFocus={e => e.currentTarget.select()}
+                onFocus={(e) => e.currentTarget.select()}
               />
               <button type="submit">
                 <i className="material-icons">search</i>
               </button>
             </div>
             {errors.cdsytn && <p>社員コードを入力ください</p>}
-
           </form>
         </div>
       </div>
